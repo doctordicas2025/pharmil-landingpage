@@ -1,0 +1,99 @@
+.pepking-section {
+  padding-block: var(--section-space);
+  background: var(--color-peach);
+}
+
+.pepking-section__layout {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(3rem, 8vw, 8rem);
+  align-items: center;
+}
+
+.pepking-section__label {
+  margin-bottom: 1.1rem;
+  color: var(--color-wine);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pepking-section__header .section-intro {
+  margin-bottom: 1.75rem;
+}
+
+.pepking-section__manifest {
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  color: var(--color-paper);
+  background: var(--color-navy);
+}
+
+.pepking-section__manifest-title {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--color-paper) 18%, transparent);
+  color: var(--color-orange);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pepking-section__manifest ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pepking-section__manifest li {
+  display: grid;
+  grid-template-columns: 3rem minmax(7rem, 0.6fr) 1fr;
+  gap: 1rem;
+  align-items: center;
+  min-height: 6.25rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid color-mix(in oklch, var(--color-paper) 18%, transparent);
+}
+
+.pepking-section__manifest li > span {
+  color: var(--color-orange);
+  font-family: var(--font-display-family);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.pepking-section__manifest strong {
+  font-family: var(--font-display-family);
+  font-size: clamp(1.4rem, 2.8vw, 2.1rem);
+  line-height: 1;
+}
+
+.pepking-section__manifest small {
+  color: color-mix(in oklch, var(--color-paper) 70%, transparent);
+  font-size: 0.85rem;
+}
+
+.pepking-section__note {
+  margin: 0;
+  padding: 1.25rem 1.5rem;
+  color: color-mix(in oklch, var(--color-paper) 65%, transparent);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 62rem) {
+  .pepking-section__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 36rem) {
+  .pepking-section__manifest li {
+    grid-template-columns: 2.5rem 1fr;
+  }
+
+  .pepking-section__manifest small {
+    grid-column: 2;
+  }
+}

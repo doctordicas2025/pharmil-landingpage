@@ -1,0 +1,31 @@
+# dependencies
+/node_modules
+
+# Next.js
+/.next
+/out
+
+# local artifacts
+/.tmp
+/.playwright-cli
+/.next-dev
+/.output
+/output
+/.impeccable/live
+/interface-design
+/skills
+/AGENTS.md
+/app/fonts/BricolageGrotesque-*.ttf
+/app/fonts/WorkSans-*.ttf
+/public/licenses/BricolageGrotesque-OFL.txt
+/public/licenses/WorkSans-OFL.txt
+*.tsbuildinfo
+
+# environment files
+.env*
+!.env.example
+
+# logs and OS files
+*.log
+.DS_Store
+Thumbs.db

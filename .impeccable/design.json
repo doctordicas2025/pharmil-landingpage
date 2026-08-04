@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-04T13:30:00-03:00",
+  "title": "Design System: Pharmil",
+  "extensions": {
+    "colorMeta": {
+      "pharmil-red": {
+        "role": "primary",
+        "displayName": "Vermelho Pharmil",
+        "canonical": "oklch(42% 0.16 24)",
+        "tonalRamp": ["oklch(15% 0.05 24)", "oklch(25% 0.09 24)", "oklch(35% 0.13 24)", "oklch(45% 0.16 24)", "oklch(58% 0.15 24)", "oklch(70% 0.11 24)", "oklch(84% 0.06 24)", "oklch(95% 0.02 24)"]
+      },
+      "signal-red": {
+        "role": "primary",
+        "displayName": "Vermelho Sinal",
+        "canonical": "oklch(55% 0.19 30)",
+        "tonalRamp": ["oklch(15% 0.06 30)", "oklch(25% 0.1 30)", "oklch(35% 0.14 30)", "oklch(48% 0.18 30)", "oklch(60% 0.18 30)", "oklch(72% 0.13 30)", "oklch(85% 0.07 30)", "oklch(95% 0.025 30)"]
+      },
+      "thermal-orange": {
+        "role": "secondary",
+        "displayName": "Laranja Térmico",
+        "canonical": "oklch(70% 0.2 42)",
+        "tonalRamp": ["oklch(15% 0.05 42)", "oklch(25% 0.08 42)", "oklch(36% 0.12 42)", "oklch(48% 0.16 42)", "oklch(61% 0.19 42)", "oklch(72% 0.18 42)", "oklch(85% 0.1 42)", "oklch(95% 0.035 42)"]
+      },
+      "cold-chain-navy": {
+        "role": "secondary",
+        "displayName": "Azul Cadeia Fria",
+        "canonical": "oklch(28% 0.07 247)",
+        "tonalRamp": ["oklch(15% 0.035 247)", "oklch(24% 0.06 247)", "oklch(34% 0.07 247)", "oklch(46% 0.065 247)", "oklch(58% 0.055 247)", "oklch(70% 0.04 247)", "oklch(84% 0.025 247)", "oklch(95% 0.01 247)"]
+      },
+      "paper-warm": {
+        "role": "neutral",
+        "displayName": "Papel Quente",
+        "canonical": "oklch(98.4% 0.008 55)",
+        "tonalRamp": ["oklch(15% 0.008 55)", "oklch(27% 0.008 55)", "oklch(39% 0.008 55)", "oklch(52% 0.008 55)", "oklch(66% 0.008 55)", "oklch(78% 0.008 55)", "oklch(89% 0.008 55)", "oklch(98% 0.008 55)"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero e mensagens dominantes." },
+      "headline": { "displayName": "Headline", "purpose": "Títulos de seção e nomes de linha." },
+      "body": { "displayName": "Body", "purpose": "Explicações e respostas em leitura contínua." },
+      "label": { "displayName": "Label", "purpose": "Metadados técnicos curtos." }
+    },
+    "shadows": [
+      { "name": "control", "value": "0 12px 32px oklch(28% 0.11 25 / 16%)", "purpose": "Elevação curta de botões." },
+      { "name": "object", "value": "0 32px 64px oklch(32% 0.11 30 / 20%)", "purpose": "Separação ambiental das embalagens." }
+    ],
+    "motion": [
+      { "name": "ease-out", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Entradas e estados interativos." },
+      { "name": "state-fast", "value": "200ms", "purpose": "Hover, foco e press." },
+      { "name": "hero-enter", "value": "650ms", "purpose": "Entrada única da primeira dobra." }
+    ],
+    "breakpoints": [
+      { "name": "compact", "value": "448px" },
+      { "name": "mobile", "value": "768px" },
+      { "name": "tablet", "value": "992px" },
+      { "name": "navigation", "value": "1152px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal com contraste alto e elevação curta.",
+      "html": "<button class=\"ds-btn-primary\">Consultar informações <span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:.65rem;min-height:52px;padding:14px 22px;border:0;border-radius:999px;background:#8F1C20;color:#FBF8F4;font:700 16px/1 Arial,sans-serif;box-shadow:0 12px 32px rgba(86,20,25,.16);transition:background .2s,transform .2s}.ds-btn-primary:hover{background:#C93424;transform:translateY(-2px)}.ds-btn-primary:focus-visible{outline:3px solid #FF6828;outline-offset:4px}.ds-btn-primary:active{transform:scale(.98)}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Ação de apoio, clara e sem competir com o CTA principal.",
+      "html": "<button class=\"ds-btn-secondary\">Entender o processo</button>",
+      "css": ".ds-btn-secondary{min-height:52px;padding:14px 22px;border:1px solid #E7DDD5;border-radius:999px;background:#FBF8F4;color:#8F1C20;font:700 16px/1 Arial,sans-serif;transition:border-color .2s,transform .2s}.ds-btn-secondary:hover{border-color:#8F1C20;transform:translateY(-2px)}.ds-btn-secondary:focus-visible{outline:3px solid #FF6828;outline-offset:4px}.ds-btn-secondary:active{transform:scale(.98)}"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "description": "Âncora curta com sublinhado funcional no hover e foco.",
+      "html": "<a class=\"ds-nav-link\" href=\"#catalogo\">Catálogo</a>",
+      "css": ".ds-nav-link{position:relative;display:inline-flex;align-items:center;min-height:44px;color:#6A5D5A;font:700 14px/1 Arial,sans-serif;text-decoration:none}.ds-nav-link:after{position:absolute;right:0;bottom:5px;left:0;height:2px;background:#FF6828;content:'';transform:scaleX(0);transition:transform .2s}.ds-nav-link:hover:after,.ds-nav-link:focus-visible:after{transform:scaleX(1)}.ds-nav-link:focus-visible{outline:3px solid #FF6828;outline-offset:4px}"
+    },
+    {
+      "name": "Catalog Row",
+      "kind": "custom",
+      "description": "Linha assimétrica para produto e situação regulatória.",
+      "html": "<article class=\"ds-product-row\"><span>01</span><div><small>SITUAÇÃO REGULATÓRIA</small><h3>Tirzepatida</h3><p>Informações da apresentação sob validação.</p></div></article>",
+      "css": ".ds-product-row{display:grid;grid-template-columns:64px 1fr;gap:24px;padding:32px 0;border-top:1px solid #E7DDD5;color:#24191A;font-family:Arial,sans-serif}.ds-product-row>span{color:#FF6828;font-size:36px;font-weight:700}.ds-product-row small{color:#8F1C20;font-size:11px;font-weight:700;letter-spacing:.09em}.ds-product-row h3{margin:8px 0;font-size:36px;line-height:1}.ds-product-row p{margin:0;color:#6A5D5A}.ds-product-row:focus-within{outline:3px solid #FF6828;outline-offset:4px}"
+    },
+    {
+      "name": "FAQ Disclosure",
+      "kind": "custom",
+      "description": "Pergunta nativa, navegável por teclado e sem JavaScript cliente.",
+      "html": "<details class=\"ds-faq\"><summary>Como é feita a entrega?<span aria-hidden=\"true\">+</span></summary><p>As condições são confirmadas antes do pedido.</p></details>",
+      "css": ".ds-faq{border-top:1px solid #E7DDD5;color:#24191A;font-family:Arial,sans-serif}.ds-faq summary{display:grid;grid-template-columns:1fr 32px;align-items:center;min-height:72px;cursor:pointer;font-weight:700;list-style:none}.ds-faq summary span{display:grid;width:32px;height:32px;place-items:center;border:1px solid #E7DDD5;border-radius:50%;color:#8F1C20;transition:transform .2s}.ds-faq[open] summary span{transform:rotate(45deg)}.ds-faq summary:focus-visible{outline:3px solid #FF6828;outline-offset:4px}.ds-faq p{max-width:60ch;margin:0 48px 24px 0;color:#6A5D5A}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A cadeia fria, em evidência",
+    "overview": "Uma embalagem farmacêutica bem resolvida sobre uma bancada iluminada: limpa, objetiva, concreta e humana. A composição usa grandes campos de cor, tipografia Archivo firme e um packshot de produto preciso.",
+    "keyCharacteristics": ["Produto em primeiro plano", "Ritmo entre áreas abertas e campos de cor", "Hierarquia forte", "Movimento opcional", "Conversão baseada em clareza"],
+    "rules": [
+      { "name": "Thermal Map Rule", "body": "Vermelho, laranja e azul formam a narrativa de calor, produto e cadeia de frio.", "section": "colors" },
+      { "name": "Packaging Voice Rule", "body": "Títulos são curtos, específicos e sem adjetivos vazios.", "section": "typography" },
+      { "name": "Object-Only Shadow Rule", "body": "Sombras pertencem a produtos e controles interativos.", "section": "elevation" }
+    ],
+    "dos": ["Do usar vermelho nos CTAs e azul para cadeia de frio.", "Do manter cada dobra focada em uma pergunta real.", "Do usar HTML semântico e foco visível."],
+    "donts": ["Don't criar landing pages genéricas de IA.", "Don't usar catálogos frios e impessoais.", "Don't usar texto em gradiente ou glassmorphism."]
+  }
+}

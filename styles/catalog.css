@@ -1,0 +1,115 @@
+.catalog-section {
+  padding-block: var(--section-space);
+}
+
+.catalog-section__layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(3rem, 8vw, 8rem);
+}
+
+.catalog-section__header {
+  align-self: start;
+}
+
+.section-title {
+  max-width: 13ch;
+  margin-bottom: 1.25rem;
+  font-size: clamp(2.45rem, 5.1vw, 5.1rem);
+  line-height: 0.94;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+.catalog-section__header .section-intro {
+  margin-bottom: 1.8rem;
+}
+
+.catalog-section__products {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.catalog-section__item {
+  border-top: 1px solid var(--color-line);
+}
+
+.catalog-section__item:last-child {
+  border-bottom: 1px solid var(--color-line);
+}
+
+.product-card {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr;
+  gap: clamp(1rem, 3vw, 2.5rem);
+  padding-block: clamp(1.8rem, 4vw, 3rem);
+  transition: background 220ms var(--ease-out), padding 220ms var(--ease-out);
+}
+
+.catalog-section__item:hover .product-card {
+  padding-inline: 1.25rem;
+  background: var(--color-surface);
+}
+
+.catalog-section__item:nth-child(2) .product-card {
+  color: var(--color-paper);
+  background: var(--color-navy);
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.catalog-section__item:nth-child(2) .product-card__meta,
+.catalog-section__item:nth-child(2) .product-card__description {
+  color: color-mix(in oklch, var(--color-paper) 72%, transparent);
+}
+
+.product-card__index {
+  color: var(--color-orange);
+  font-family: var(--font-display-family);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.product-card__meta {
+  margin-bottom: 0.55rem;
+  color: var(--color-wine);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.product-card__title {
+  margin-bottom: 0.7rem;
+  font-size: clamp(1.8rem, 3.5vw, 3rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.product-card__description {
+  max-width: 54ch;
+  margin-bottom: 0;
+  color: var(--color-muted);
+}
+
+.catalog-section__notice {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: 1.6rem 1fr;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: var(--color-peach);
+}
+
+.catalog-section__notice svg {
+  width: 1.5rem;
+  color: var(--color-wine);
+  stroke-width: 1.7;
+}
+
+.catalog-section__notice p {
+  margin-bottom: 0;
+}

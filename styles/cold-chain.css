@@ -1,0 +1,98 @@
+.cold-chain-section {
+  position: relative;
+  overflow: clip;
+  padding-block: var(--section-space);
+  color: var(--color-paper);
+  background: var(--color-navy);
+}
+
+.cold-chain-section::before {
+  position: absolute;
+  top: -15rem;
+  right: -10rem;
+  width: 30rem;
+  height: 30rem;
+  border-radius: 50%;
+  background: var(--color-navy-light);
+  content: "";
+  opacity: 0.55;
+}
+
+.cold-chain-section__layout {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(17rem, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(3rem, 8vw, 8rem);
+}
+
+.cold-chain-section__symbol {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 2rem;
+  color: var(--color-orange);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.cold-chain-section__symbol svg {
+  width: 2rem;
+  stroke-width: 1.7;
+}
+
+.cold-chain-section .section-title {
+  max-width: 11ch;
+}
+
+.cold-chain-section .section-intro {
+  color: color-mix(in oklch, var(--color-paper) 74%, transparent);
+}
+
+.cold-chain-section__stages {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cold-chain-stage {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1rem;
+  padding-block: clamp(1.35rem, 3vw, 2rem);
+  border-top: 1px solid color-mix(in oklch, var(--color-paper) 18%, transparent);
+}
+
+.cold-chain-stage:last-child {
+  border-bottom: 1px solid color-mix(in oklch, var(--color-paper) 18%, transparent);
+}
+
+.cold-chain-stage__number {
+  color: var(--color-orange);
+  font-family: var(--font-display-family);
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.cold-chain-stage__title {
+  margin-bottom: 0.35rem;
+  font-size: clamp(1.25rem, 2.3vw, 1.75rem);
+  line-height: 1.1;
+}
+
+.cold-chain-stage__description {
+  max-width: 52ch;
+  margin-bottom: 0;
+  color: color-mix(in oklch, var(--color-paper) 68%, transparent);
+}
+
+.cold-chain-section__caveat {
+  grid-column: 2;
+  margin: 0;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid color-mix(in oklch, var(--color-paper) 20%, transparent);
+  border-radius: var(--radius-sm);
+  color: color-mix(in oklch, var(--color-paper) 78%, transparent);
+  font-size: 0.88rem;
+}
