@@ -17,10 +17,10 @@ export default function HomePage() {
       <a className="skip-link" href="#conteudo">
         Pular para o conteúdo
       </a>
-      <Header />
+      <Header contactHref={contactHref} />
       <main id="conteudo">
-        <Hero />
-        <Catalog />
+        <Hero contactHref={contactHref} />
+        <Catalog contactHref={contactHref} />
         <Pepking />
         <ColdChain />
         <OrderProcess contactHref={contactHref} />

@@ -29,7 +29,11 @@ function ArrowIcon() {
   );
 }
 
-export default function Catalog() {
+export type CatalogProps = {
+  contactHref: string;
+};
+
+export default function Catalog({ contactHref }: CatalogProps) {
   return (
     <section
       aria-labelledby="catalog-title"
@@ -46,8 +50,13 @@ export default function Catalog() {
             Antes de qualquer publicação, apresentação, procedência, registro e
             condições de distribuição precisam ser validados.
           </p>
-          <a className="button button--primary" href="#como-pedir">
-            Entender o processo
+          <a
+            className="button button--primary"
+            href={contactHref}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Consultar no WhatsApp
             <ArrowIcon />
           </a>
         </header>

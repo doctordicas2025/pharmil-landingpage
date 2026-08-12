@@ -18,7 +18,11 @@ const trustSignals = [
   },
 ] as const;
 
-export function Hero() {
+export type HeroProps = {
+  contactHref: string;
+};
+
+export function Hero({ contactHref }: HeroProps) {
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
       <div className="hero__inner page-shell">
@@ -40,8 +44,13 @@ export function Hero() {
           </p>
 
           <div className="hero__actions" aria-label="Ações principais">
-            <a className="button button--primary" href="#catalogo">
-              Consultar informações
+            <a
+              className="button button--primary"
+              href={contactHref}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Consultar no WhatsApp
               <span aria-hidden="true">→</span>
             </a>
             <a className="button button--secondary" href="#como-pedir">

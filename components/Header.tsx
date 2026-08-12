@@ -38,7 +38,11 @@ function NavigationLinks({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
-export function Header() {
+export type HeaderProps = {
+  contactHref: string;
+};
+
+export function Header({ contactHref }: HeaderProps) {
   return (
     <header className="site-header">
       <div className="site-header__inner page-shell">
@@ -48,8 +52,13 @@ export function Header() {
           <NavigationLinks />
         </nav>
 
-        <a className="button button--primary header-cta" href="#catalogo">
-          Ver informações
+        <a
+          className="button button--primary header-cta"
+          href={contactHref}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Falar no WhatsApp
           <span aria-hidden="true">→</span>
         </a>
 
@@ -62,8 +71,13 @@ export function Header() {
           </summary>
           <nav className="mobile-menu__panel" aria-label="Navegação mobile">
             <NavigationLinks mobile />
-            <a className="button button--primary mobile-menu__cta" href="#como-pedir">
-              Ver informações
+            <a
+              className="button button--primary mobile-menu__cta"
+              href={contactHref}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Falar no WhatsApp
               <span aria-hidden="true">→</span>
             </a>
           </nav>
