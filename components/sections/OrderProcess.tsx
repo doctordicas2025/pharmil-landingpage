@@ -54,8 +54,13 @@ export default function OrderProcess({ contactHref }: OrderProcessProps) {
 
         <div className="order-process-section__actions">
           {contactHref ? (
-            <a className="button button--primary" href={contactHref}>
-              Falar com a equipe
+            <a
+              className="button button--primary"
+              href={contactHref}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Consultar disponibilidade no WhatsApp
             </a>
           ) : null}
           <a className="text-link" href="#faq">

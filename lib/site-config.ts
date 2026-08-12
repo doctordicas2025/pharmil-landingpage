@@ -1,4 +1,5 @@
 const localSiteUrl = "http://localhost:3000";
+const defaultContactUrl = "https://wa.me/5561999969091";
 
 function readHttpsUrl(value: string | undefined) {
   if (!value || !URL.canParse(value)) {
@@ -14,5 +15,8 @@ export function getSiteUrl() {
 }
 
 export function getContactHref() {
-  return readHttpsUrl(process.env.NEXT_PUBLIC_CONTACT_URL)?.toString();
+  return (
+    readHttpsUrl(process.env.NEXT_PUBLIC_CONTACT_URL)?.toString() ??
+    defaultContactUrl
+  );
 }

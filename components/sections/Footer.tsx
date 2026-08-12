@@ -40,8 +40,13 @@ export default function Footer({ contactHref }: FooterProps) {
             antes de confirmar o pedido.
           </p>
           {contactHref ? (
-            <a className="button button--secondary" href={contactHref}>
-              Falar com a equipe
+            <a
+              className="button button--secondary"
+              href={contactHref}
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Consultar no WhatsApp
             </a>
           ) : null}
         </div>
