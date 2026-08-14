@@ -7,7 +7,7 @@ const products = [
   {
     name: "Retatrutida",
     description:
-      "Substância experimental, ainda sem aprovação sanitária. Exibida apenas como referência informativa, sem oferta comercial.",
+      "Substância experimental, ainda sem aprovação sanitária e indisponível para comercialização.",
   },
   {
     name: "GHK-Cu",
@@ -46,9 +46,9 @@ export default function Catalog({ contactHref }: CatalogProps) {
             Produtos apresentados com clareza.
           </h2>
           <p className="section-intro">
-            A referência original foi organizada com transparência regulatória.
-            Antes de qualquer publicação, apresentação, procedência, registro e
-            condições de distribuição precisam ser validados.
+            Cada item é apresentado com transparência regulatória. Apresentação,
+            procedência, registro e condições de distribuição são confirmados
+            durante o atendimento.
           </p>
           <a
             className="button button--primary"
@@ -89,9 +89,9 @@ export default function Catalog({ contactHref }: CatalogProps) {
             <path d="M12 10v6M12 7.5v.5" stroke="currentColor" />
           </svg>
           <p>
-            <strong>Informação importante.</strong> Esta versão é institucional e
-            não constitui oferta. Itens somente podem ser publicados após validação
-            de registro, origem, prescrição e autorização de comercialização.
+            <strong>Informação importante.</strong> Registro, origem, prescrição e
+            autorização de comercialização são verificados conforme o item e a
+            apresentação.
           </p>
         </aside>
       </div>

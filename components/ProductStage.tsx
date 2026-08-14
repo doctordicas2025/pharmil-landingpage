@@ -20,7 +20,7 @@ export function ProductStage() {
           <span aria-hidden="true" />
           Linha Pharmil
         </span>
-        <small>Imagem ilustrativa. Apresentações e disponibilidade sob confirmação.</small>
+        <small>Apresentações e disponibilidade sob confirmação.</small>
       </figcaption>
     </figure>
   );

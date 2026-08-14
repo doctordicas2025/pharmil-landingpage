@@ -9,7 +9,7 @@ const lineItems = [
   },
   {
     name: "Retatrutida",
-    status: "Referência experimental, sem oferta comercial",
+    status: "Experimental e indisponível para comercialização",
   },
 ] as const;
 
@@ -44,8 +44,8 @@ export default function Pepking() {
             ))}
           </ul>
           <p className="pepking-section__note">
-            Laudos, registros e dados do lote não são substituídos por percentuais
-            promocionais ou imagens ilustrativas.
+            Laudos, registros e dados do lote são a base para confirmar as
+            informações de cada apresentação.
           </p>
         </div>
       </div>
