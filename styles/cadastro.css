@@ -1,0 +1,101 @@
+.cadastro-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: var(--section-space);
+  background: var(--color-surface);
+}
+
+.cadastro-container {
+  max-width: 500px;
+  margin: 0 auto;
+  background: var(--color-paper);
+  padding: 2.5rem;
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-object);
+}
+
+.cadastro-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.cadastro-header .section-heading {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  margin-bottom: 0.5rem;
+  margin-inline: auto;
+}
+
+.cadastro-header .section-intro {
+  font-size: 1rem;
+  margin-inline: auto;
+}
+
+.cadastro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 700;
+  color: var(--color-wine);
+}
+
+.form-group input[type="text"],
+.form-group input[type="tel"] {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-wine);
+  box-shadow: 0 0 0 3px oklch(0.71 0.2 43 / 0.2);
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 200ms var(--ease-out);
+  background: var(--color-surface);
+  font-weight: 400 !important;
+  color: var(--color-ink) !important;
+}
+
+.option-label:hover {
+  border-color: var(--color-wine);
+}
+
+.option-label.selected {
+  background: var(--color-wine);
+  color: var(--color-paper) !important;
+  border-color: var(--color-wine);
+  font-weight: 700 !important;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  width: 100%;
+}
