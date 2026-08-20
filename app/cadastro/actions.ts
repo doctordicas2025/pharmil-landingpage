@@ -18,6 +18,10 @@ export const salvarLeadAction = actionClient
     console.log("Tentando salvar lead no Supabase...", { nome, telefone, objetivo, influenciadora });
 
     try {
+      if (!supabase) {
+        return { success: false, error: "Servidor não configurado com as chaves do Supabase. Verifique o Vercel." };
+      }
+
       // Inserir no Supabase (na tabela "leads")
       const { error, data } = await supabase
         .from("leads")
