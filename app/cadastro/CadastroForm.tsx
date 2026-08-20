@@ -28,7 +28,14 @@ export default function CadastroForm() {
       if (result?.data?.success) {
         // 2. Redirecionar para o WhatsApp
         const whatsappNumber = "5561999969091";
-        const mensagem = `Olá, meu nome é ${nome}, meu telefone é ${telefone}. Meu objetivo de emagrecimento é: ${objetivo}. Fui indicado(a) por: ${influencer || 'Ninguém'}.`;
+        
+        // Monta a mensagem dinamicamente
+        let mensagem = `Olá, meu nome é ${nome}. Meu objetivo de emagrecimento é: ${objetivo}.`;
+        
+        // Só adiciona a parte da influenciadora se o link tiver vindo com o parâmetro
+        if (influencer) {
+          mensagem += ` Fui indicado(a) por: ${influencer}.`;
+        }
         
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensagem)}`;
         window.location.href = whatsappUrl;
