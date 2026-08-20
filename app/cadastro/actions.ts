@@ -15,21 +15,30 @@ export const salvarLeadAction = actionClient
   .schema(schema)
   .action(async ({ parsedInput: { nome, telefone, objetivo, influenciadora } }) => {
     
-    // Inserir no Supabase (na tabela "leads")
-    const { error } = await supabase
-      .from("leads")
-      .insert([
-        {
-          nome,
-          telefone,
-          objetivo,
-          influenciadora: influenciadora || 'Nenhuma',
-        }
-      ]);
+    console.log("Tentando salvar lead no Supabase...", { nome, telefone, objetivo, influenciadora });
 
-    if (error) {
-      return { success: false, error: "Erro ao salvar o lead no banco de dados." };
+    try {
+      // Inserir no Supabase (na tabela "leads")
+      const { error, data } = await supabase
+        .from("leads")
+        .insert([
+          {
+            nome,
+            telefone,
+            objetivo,
+            influenciadora: influenciadora || 'Nenhuma',
+          }
+        ]);
+
+      if (error) {
+        console.error("Erro do Supabase:", error);
+        return { success: false, error: `Erro Banco: ${error.message} (${error.code})` };
+      }
+
+      console.log("Salvo com sucesso!");
+      return { success: true };
+    } catch (err: any) {
+      console.error("Erro inesperado:", err);
+      return { success: false, error: `Erro Servidor: ${err.message}` };
     }
-
-    return { success: true };
   });

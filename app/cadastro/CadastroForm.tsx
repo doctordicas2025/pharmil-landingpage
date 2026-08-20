@@ -33,7 +33,19 @@ export default function CadastroForm() {
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensagem)}`;
         window.location.href = whatsappUrl;
       } else {
-        alert("Ocorreu um erro ao salvar seus dados. Por favor, tente novamente.");
+        // Tratar erro do Zod (validação)
+        if (result?.validationErrors) {
+          const errosZod = Object.values(result.validationErrors).flat().join(', ');
+          alert(`Erro de preenchimento: ${errosZod}`);
+        } 
+        // Tratar erro retornado pelo Supabase/Servidor
+        else if (result?.data?.error) {
+          alert(`Detalhe do Erro: ${result.data.error}`);
+        } 
+        // Erro genérico (ex: falha de rede do Next)
+        else {
+          alert(`Falha na comunicação com o servidor. Verifique as chaves no Vercel.`);
+        }
       }
     });
   };
