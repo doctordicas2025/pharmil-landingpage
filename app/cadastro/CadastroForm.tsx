@@ -4,6 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { useState, FormEvent, useTransition } from "react";
 import { salvarLeadAction } from "./actions";
 
+const WHATSAPP_NUMBER = "5561999969091";
+
 export default function CadastroForm() {
   const searchParams = useSearchParams();
   const influencer = searchParams.get("inf") || "";
@@ -17,43 +19,30 @@ export default function CadastroForm() {
     e.preventDefault();
     
     startTransition(async () => {
-      // 1. Salvar no Supabase
-      const result = await salvarLeadAction({
-        nome,
-        telefone,
-        objetivo,
-        influenciadora: influencer,
-      });
-
-      if (result?.data?.success) {
-        // 2. Redirecionar para o WhatsApp
-        const whatsappNumber = "5561999969091";
-        
-        // Monta a mensagem dinamicamente
-        let mensagem = `Olá, meu nome é ${nome}. Gostaria de: ${objetivo}.`;
-        
-        // Só adiciona a parte da influenciadora se o link tiver vindo com o parâmetro
-        if (influencer) {
-          mensagem += ` Fui indicado(a) por: ${influencer}.`;
-        }
-        
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensagem)}`;
-        window.location.href = whatsappUrl;
-      } else {
-        // Tratar erro do Zod (validação)
-        if (result?.validationErrors) {
-          const errosZod = Object.values(result.validationErrors).flat().join(', ');
-          alert(`Erro de preenchimento: ${errosZod}`);
-        } 
-        // Tratar erro retornado pelo Supabase/Servidor
-        else if (result?.data?.error) {
-          alert(`Detalhe do Erro: ${result.data.error}`);
-        } 
-        // Erro genérico (ex: falha de rede do Next)
-        else {
-          alert(`Falha na comunicação com o servidor. Verifique as chaves no Vercel.`);
-        }
+      let mensagem = `Olá, meu nome é ${nome}. Gostaria de: ${objetivo}.`;
+      if (influencer) {
+        mensagem += ` Fui indicado(a) por: ${influencer}.`;
       }
+      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+
+      // O registro do lead nao pode barrar o contato: se o banco falhar, o
+      // atendimento segue e a falha fica no console.
+      try {
+        const result = await salvarLeadAction({
+          nome,
+          telefone,
+          objetivo,
+          influenciadora: influencer,
+        });
+
+        if (!result?.data?.success) {
+          console.error("Lead nao registrado:", result?.data?.error ?? result?.validationErrors);
+        }
+      } catch (err) {
+        console.error("Falha ao registrar lead:", err);
+      }
+
+      window.location.href = whatsappUrl;
     });
   };
 

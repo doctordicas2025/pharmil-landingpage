@@ -118,6 +118,14 @@
   color: color-mix(in oklch, var(--color-paper) 76%, transparent);
 }
 
+.site-footer__brand .site-footer__entity {
+  max-width: 44ch;
+  margin-top: 1.1rem;
+  color: color-mix(in oklch, var(--color-paper) 58%, transparent);
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
 .site-footer__heading {
   margin-bottom: 1rem;
   font-size: 0.75rem;

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const navigation = [
   { href: "/#catalogo", label: "Como funciona" },
@@ -11,7 +12,7 @@ const navigation = [
 
 function Brand() {
   return (
-    <a className="brand" href="/#inicio" aria-label="Pharmil, voltar ao início">
+    <Link className="brand" href="/#inicio" aria-label="Pharmil, voltar ao início">
       <span className="brand__logo-crop" aria-hidden="true">
         <Image
           className="brand__logo"
@@ -22,7 +23,7 @@ function Brand() {
           sizes="60px"
         />
       </span>
-    </a>
+    </Link>
   );
 }
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 import { Header } from "@/components/Header";
 import Footer from "@/components/sections/Footer";
@@ -240,9 +241,9 @@ export default function PrivacidadePage() {
               </li>
             </ul>
 
-            <a className="legal-back" href="/">
+            <Link className="legal-back" href="/">
               <span aria-hidden="true">←</span> Voltar para a página inicial
-            </a>
+            </Link>
           </div>
         </div>
       </main>

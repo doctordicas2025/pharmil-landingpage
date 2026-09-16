@@ -1,3 +1,7 @@
+import Link from "next/link";
+
+import { companyInfo } from "@/lib/site-config";
+
 const footerLinks = [
   { label: "Como funciona", href: "/#catalogo" },
   { label: "Rede parceira", href: "/#rede-parceira" },
@@ -21,10 +25,14 @@ export default function Footer({ contactHref }: FooterProps) {
     <footer className="site-footer" id="contato">
       <div className="section-shell site-footer__layout">
         <div className="site-footer__brand">
-          <a aria-label="Pharmil, voltar ao início" className="site-footer__logo" href="/#inicio">
+          <Link aria-label="Pharmil, voltar ao início" className="site-footer__logo" href="/#inicio">
             PHARMIL
-          </a>
+          </Link>
           <p>Atendimento claro, conformidade verificada e entrega acompanhada.</p>
+          <p className="site-footer__entity">
+            PHARMIL&reg; | Marca comercial operada por {companyInfo.legalName}.
+            &mdash; CNPJ {companyInfo.cnpj}
+          </p>
         </div>
 
         <nav aria-label="Navegação do rodapé" className="site-footer__navigation">
