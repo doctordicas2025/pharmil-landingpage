@@ -25,14 +25,15 @@ export function getContactHref() {
   );
 }
 
-// PREENCHER antes de submeter à análise do gateway de pagamento.
 export const companyInfo = {
-  legalName: "[RAZÃO SOCIAL COMPLETA]",
+  legalName: "DOCTOR INSTITUIÇÃO DE PAGAMENTO LTDA",
   tradeName: "Pharmil",
-  cnpj: "[00.000.000/0001-00]",
-  address: "[Endereço completo, cidade/UF, CEP]",
-  email: "[contato@pharmil.com.br]",
-  phone: "[(00) 00000-0000]",
-  jurisdiction: "[Comarca/UF]",
+  cnpj: "60.273.707/0001-01",
+  address:
+    "SAUS Quadra 5, Bloco N, s/n, Sala 307, Edifício OAB — Asa Sul, Brasília/DF, CEP 70.070-913",
+  email: "doctorminuto2025@gmail.com",
+  phone: "+55 (11) 92474-0935",
+  jurisdiction: "Brasília/DF",
+  effectiveDate: "13 de agosto de 2026",
   lastUpdated: "16 de setembro de 2026",
 } as const;

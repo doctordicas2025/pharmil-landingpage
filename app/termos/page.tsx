@@ -22,7 +22,8 @@ export default function TermosPage() {
             <p className="legal-page__eyebrow">Documento legal</p>
             <h1 className="legal-page__title">Termos de Uso</h1>
             <p className="legal-page__updated">
-              Última atualização: {companyInfo.lastUpdated}
+              Vigente desde {companyInfo.effectiveDate} &middot; Última
+              atualização: {companyInfo.lastUpdated}
             </p>
           </header>
 

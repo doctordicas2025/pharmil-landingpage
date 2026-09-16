@@ -22,7 +22,8 @@ export default function PrivacidadePage() {
             <p className="legal-page__eyebrow">Documento legal</p>
             <h1 className="legal-page__title">Política de Privacidade</h1>
             <p className="legal-page__updated">
-              Última atualização: {companyInfo.lastUpdated}
+              Vigente desde {companyInfo.effectiveDate} &middot; Última
+              atualização: {companyInfo.lastUpdated}
             </p>
           </header>
 
