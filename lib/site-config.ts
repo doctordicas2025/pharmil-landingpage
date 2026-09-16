@@ -1,5 +1,8 @@
 const localSiteUrl = "http://localhost:3000";
-const defaultContactUrl = "/cadastro";
+const whatsappNumber = "5561999969091";
+const whatsappGreeting =
+  "Olá, vim pelo site da Pharmil e gostaria de consultar a disponibilidade.";
+const defaultContactUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappGreeting)}`;
 
 function readHttpsUrl(value: string | undefined) {
   if (!value) return undefined;
