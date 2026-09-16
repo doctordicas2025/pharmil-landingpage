@@ -1,33 +1,33 @@
 const faqItems = [
   {
-    question: "Como confirmo a procedência dos produtos?",
+    question: "O que exatamente a Pharmil faz?",
     answer:
-      "Antes da compra, peça à equipe as informações de origem, identificação e documentação disponível para o item. Conclua o pedido somente quando esses dados estiverem claros para você.",
-  },
-  {
-    question: "Como é feita a entrega?",
-    answer:
-      "A modalidade é definida conforme o produto, o destino e a disponibilidade logística. Prazo estimado, acondicionamento e forma de acompanhamento são informados antes da confirmação.",
-  },
-  {
-    question: "Quais formas de pagamento são aceitas?",
-    answer:
-      "As opções disponíveis e o valor total são confirmados no atendimento. Use apenas os canais oficiais da Pharmil e confira os dados do destinatário antes de realizar qualquer pagamento.",
-  },
-  {
-    question: "Como funcionam os preços por quantidade?",
-    answer:
-      "A equipe prepara uma cotação atualizada de acordo com o item, a quantidade e a disponibilidade. Não considere como vigente uma condição que não tenha sido confirmada no atendimento.",
+      "Atuamos como intermediários entre você e farmácias parceiras habilitadas. Organizamos o atendimento, a verificação de requisitos e a logística de entrega. Não realizamos dispensação nem comercializamos medicamentos diretamente.",
   },
   {
     question: "Preciso de receita médica?",
     answer:
-      "Produtos sujeitos à prescrição somente devem ser adquiridos e utilizados com receita e acompanhamento profissional, conforme as exigências aplicáveis. A equipe informa os requisitos antes de seguir com o pedido.",
+      "Sim, sempre que o item exigir. Itens sujeitos à prescrição só podem ser dispensados com receita válida e acompanhamento de profissional de saúde habilitado. A equipe informa os requisitos antes de seguir com qualquer solicitação.",
   },
   {
-    question: "Como devo conservar o produto depois de receber?",
+    question: "Como é feita a entrega?",
     answer:
-      "Siga o rótulo, as orientações de entrega e a recomendação do profissional responsável. Se a embalagem chegar violada ou em condição diferente da esperada, não utilize o produto antes de buscar orientação.",
+      "A modalidade é definida conforme o destino e a disponibilidade logística. Prazo estimado, acondicionamento e forma de acompanhamento são informados antes da confirmação.",
+  },
+  {
+    question: "Quais formas de pagamento são aceitas?",
+    answer:
+      "As opções disponíveis e o valor total são confirmados durante o atendimento. Use apenas os canais oficiais da Pharmil e confira os dados do destinatário antes de realizar qualquer pagamento.",
+  },
+  {
+    question: "Como solicito um cancelamento ou reembolso?",
+    answer:
+      "Solicitações podem ser feitas pelo mesmo canal de atendimento. As condições de cancelamento, troca e reembolso seguem o Código de Defesa do Consumidor e estão detalhadas nos nossos Termos de Uso.",
+  },
+  {
+    question: "Como meus dados pessoais são tratados?",
+    answer:
+      "Coletamos apenas os dados necessários para o atendimento e a logística, conforme a LGPD. Você pode solicitar acesso, correção ou exclusão a qualquer momento. Os detalhes estão na Política de Privacidade.",
   },
 ] as const;
 
@@ -63,7 +63,7 @@ export default function Faq() {
 
         <p className="faq-section__note">
           Ainda ficou alguma dúvida? Confirme as condições específicas do seu
-          pedido diretamente com a equipe antes de comprar.
+          atendimento diretamente com a equipe.
         </p>
       </div>
     </section>

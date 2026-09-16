@@ -1,0 +1,123 @@
+.legal-page {
+  padding-block: clamp(3rem, 8vw, 6rem);
+  background: var(--color-paper);
+}
+
+.legal-shell {
+  width: min(100% - (var(--page-gutter) * 2), 52rem);
+  margin-inline: auto;
+}
+
+.legal-page__header {
+  padding-bottom: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: clamp(2rem, 5vw, 3rem);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.legal-page__eyebrow {
+  margin: 0 0 0.75rem;
+  color: var(--color-red);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.legal-page__title {
+  margin: 0 0 1rem;
+  color: var(--color-ink);
+  font-family: var(--font-display-family);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.legal-page__updated {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 0.86rem;
+}
+
+.legal-page__body h2 {
+  margin: clamp(2.25rem, 5vw, 3rem) 0 0.9rem;
+  color: var(--color-ink);
+  font-family: var(--font-display-family);
+  font-size: clamp(1.15rem, 2.5vw, 1.45rem);
+  font-weight: 750;
+  line-height: 1.25;
+}
+
+.legal-page__body h2:first-child {
+  margin-top: 0;
+}
+
+.legal-page__body h3 {
+  margin: 1.75rem 0 0.6rem;
+  color: var(--color-ink);
+  font-size: 1rem;
+  font-weight: 750;
+}
+
+.legal-page__body p,
+.legal-page__body li {
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.legal-page__body p {
+  margin: 0 0 1rem;
+}
+
+.legal-page__body ul,
+.legal-page__body ol {
+  margin: 0 0 1rem;
+  padding-left: 1.35rem;
+}
+
+.legal-page__body li {
+  margin-bottom: 0.5rem;
+}
+
+.legal-page__body strong {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.legal-page__body a {
+  color: var(--color-red);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.legal-callout {
+  margin: 1.5rem 0;
+  padding: clamp(1.1rem, 3vw, 1.5rem);
+  border-left: 0.25rem solid var(--color-orange);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  background: var(--color-surface);
+}
+
+.legal-callout p:last-child {
+  margin-bottom: 0;
+}
+
+.legal-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: clamp(2.5rem, 6vw, 3.5rem);
+  padding-top: clamp(1.5rem, 4vw, 2rem);
+  border-top: 1px solid var(--color-line);
+  width: 100%;
+  color: var(--color-red);
+  font-size: 0.9rem;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.legal-back:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

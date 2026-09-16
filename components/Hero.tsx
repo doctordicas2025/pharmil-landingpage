@@ -33,14 +33,12 @@ export function Hero({ contactHref }: HeroProps) {
           </p>
 
           <h1 id="hero-title">
-            Informação clara.
-            <span>Cuidado em cada etapa.</span>
+            Consultoria farmacêutica.
+            <span>Logística confiável.</span>
           </h1>
 
           <p className="hero__description">
-            Conheça como a Pharmil organiza procedência, conservação e logística.
-            Produtos sujeitos a controle dependem de registro válido, prescrição
-            e confirmação dos requisitos aplicáveis.
+            Acesso facilitado a orientação profissional e entrega segura até sua farmácia parceira. Cada etapa acompanhada com conformidade regulatória garantida.
           </p>
 
           <div className="hero__actions" aria-label="Ações principais">

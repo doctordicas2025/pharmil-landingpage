@@ -150,7 +150,8 @@
 .site-footer__legal {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
+  grid-template-columns: 1.5fr auto 1fr;
+  align-items: start;
   gap: 2rem;
   margin-top: 2rem;
   padding-top: 1.5rem;
@@ -165,4 +166,23 @@
 
 .site-footer__legal p:last-child {
   text-align: right;
+}
+
+.site-footer__legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.site-footer__legal-links a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.site-footer__legal-links a:hover {
+  color: var(--color-paper);
 }

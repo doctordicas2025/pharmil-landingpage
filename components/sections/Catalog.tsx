@@ -1,18 +1,18 @@
-const products = [
+const steps = [
   {
-    name: "Tirzepatida",
+    name: "Consultoria orientada",
     description:
-      "Somente apresentações com registro sanitário válido e mediante os requisitos de prescrição aplicáveis.",
+      "A equipe entende sua necessidade e indica quais requisitos precisam ser confirmados antes de seguir.",
   },
   {
-    name: "Retatrutida",
+    name: "Conformidade confirmada",
     description:
-      "Substância experimental, ainda sem aprovação sanitária e indisponível para comercialização.",
+      "Origem, registro e autorização são verificados junto à farmácia parceira responsável pela dispensação.",
   },
   {
-    name: "GHK-Cu",
+    name: "Entrega acompanhada",
     description:
-      "Classificação, finalidade e regularização devem ser confirmadas para cada apresentação antes de qualquer divulgação.",
+      "Acondicionamento, prazo e rastreamento são definidos conforme a rota e informados antes da confirmação.",
   },
 ] as const;
 
@@ -43,12 +43,12 @@ export default function Catalog({ contactHref }: CatalogProps) {
       <div className="section-shell catalog-section__layout">
         <header className="catalog-section__header">
           <h2 className="section-title" id="catalog-title">
-            Produtos apresentados com clareza.
+            Um processo explicado do início ao fim.
           </h2>
           <p className="section-intro">
-            Cada item é apresentado com transparência regulatória. Apresentação,
-            procedência, registro e condições de distribuição são confirmados
-            durante o atendimento.
+            Somos intermediários entre você e farmácias parceiras. Cada etapa é
+            conduzida com transparência, e as condições são confirmadas durante o
+            atendimento.
           </p>
           <a
             className="button button--primary"
@@ -61,18 +61,18 @@ export default function Catalog({ contactHref }: CatalogProps) {
           </a>
         </header>
 
-        <ol aria-label="Produtos Pharmil" className="catalog-section__products">
-          {products.map((product, index) => (
-            <li className="catalog-section__item" key={product.name}>
+        <ol aria-label="Etapas do atendimento" className="catalog-section__products">
+          {steps.map((step, index) => (
+            <li className="catalog-section__item" key={step.name}>
               <article className="product-card">
                 <span aria-hidden="true" className="product-card__index">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <div className="product-card__content">
-                <p className="product-card__meta">Situação regulatória</p>
-                  <h3 className="product-card__title">{product.name}</h3>
+                <p className="product-card__meta">Etapa</p>
+                  <h3 className="product-card__title">{step.name}</h3>
                   <p className="product-card__description">
-                    {product.description}
+                    {step.description}
                   </p>
                 </div>
               </article>
@@ -81,7 +81,7 @@ export default function Catalog({ contactHref }: CatalogProps) {
         </ol>
 
         <aside
-          aria-label="Informação importante sobre o catálogo"
+          aria-label="Informação importante sobre o atendimento"
           className="catalog-section__notice"
         >
           <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
@@ -89,9 +89,9 @@ export default function Catalog({ contactHref }: CatalogProps) {
             <path d="M12 10v6M12 7.5v.5" stroke="currentColor" />
           </svg>
           <p>
-            <strong>Informação importante.</strong> Registro, origem, prescrição e
-            autorização de comercialização são verificados conforme o item e a
-            apresentação.
+            <strong>Informação importante.</strong> A dispensação é realizada por
+            farmácia parceira habilitada, mediante prescrição e acompanhamento de
+            profissional de saúde, conforme as exigências aplicáveis.
           </p>
         </aside>
       </div>

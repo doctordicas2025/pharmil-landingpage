@@ -1,41 +1,48 @@
-const lineItems = [
+const networkItems = [
   {
-    name: "GHK-Cu",
-    status: "Apresentação e finalidade sob validação",
+    name: "Farmácias habilitadas",
+    status: "Dispensação feita por estabelecimento regularizado",
   },
   {
-    name: "Tirzepatida",
-    status: "Somente apresentação regularizada e prescrita",
+    name: "Documentação verificada",
+    status: "Registro e origem confirmados a cada pedido",
   },
   {
-    name: "Retatrutida",
-    status: "Experimental e indisponível para comercialização",
+    name: "Cobertura nacional",
+    status: "Rotas e prazos informados conforme o destino",
   },
 ] as const;
 
 export default function Pepking() {
   return (
-    <section className="pepking-section" id="pepking" aria-labelledby="pepking-title">
+    <section
+      className="pepking-section"
+      id="rede-parceira"
+      aria-labelledby="pepking-title"
+    >
       <div className="section-shell pepking-section__layout">
         <header className="pepking-section__header">
-          <p className="pepking-section__label">Linha Pepking</p>
+          <p className="pepking-section__label">Rede parceira</p>
           <h2 className="section-title" id="pepking-title">
-            Detalhe técnico vem com documento.
+            Quem entrega está habilitado para isso.
           </h2>
           <p className="section-intro">
-            A linha de peptídeos permanece na arquitetura original. Pureza,
-            concentração, origem e uso só devem ser publicados com documentação
-            válida para a apresentação e o lote correspondentes.
+            A Pharmil não dispensa nem comercializa medicamentos. Atuamos como
+            intermediários: organizamos o atendimento e a logística, enquanto a
+            dispensação fica a cargo de farmácias parceiras regularizadas.
           </p>
           <a className="button button--secondary" href="#cadeia-de-frio">
             Entender o acondicionamento
           </a>
         </header>
 
-        <div className="pepking-section__manifest" aria-label="Itens citados na linha Pepking">
-          <p className="pepking-section__manifest-title">Manifesto de linha</p>
+        <div
+          className="pepking-section__manifest"
+          aria-label="Critérios da rede parceira"
+        >
+          <p className="pepking-section__manifest-title">Critérios da rede</p>
           <ul>
-            {lineItems.map((item, index) => (
+            {networkItems.map((item, index) => (
               <li key={item.name}>
                 <span aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
                 <strong>{item.name}</strong>
@@ -44,8 +51,8 @@ export default function Pepking() {
             ))}
           </ul>
           <p className="pepking-section__note">
-            Laudos, registros e dados do lote são a base para confirmar as
-            informações de cada apresentação.
+            Toda dispensação depende de prescrição válida e acompanhamento de
+            profissional de saúde habilitado.
           </p>
         </div>
       </div>

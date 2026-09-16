@@ -1,8 +1,8 @@
 const trustSignals = [
   {
-    title: "Procedência explicada",
+    title: "Papéis definidos",
     description:
-      "Origem, identificação e informações disponíveis sobre o item podem ser consultadas antes da decisão.",
+      "Somos intermediários de atendimento e logística. A dispensação é feita por farmácia parceira habilitada.",
   },
   {
     title: "Condições antecipadas",
@@ -43,8 +43,8 @@ export default function Trust() {
             Confiança se constrói com informação verificável.
           </h2>
           <p className="section-intro">
-            Em vez de promessas amplas, a Pharmil coloca produto, processo e
-            entrega no centro da conversa.
+            Em vez de promessas amplas, a Pharmil coloca processo, conformidade
+            e entrega no centro da conversa.
           </p>
         </header>
 

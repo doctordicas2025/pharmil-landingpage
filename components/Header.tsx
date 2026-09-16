@@ -1,17 +1,17 @@
 import Image from "next/image";
 
 const navigation = [
-  { href: "#catalogo", label: "Catálogo" },
-  { href: "#pepking", label: "Linha Pepking" },
-  { href: "#cadeia-de-frio", label: "Cadeia fria" },
-  { href: "#como-pedir", label: "Como pedir" },
-  { href: "#confianca", label: "Por que a Pharmil" },
-  { href: "#faq", label: "Dúvidas" },
+  { href: "/#catalogo", label: "Como funciona" },
+  { href: "/#rede-parceira", label: "Rede parceira" },
+  { href: "/#cadeia-de-frio", label: "Logística" },
+  { href: "/#como-pedir", label: "Atendimento" },
+  { href: "/#confianca", label: "Por que a Pharmil" },
+  { href: "/#faq", label: "Dúvidas" },
 ] as const;
 
 function Brand() {
   return (
-    <a className="brand" href="#inicio" aria-label="Pharmil, voltar ao início">
+    <a className="brand" href="/#inicio" aria-label="Pharmil, voltar ao início">
       <span className="brand__logo-crop" aria-hidden="true">
         <Image
           className="brand__logo"

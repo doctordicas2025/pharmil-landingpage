@@ -24,3 +24,15 @@ export function getContactHref() {
     defaultContactUrl
   );
 }
+
+// PREENCHER antes de submeter à análise do gateway de pagamento.
+export const companyInfo = {
+  legalName: "[RAZÃO SOCIAL COMPLETA]",
+  tradeName: "Pharmil",
+  cnpj: "[00.000.000/0001-00]",
+  address: "[Endereço completo, cidade/UF, CEP]",
+  email: "[contato@pharmil.com.br]",
+  phone: "[(00) 00000-0000]",
+  jurisdiction: "[Comarca/UF]",
+  lastUpdated: "16 de setembro de 2026",
+} as const;

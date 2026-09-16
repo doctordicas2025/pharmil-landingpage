@@ -1,10 +1,15 @@
 const footerLinks = [
-  { label: "Produtos", href: "#catalogo" },
-  { label: "Linha Pepking", href: "#pepking" },
-  { label: "Cadeia de frio", href: "#cadeia-de-frio" },
-  { label: "Como pedir", href: "#como-pedir" },
-  { label: "Confiança", href: "#confianca" },
-  { label: "Dúvidas", href: "#faq" },
+  { label: "Como funciona", href: "/#catalogo" },
+  { label: "Rede parceira", href: "/#rede-parceira" },
+  { label: "Logística", href: "/#cadeia-de-frio" },
+  { label: "Atendimento", href: "/#como-pedir" },
+  { label: "Confiança", href: "/#confianca" },
+  { label: "Dúvidas", href: "/#faq" },
+] as const;
+
+const legalLinks = [
+  { label: "Termos de uso", href: "/termos" },
+  { label: "Política de privacidade", href: "/privacidade" },
 ] as const;
 
 export type FooterProps = {
@@ -16,10 +21,10 @@ export default function Footer({ contactHref }: FooterProps) {
     <footer className="site-footer" id="contato">
       <div className="section-shell site-footer__layout">
         <div className="site-footer__brand">
-          <a aria-label="Pharmil, voltar ao início" className="site-footer__logo" href="#inicio">
+          <a aria-label="Pharmil, voltar ao início" className="site-footer__logo" href="/#inicio">
             PHARMIL
           </a>
-          <p>Procedência visível, atendimento claro e entrega acompanhada.</p>
+          <p>Atendimento claro, conformidade verificada e entrega acompanhada.</p>
         </div>
 
         <nav aria-label="Navegação do rodapé" className="site-footer__navigation">
@@ -53,10 +58,18 @@ export default function Footer({ contactHref }: FooterProps) {
 
         <div className="site-footer__legal">
           <p>
-            Conteúdo informativo. Não substitui avaliação, diagnóstico,
-            prescrição ou acompanhamento de profissional habilitado. Imagens e
-            apresentações podem variar conforme disponibilidade.
+            Conteúdo informativo. A Pharmil atua como intermediária de
+            atendimento e logística e não realiza dispensação de medicamentos.
+            Este site não substitui avaliação, diagnóstico, prescrição ou
+            acompanhamento de profissional de saúde habilitado.
           </p>
+          <ul className="site-footer__legal-links">
+            {legalLinks.map((link) => (
+              <li key={link.href}>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+          </ul>
           <p>© {new Date().getFullYear()} Pharmil. Todos os direitos reservados.</p>
         </div>
       </div>

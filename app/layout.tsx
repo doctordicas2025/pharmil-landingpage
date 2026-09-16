@@ -14,15 +14,15 @@ const brandFont = localFont({
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {
-    default: "Pharmil | Procedência em cada etapa",
+    default: "Pharmil | Consultoria farmacêutica e logística",
     template: "%s | Pharmil",
   },
   description:
-    "Conheça as linhas Pharmil e entenda como funcionam o atendimento, o acondicionamento e o rastreio do pedido.",
+    "Intermediamos o atendimento entre você e farmácias parceiras habilitadas, com conformidade verificada e entrega acompanhada.",
   openGraph: {
-    title: "Pharmil | Procedência em cada etapa",
+    title: "Pharmil | Consultoria farmacêutica e logística",
     description:
-      "Produtos selecionados, acondicionamento cuidadoso e entrega acompanhada.",
+      "Atendimento orientado, conformidade verificada e entrega acompanhada.",
     locale: "pt_BR",
     type: "website",
   },

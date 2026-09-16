@@ -1,26 +1,43 @@
-import Image from "next/image";
+const pillars = [
+  {
+    label: "Atendimento",
+    description: "Orientação conduzida por equipe, do primeiro contato à confirmação.",
+  },
+  {
+    label: "Conformidade",
+    description: "Registro, origem e requisitos verificados antes de qualquer envio.",
+  },
+  {
+    label: "Logística",
+    description: "Acondicionamento definido por rota e acompanhamento até a entrega.",
+  },
+] as const;
 
 export function ProductStage() {
   return (
     <figure className="product-stage">
-      <div className="product-stage__image-frame">
-        <Image
-          className="product-stage__image"
-          src="/images/pharmil-products-hero.jpg"
-          alt="Embalagens e frascos da linha Pharmil"
-          width={1376}
-          height={768}
-          sizes="(max-width: 992px) 100vw, 55vw"
-          preload
-        />
+      <div className="product-stage__panel">
+        <ul className="stage-pillars">
+          {pillars.map((pillar, index) => (
+            <li className="stage-pillar" key={pillar.label}>
+              <span aria-hidden="true" className="stage-pillar__index">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <strong className="stage-pillar__label">{pillar.label}</strong>
+                <p className="stage-pillar__description">{pillar.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
 
       <figcaption className="product-stage__caption">
         <span className="product-stage__caption-title">
           <span aria-hidden="true" />
-          Linha Pharmil
+          Como atendemos
         </span>
-        <small>Apresentações e disponibilidade sob confirmação.</small>
+        <small>Condições e prazos confirmados durante o atendimento.</small>
       </figcaption>
     </figure>
   );

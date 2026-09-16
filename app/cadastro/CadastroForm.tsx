@@ -30,7 +30,7 @@ export default function CadastroForm() {
         const whatsappNumber = "5561999969091";
         
         // Monta a mensagem dinamicamente
-        let mensagem = `Olá, meu nome é ${nome}. Meu objetivo de emagrecimento é: ${objetivo}.`;
+        let mensagem = `Olá, meu nome é ${nome}. Gostaria de: ${objetivo}.`;
         
         // Só adiciona a parte da influenciadora se o link tiver vindo com o parâmetro
         if (influencer) {
@@ -58,9 +58,9 @@ export default function CadastroForm() {
   };
 
   const objetivos = [
-    'Perder peso rápido',
-    'Reeducação alimentar',
-    'Definição muscular'
+    'Entender como funciona',
+    'Consultar disponibilidade',
+    'Tirar dúvidas sobre entrega'
   ];
 
   return (
@@ -96,7 +96,7 @@ export default function CadastroForm() {
         </div>
 
         <div className="form-group">
-          <label>Qual o seu principal objetivo?</label>
+          <label>Como podemos ajudar?</label>
           <div className="options-group">
             {objetivos.map((opt) => (
               <label key={opt} className={`option-label ${objetivo === opt ? 'selected' : ''}`}>
