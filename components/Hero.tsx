@@ -29,7 +29,7 @@ export function Hero({ contactHref }: HeroProps) {
         <div className="hero__copy">
           <p className="hero__eyebrow">
             <span aria-hidden="true" />
-            Catálogo e atendimento Pharmil
+            Atendimento e logística Pharmil
           </p>
 
           <h1 id="hero-title">

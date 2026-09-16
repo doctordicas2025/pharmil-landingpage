@@ -22,17 +22,20 @@
 .brand__logo-crop {
   position: relative;
   display: block;
-  width: 8.25rem;
-  height: 2.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
   overflow: hidden;
 }
 
+/* A arte tem ~12% de margem branca em volta do círculo; o zoom recorta essa
+   folga para o círculo preencher a caixa. multiply funde o fundo branco do
+   JPG com o papel do cabeçalho. */
 .brand__logo {
   position: absolute;
-  top: -5.3rem;
-  left: -2.5rem;
-  width: 13rem;
-  height: 13rem;
+  top: -0.475rem;
+  left: -0.475rem;
+  width: 3.7rem;
+  height: 3.7rem;
   max-width: none;
   mix-blend-mode: multiply;
 }

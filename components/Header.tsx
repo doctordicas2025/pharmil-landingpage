@@ -19,7 +19,7 @@ function Brand() {
           alt=""
           width={1254}
           height={1254}
-          sizes="132px"
+          sizes="60px"
         />
       </span>
     </a>
