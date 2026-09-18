@@ -1,20 +1,20 @@
-import { ProductStage } from "./ProductStage";
+import Image from "next/image";
 
-const trustSignals = [
+const chips = [
   {
-    number: "01",
-    title: "Disponibilidade confirmada",
-    detail: "durante o atendimento",
+    label: ["Laudo de análise", "por lote"],
+    stroke: "var(--color-wine)",
+    path: <><path d="M7 3h7l4 4v14H7z" /><path d="M10 12h5M10 16h5" /></>,
   },
   {
-    number: "02",
-    title: "Conservação orientada",
-    detail: "de acordo com o produto",
+    label: ["Envio entre", "2 e 8 °C"],
+    stroke: "var(--color-navy)",
+    path: <path d="M12 3v18M6.5 6.5l5.5-3.5 5.5 3.5M6.5 17.5l5.5 3.5 5.5-3.5M4 12h16" />,
   },
   {
-    number: "03",
-    title: "Envio acompanhado",
-    detail: "até a etapa de entrega",
+    label: ["Rastreio no", "mesmo dia"],
+    stroke: "var(--color-orange)",
+    path: <><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></>,
   },
 ] as const;
 
@@ -25,58 +25,99 @@ export type HeroProps = {
 export function Hero({ contactHref }: HeroProps) {
   return (
     <section className="hero" id="inicio" aria-labelledby="hero-title">
-      <div className="hero__inner page-shell">
+      <div aria-hidden="true" className="hero__halo" />
+
+      <div className="hero__inner">
         <div className="hero__copy">
-          <p className="hero__eyebrow">
+          <p className="hero__pill">
             <span aria-hidden="true" />
-            Atendimento e logística Pharmil
+            Tecnologia em peptídeos
           </p>
 
-          <h1 id="hero-title">
-            Consultoria farmacêutica.
-            <span>Logística confiável.</span>
+          <h1 className="hero__title" id="hero-title">
+            O padrão Pharmil em
+            <br />
+            <em>peptídeos injetáveis</em>
+            <br />
+            de alta pureza.
           </h1>
 
-          <p className="hero__description">
-            Acesso facilitado a orientação profissional e entrega segura até sua farmácia parceira. Cada etapa acompanhada com conformidade regulatória garantida.
+          <p className="hero__lede">
+            Tirzepatida, Retatrutida, GHK-Cu e blends — com laudo do lote, cadeia
+            de frio e rastreio informados antes de você confirmar.
           </p>
 
-          <div className="hero__actions" aria-label="Ações principais">
+          <ul className="hero__chips">
+            {chips.map((chip) => (
+              <li className="hero__chip" key={chip.label.join(" ")}>
+                <span aria-hidden="true" className="hero__chip-icon">
+                  <svg
+                    fill="none"
+                    height="18"
+                    stroke={chip.stroke}
+                    strokeWidth="1.7"
+                    viewBox="0 0 24 24"
+                    width="18"
+                  >
+                    {chip.path}
+                  </svg>
+                </span>
+                <span>
+                  {chip.label[0]}
+                  <br />
+                  {chip.label[1]}
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <div className="hero__actions">
             <a
-              className="button button--primary"
+              className="hero__cta"
               href={contactHref}
               rel="noopener noreferrer"
               target="_blank"
             >
-              Consultar no WhatsApp
+              Garanta o seu agora
               <span aria-hidden="true">→</span>
             </a>
-            <a className="button button--secondary" href="#como-pedir">
-              Entender o processo
+            <a className="hero__link" href="#loja">
+              Ver todos os produtos
             </a>
           </div>
+
+          <p className="hero__fineprint">
+            Produtos de alta pureza &nbsp;|&nbsp; Uso sob orientação profissional
+          </p>
         </div>
 
-        <div className="hero__visual">
-          <ProductStage />
-        </div>
-      </div>
+        <div className="showcase">
+          <div aria-hidden="true" className="showcase__halo" />
+          <span aria-hidden="true" className="showcase__dot showcase__dot--a" />
+          <span aria-hidden="true" className="showcase__dot showcase__dot--b" />
 
-      <div className="trust-rail page-shell" aria-label="Como cuidamos do pedido">
-        <p className="trust-rail__intro">Do atendimento à entrega</p>
-        <ul>
-          {trustSignals.map((signal) => (
-            <li key={signal.number}>
-              <span className="trust-rail__number" aria-hidden="true">
-                {signal.number}
-              </span>
-              <span>
-                <strong>{signal.title}</strong>
-                <small>{signal.detail}</small>
-              </span>
-            </li>
-          ))}
-        </ul>
+          <div className="showcase__stage" data-sway>
+            <Image
+              alt=""
+              aria-hidden="true"
+              className="showcase__ground"
+              data-ground
+              height={642}
+              src="/images/hero-podium.png"
+              width={1632}
+            />
+            <Image
+              alt="Linha Pharmil sobre pódio: T.G. 15, Lipoless 15, GHKCU 100 mg, Klow 80 mg e GHK-Cu 50 mg"
+              className="showcase__object"
+              data-float
+              height={642}
+              priority
+              sizes="(max-width: 992px) 92vw, 660px"
+              src="/images/hero-podium.png"
+              width={1632}
+            />
+          </div>
+        </div>
       </div>
     </section>
   );

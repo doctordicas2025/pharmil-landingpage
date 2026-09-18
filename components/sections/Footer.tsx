@@ -1,19 +1,13 @@
+import Image from "next/image";
 import Link from "next/link";
 
 import { companyInfo } from "@/lib/site-config";
 
-const footerLinks = [
-  { label: "Como funciona", href: "/#catalogo" },
-  { label: "Rede parceira", href: "/#rede-parceira" },
-  { label: "Logística", href: "/#cadeia-de-frio" },
-  { label: "Atendimento", href: "/#como-pedir" },
-  { label: "Confiança", href: "/#confianca" },
+const navLinks = [
+  { label: "Produtos", href: "/#loja" },
+  { label: "Cadeia de frio", href: "/#cadeia-de-frio" },
+  { label: "Como pedir", href: "/#como-pedir" },
   { label: "Dúvidas", href: "/#faq" },
-] as const;
-
-const legalLinks = [
-  { label: "Termos de uso", href: "/termos" },
-  { label: "Política de privacidade", href: "/privacidade" },
 ] as const;
 
 export type FooterProps = {
@@ -23,62 +17,73 @@ export type FooterProps = {
 export default function Footer({ contactHref }: FooterProps) {
   return (
     <footer className="site-footer" id="contato">
-      <div className="section-shell site-footer__layout">
+      <div className="site-footer__inner">
         <div className="site-footer__brand">
-          <Link aria-label="Pharmil, voltar ao início" className="site-footer__logo" href="/#inicio">
-            PHARMIL
+          <Link className="site-footer__logo" href="/#inicio">
+            <Image alt="" height={42} src="/images/pharmil-logo.jpg" width={42} />
+            <span>Pharmil</span>
           </Link>
-          <p>Atendimento claro, conformidade verificada e entrega acompanhada.</p>
-          <p className="site-footer__entity">
-            PHARMIL&reg; | Marca comercial operada por {companyInfo.legalName}.
-            &mdash; CNPJ {companyInfo.cnpj}
-          </p>
+          <p>Procedência visível, atendimento claro e entrega acompanhada.</p>
         </div>
 
-        <nav aria-label="Navegação do rodapé" className="site-footer__navigation">
-          <p className="site-footer__heading">Navegue</p>
-          <ul>
-            {footerLinks.map((link) => (
+        <nav aria-label="Navegação do rodapé">
+          <p className="site-footer__heading">Navegar</p>
+          <ul className="site-footer__list">
+            {navLinks.map((link) => (
               <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
+                <Link href={link.href}>{link.label}</Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <div className="site-footer__contact">
-          <p className="site-footer__heading">Atendimento</p>
-          <p>
-            Consulte disponibilidade, condições de envio e requisitos do produto
-            antes de confirmar o pedido.
-          </p>
-          {contactHref ? (
-            <a
-              className="button button--secondary"
-              href={contactHref}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Consultar no WhatsApp
-            </a>
-          ) : null}
+        <div>
+          <p className="site-footer__heading">Contato</p>
+          <ul className="site-footer__list">
+            <li>
+              <a
+                href={contactHref}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                WhatsApp (61) 99996-9091
+              </a>
+            </li>
+            <li>{companyInfo.email}</li>
+            <li className="site-footer__address">
+              SAUS Q. 5, Bloco N, Sala 307
+              <br />
+              Asa Sul, Brasília/DF
+            </li>
+          </ul>
         </div>
 
-        <div className="site-footer__legal">
-          <p>
-            Conteúdo informativo. A Pharmil atua como intermediária de
-            atendimento e logística e não realiza dispensação de medicamentos.
-            Este site não substitui avaliação, diagnóstico, prescrição ou
-            acompanhamento de profissional de saúde habilitado.
-          </p>
-          <ul className="site-footer__legal-links">
-            {legalLinks.map((link) => (
-              <li key={link.href}>
-                <a href={link.href}>{link.label}</a>
-              </li>
-            ))}
+        <div>
+          <p className="site-footer__heading">Legal</p>
+          <ul className="site-footer__list">
+            <li>
+              <Link href="/termos">Termos de uso</Link>
+            </li>
+            <li>
+              <Link href="/privacidade">Privacidade</Link>
+            </li>
+            <li className="site-footer__address">CNPJ {companyInfo.cnpj}</li>
           </ul>
-          <p>© {new Date().getFullYear()} Pharmil. Todos os direitos reservados.</p>
+        </div>
+      </div>
+
+      <div className="site-footer__legal">
+        <div className="site-footer__legal-inner">
+          <p>
+            Conteúdo informativo. Não substitui avaliação profissional e não promete
+            resultados. Dispensação por farmácia parceira habilitada, mediante
+            prescrição.
+          </p>
+          <p className="site-footer__entity">
+            PHARMIL&reg; | Marca comercial operada por {companyInfo.legalName}. &mdash;
+            CNPJ {companyInfo.cnpj}
+          </p>
+          <p>© {new Date().getFullYear()} Pharmil</p>
         </div>
       </div>
     </footer>

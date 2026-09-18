@@ -191,8 +191,10 @@ p {
   border: 0;
 }
 
+/* A vitrine da hero fica fora da regra: sem as tres animacoes em conjunto o
+   objeto congela no meio do curso, separado da propria sombra. */
 @media (prefers-reduced-motion: reduce) {
-  *,
+  *:not([data-float]):not([data-ground]):not([data-sway]),
   *::before,
   *::after {
     scroll-behavior: auto !important;

@@ -2,11 +2,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navigation = [
-  { href: "/#catalogo", label: "Como funciona" },
-  { href: "/#rede-parceira", label: "Rede parceira" },
-  { href: "/#cadeia-de-frio", label: "Logística" },
-  { href: "/#como-pedir", label: "Atendimento" },
-  { href: "/#confianca", label: "Por que a Pharmil" },
+  { href: "/#loja", label: "Produtos" },
+  { href: "/#cadeia-de-frio", label: "Cadeia de frio" },
+  { href: "/#como-pedir", label: "Como pedir" },
   { href: "/#faq", label: "Dúvidas" },
 ] as const;
 

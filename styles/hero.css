@@ -1,0 +1,296 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    180deg,
+    oklch(0.99 0.004 60) 0%,
+    var(--color-paper) 62%,
+    oklch(0.965 0.012 52) 100%
+  );
+}
+
+.hero__halo {
+  position: absolute;
+  top: -14%;
+  right: -8%;
+  width: min(760px, 78vw);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--color-peach) 0%,
+    color-mix(in oklch, var(--color-peach) 45%, transparent) 44%,
+    transparent 72%
+  );
+  pointer-events: none;
+}
+
+.hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 84px) 20px clamp(48px, 6vw, 88px);
+}
+
+.hero__copy {
+  animation: pmRise 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hero__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  border: 1px solid var(--color-line);
+  border-radius: 999px;
+  background: color-mix(in oklch, var(--color-paper) 80%, transparent);
+  color: var(--color-wine);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hero__pill span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-orange);
+}
+
+.hero__title {
+  margin-top: 26px;
+  color: var(--color-ink);
+  font-size: clamp(2.15rem, 5vw, 4.5rem);
+  font-weight: 900;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.hero__title em {
+  color: var(--color-red);
+  font-style: normal;
+}
+
+.hero__lede {
+  margin-top: 24px;
+  max-width: 46ch;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 1.25vw, 1.15rem);
+  line-height: 1.6;
+}
+
+.hero__chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 14px;
+  margin: 34px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__chip {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.hero__chip-icon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-paper);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(14px, 2vw, 24px);
+  margin-top: 38px;
+}
+
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 32px;
+  border-radius: 999px;
+  background: var(--color-wine);
+  color: var(--color-paper);
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 1rem 2rem color-mix(in oklch, var(--color-wine) 26%, transparent);
+  transition: background 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__cta:hover {
+  background: var(--color-red);
+  transform: translateY(-3px);
+}
+
+.hero__link {
+  border-bottom: 1.5px solid color-mix(in oklch, var(--color-wine) 30%, transparent);
+  color: var(--color-wine);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.hero__link:hover {
+  border-bottom-color: var(--color-wine);
+}
+
+.hero__fineprint {
+  margin-top: 20px;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+}
+
+/* --- Vitrine 3D --- */
+
+.showcase {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: clamp(10px, 2vw, 26px) 0 clamp(26px, 3vw, 40px);
+  perspective: 1500px;
+}
+
+.showcase__halo {
+  position: absolute;
+  width: min(94%, 560px);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at 50% 50%,
+    color-mix(in oklch, var(--color-peach) 80%, transparent) 0%,
+    transparent 68%
+  );
+  pointer-events: none;
+}
+
+.showcase__dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: pmDrift 6400ms cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+.showcase__dot--a {
+  top: 6%;
+  left: 2%;
+  width: 9px;
+  height: 9px;
+  background: var(--color-orange);
+}
+
+.showcase__dot--b {
+  right: 1%;
+  bottom: 14%;
+  width: 7px;
+  height: 7px;
+  background: var(--color-red);
+  opacity: 0.7;
+  animation-duration: 7600ms;
+}
+
+.showcase__stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 660px;
+  transform-style: preserve-3d;
+}
+
+/* brightness(0) vira silhueta preservando o alpha: a sombra segue o contorno
+   real da arte em vez de um retangulo. */
+.showcase__ground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform-origin: 50% 100%;
+  filter: blur(13px) brightness(0);
+  pointer-events: none;
+}
+
+.showcase__object {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: auto;
+  /* sombra curta de proposito: a profundidade vem da sombra de chao */
+  filter: drop-shadow(0 9px 13px oklch(0.22 0.022 22 / 0.14));
+}
+
+@keyframes pmSway {
+  from { transform: translate3d(-15px, 0, 0); }
+  to   { transform: translate3d(15px, 0, 0); }
+}
+
+@keyframes pmFloat3d {
+  from { transform: translate3d(0, 0, 0) rotateX(1.4deg) rotateY(-2.6deg); }
+  to   { transform: translate3d(0, -26px, 0) rotateX(-1.4deg) rotateY(2.6deg); }
+}
+
+@keyframes pmGround3d {
+  from { transform: scale(1) scaleY(-0.16) skewX(-2.4deg); opacity: 0.46; }
+  to   { transform: scale(0.85) scaleY(-0.16) skewX(2.4deg); opacity: 0.16; }
+}
+
+@keyframes pmDrift {
+  from { transform: translate3d(0, 6px, 0); opacity: 0.45; }
+  to   { transform: translate3d(0, -12px, 0); opacity: 1; }
+}
+
+@keyframes pmRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes pmFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+[data-sway] {
+  animation: pmSway 8200ms cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+
+[data-float] {
+  animation: pmFloat3d 5200ms cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  will-change: transform;
+}
+
+[data-ground] {
+  animation: pmGround3d 5200ms cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+}
+
+@media (max-width: 40rem) {
+  .hero__actions {
+    gap: 16px;
+  }
+
+  .hero__cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

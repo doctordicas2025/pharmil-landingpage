@@ -1,73 +1,48 @@
-const orderSteps = [
+const steps = [
   {
-    title: "Consulte o item",
+    title: "Você escolhe",
     description:
-      "Veja as informações disponíveis e identifique quais dados regulatórios ainda precisam ser confirmados.",
+      "Manda o produto e a dosagem pelo WhatsApp. Confirmamos lote e disponibilidade na hora.",
   },
   {
-    title: "Confirme as condições",
+    title: "Conferimos",
     description:
-      "Confirme registro, apresentação, prescrição, origem, disponibilidade e condições logísticas aplicáveis.",
+      "Origem, validade e a orientação profissional que acompanha o pedido.",
   },
   {
-    title: "Siga as orientações",
+    title: "Pagamento",
     description:
-      "Somente itens autorizados avançam. A equipe informa acondicionamento, modalidade de entrega e acompanhamento disponível.",
+      "PIX à vista ou cartão. Nota e comprovante enviados na mesma conversa.",
+  },
+  {
+    title: "Envio e rastreio",
+    description:
+      "Caixa térmica lacrada, foto do lacre e código de rastreio no mesmo dia.",
   },
 ] as const;
 
-export type OrderProcessProps = {
-  contactHref?: string;
-};
-
-export default function OrderProcess({ contactHref }: OrderProcessProps) {
+export default function OrderProcess() {
   return (
     <section
       aria-labelledby="order-process-title"
-      className="order-process-section"
+      className="order-process"
       id="como-pedir"
     >
-      <div className="section-shell order-process-section__layout">
-        <header className="order-process-section__header">
-          <h2 className="section-title" id="order-process-title">
-            Cada requisito vem antes da confirmação.
-          </h2>
-          <p className="section-intro">
-            O atendimento organiza as informações em uma sequência simples, sem
-            esconder restrições, documentação ou condições importantes.
-          </p>
-        </header>
+      <h2 className="section-title" id="order-process-title">
+        Quatro passos, sem enrolação.
+      </h2>
 
-        <ol className="order-process-section__steps">
-          {orderSteps.map((step, index) => (
-            <li className="order-step" key={step.title}>
-              <span aria-hidden="true" className="order-step__number">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <div className="order-step__content">
-                <h3 className="order-step__title">{step.title}</h3>
-                <p className="order-step__description">{step.description}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-
-        <div className="order-process-section__actions">
-          {contactHref ? (
-            <a
-              className="button button--primary"
-              href={contactHref}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Consultar disponibilidade no WhatsApp
-            </a>
-          ) : null}
-          <a className="text-link" href="#faq">
-            Consultar dúvidas frequentes
-          </a>
-        </div>
-      </div>
+      <ol className="order-process__steps">
+        {steps.map((step, index) => (
+          <li className="order-step" key={step.title}>
+            <span aria-hidden="true" className="order-step__number">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <strong className="order-step__title">{step.title}</strong>
+            <p className="order-step__description">{step.description}</p>
+          </li>
+        ))}
+      </ol>
     </section>
   );
 }

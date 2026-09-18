@@ -14,15 +14,15 @@ const brandFont = localFont({
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {
-    default: "Pharmil | Consultoria farmacêutica e logística",
+    default: "Pharmil | Peptídeos injetáveis de alta pureza",
     template: "%s | Pharmil",
   },
   description:
-    "Intermediamos o atendimento entre você e farmácias parceiras habilitadas, com conformidade verificada e entrega acompanhada.",
+    "Laudo de análise por lote, envio entre 2 e 8 °C e rastreio no mesmo dia. Dispensação por farmácia parceira habilitada, mediante prescrição.",
   openGraph: {
-    title: "Pharmil | Consultoria farmacêutica e logística",
+    title: "Pharmil | Peptídeos injetáveis de alta pureza",
     description:
-      "Atendimento orientado, conformidade verificada e entrega acompanhada.",
+      "Laudo por lote, cadeia de frio e rastreio informados antes de você confirmar.",
     locale: "pt_BR",
     type: "website",
   },

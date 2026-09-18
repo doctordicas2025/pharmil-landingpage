@@ -1,77 +1,53 @@
-const trustSignals = [
+const networkItems = [
   {
-    title: "Papéis definidos",
-    description:
-      "Somos intermediários de atendimento e logística. A dispensação é feita por farmácia parceira habilitada.",
+    title: "Farmácias habilitadas",
+    detail: "Dispensação por estabelecimento regularizado",
   },
   {
-    title: "Condições antecipadas",
-    description:
-      "Disponibilidade, valor, prazo e forma de acondicionamento são alinhados antes da confirmação.",
+    title: "Documentação verificada",
+    detail: "Registro e origem confirmados a cada pedido",
   },
   {
-    title: "Entrega acompanhada",
-    description:
-      "A modalidade e os recursos de rastreamento disponíveis para o destino são informados no atendimento.",
-  },
-  {
-    title: "Atendimento humano",
-    description:
-      "Dúvidas sobre o processo são tratadas por uma equipe, com respostas objetivas e contexto.",
+    title: "Cobertura nacional",
+    detail: "Rotas e prazos informados conforme o destino",
   },
 ] as const;
 
-function CheckIcon() {
-  return (
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" fill="none" r="9" stroke="currentColor" />
-      <path d="m7.5 12 3 3 6-7" fill="none" stroke="currentColor" />
-    </svg>
-  );
-}
+export type TrustProps = {
+  contactHref: string;
+};
 
-export default function Trust() {
+export default function Trust({ contactHref }: TrustProps) {
   return (
-    <section
-      aria-labelledby="trust-title"
-      className="trust-section"
-      id="confianca"
-    >
-      <div className="section-shell trust-section__layout">
-        <header className="trust-section__header">
-          <h2 className="section-title" id="trust-title">
-            Confiança se constrói com informação verificável.
+    <section aria-labelledby="rede-title" className="network" id="rede">
+      <div className="network__inner">
+        <div>
+          <p className="network__label">Rede parceira</p>
+          <h2 className="section-title" id="rede-title">
+            Quem dispensa está habilitado para isso.
           </h2>
           <p className="section-intro">
-            Em vez de promessas amplas, a Pharmil coloca processo, conformidade
-            e entrega no centro da conversa.
+            A Pharmil organiza o atendimento e a logística. A dispensação fica com
+            farmácias parceiras regularizadas, mediante prescrição válida.
           </p>
-        </header>
+          <a
+            className="network__link"
+            href={contactHref}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Tirar uma dúvida <span aria-hidden="true">→</span>
+          </a>
+        </div>
 
-        <ul className="trust-section__signals">
-          {trustSignals.map((signal) => (
-            <li className="trust-signal" key={signal.title}>
-              <span className="trust-signal__icon">
-                <CheckIcon />
-              </span>
-              <div>
-                <h3 className="trust-signal__title">{signal.title}</h3>
-                <p className="trust-signal__description">
-                  {signal.description}
-                </p>
-              </div>
+        <ul className="network__list">
+          {networkItems.map((item) => (
+            <li key={item.title}>
+              <strong>{item.title}</strong>
+              <small>{item.detail}</small>
             </li>
           ))}
         </ul>
-
-        <aside className="trust-section__commitment">
-          <p className="trust-section__commitment-label">Nosso compromisso</p>
-          <p>
-            Clareza sobre o que é oferecido e como o pedido funciona. O conteúdo
-            desta página não promete resultado clínico nem substitui orientação
-            profissional.
-          </p>
-        </aside>
       </div>
     </section>
   );

@@ -28,6 +28,10 @@ export function getContactHref() {
   );
 }
 
+export function getWhatsappHref(message: string) {
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+}
+
 export const companyInfo = {
   legalName: "DOCTOR INSTITUIÇÃO DE PAGAMENTO LTDA",
   tradeName: "Pharmil",
