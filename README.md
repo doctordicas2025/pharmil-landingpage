@@ -51,9 +51,29 @@ A interface mantém as linhas e nomenclaturas da referência, mas não transform
 
 ## Estrutura principal
 
-- `app/`: layout, metadados e rota inicial.
-- `components/`: header, hero, apresentação do produto e seções.
-- `public/brand` e `public/images`: logo oficial e packshot local do hero.
-- `styles/`: tokens e estilos organizados por domínio visual.
-- `PRODUCT.md` e `DESIGN.md`: contexto estratégico e sistema visual.
-- `.impeccable/design.json`: extensão legível por ferramentas de design.
+- `app/`: layout, metadados, rota inicial e a rota `/design-system`.
+- `components/`: header, hero e seções da landing, montadas a partir da biblioteca.
+- `design-system/`: biblioteca de componentes, tokens e HTMLs de referência.
+- `public/brand` e `public/images`: logo oficial e imagens de produto.
+- `styles/`: estilos de layout por seção. Valores vêm dos tokens da biblioteca.
+- `PRODUCT.md` e `DESIGN.md`: contexto estratégico e contrato visual.
+- `AGENTS.md` e `CLAUDE.md`: instruções para agentes.
+- `.interface-design/system.md`: extração medida do design system a partir do código.
+- `.impeccable/design.json`: snapshot legível por ferramentas de design, anterior ao
+  redesign — mantido por compatibilidade, mas `DESIGN.md` prevalece.
+
+## Design system
+
+A biblioteca de componentes fica em `design-system/`, com os tokens em
+`design-system/tokens/tokens.css`. Interface nova sai dela, e nenhum valor de cor,
+fonte, espaçamento ou raio é escrito direto no código.
+
+```bash
+npm run dev   # e abra /design-system
+```
+
+A rota renderiza todos os componentes com seus estados. O mapa da biblioteca e o
+passo a passo para criar um componente estão em `design-system/README.md`.
+
+Os HTMLs de referência visual estão em `design-system/reference/` e abrem direto
+no navegador, sem servidor.

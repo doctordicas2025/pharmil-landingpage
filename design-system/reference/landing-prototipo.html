@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="ext-resource-dependency" content="img/cut-tg.png">
+<meta name="ext-resource-dependency" content="img/cut-lipoless.png">
+<meta name="ext-resource-dependency" content="img/cut-ghkcu.png">
+<meta name="ext-resource-dependency" content="img/cut-glow.png">
+<meta name="ext-resource-dependency" content="img/cut-klow.png">
+<meta name="ext-resource-dependency" content="img/tile-tirzepatida.jpg">
+<meta name="ext-resource-dependency" content="img/tile-brand-a.jpg">
+<meta name="ext-resource-dependency" content="img/tile-brand-b.jpg">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: #FBF8F4; color: #24191A; font-family: Archivo, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+  a { color: #8F1C20; text-decoration: none; }
+  a:hover { color: #C93424; }
+  h1, h2, h3, h4, p, ul, ol, figure, blockquote { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+  button { font: inherit; color: inherit; }
+  img { display: block; }
+  @keyframes pmRise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  @keyframes pmFade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes pmFloat { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(0, -22px, 0); } }
+  @keyframes pmGround { from { transform: scale(1) scaleY(-0.16); opacity: 0.48; } to { transform: scale(0.86) scaleY(-0.16); opacity: 0.17; } }
+  @keyframes pmFloat3d { from { transform: translate3d(0, 0, 0) rotateX(1.4deg) rotateY(-2.6deg); } to { transform: translate3d(0, -26px, 0) rotateX(-1.4deg) rotateY(2.6deg); } }
+  @keyframes pmGround3d { from { transform: scale(1) scaleY(-0.16) skewX(-2.4deg); opacity: 0.46; } to { transform: scale(0.85) scaleY(-0.16) skewX(2.4deg); opacity: 0.16; } }
+  @keyframes pmDrift { from { transform: translate3d(0, 6px, 0); opacity: 0.45; } to { transform: translate3d(0, -12px, 0); opacity: 1; } }
+  @keyframes pmGroundPlate { from { transform: scaleX(1); opacity: 0.5; } to { transform: scaleX(0.84); opacity: 0.16; } }
+  @keyframes pmSway { from { transform: translate3d(-15px, 0, 0); } to { transform: translate3d(15px, 0, 0); } }
+  @media (max-width: 860px) { [data-nav-links] { display: none !important; } [data-header-cta] { margin-left: auto !important; } }
+  @media (max-width: 640px) { [data-slide-copy] { padding-right: 24px !important; } }
+  @media (prefers-reduced-motion: reduce) {
+    *:not([data-float]):not([data-ground]):not([data-sway]), *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+</helmet>
+
+<div style="width:100%;background:#FBF8F4;overflow-x:hidden">
+
+  <div style="background:#24191A;color:#FBF8F4;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase">
+    <div style="max-width:1200px;margin:0 auto;padding:10px 20px;display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;justify-content:space-between">
+      <span style="opacity:0.86">Entrega refrigerada e rastreada em todo o Brasil</span>
+      <span style="display:flex;gap:22px;flex-wrap:wrap;opacity:0.86">
+        <span>100% original</span>
+        <span>Envio seguro</span>
+        <span>Compra protegida</span>
+      </span>
+    </div>
+  </div>
+
+  <header style="position:sticky;top:0;z-index:40;background:rgba(251,248,244,0.94);backdrop-filter:blur(8px);border-bottom:1px solid #E7DDD5">
+    <div style="max-width:1200px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:28px">
+      <a href="#inicio" style="display:flex;align-items:center;gap:12px;flex:0 0 auto">
+        <img src="assets/pharmil-logo.jpg" alt="Pharmil" width="44" height="44" style="width:44px;height:44px;border-radius:999px;object-fit:cover">
+        <span style="font-size:1.28rem;font-weight:900;letter-spacing:-0.03em;color:#24191A">Pharmil</span>
+      </a>
+      <nav data-nav-links style="display:flex;gap:26px;margin-left:auto;font-size:0.9rem;font-weight:600;flex-wrap:wrap">
+        <a href="#loja" style="color:#24191A">Produtos</a>
+        <a href="#cadeia-de-frio" style="color:#24191A">Cadeia de frio</a>
+        <a href="#como-pedir" style="color:#24191A">Como pedir</a>
+        <a href="#faq" style="color:#24191A">Dúvidas</a>
+      </nav>
+      <a data-header-cta href="{{ waHref }}" target="_blank" rel="noopener noreferrer" style="flex:0 0 auto;background:#8F1C20;color:#FBF8F4;padding:12px 20px;border-radius:999px;font-size:0.88rem;font-weight:700;display:inline-flex;align-items:center;gap:8px;box-shadow:0 0.6rem 1.4rem rgba(143,28,32,0.22);transition:transform 160ms ease, background 160ms ease" style-hover="background:#C93424;color:#FBF8F4;transform:translateY(-2px)">
+        Falar no WhatsApp
+        <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </header>
+
+  <section id="inicio" style="position:relative;overflow:hidden;background:linear-gradient(180deg,#FEFCFA 0%,#FBF8F4 62%,#F7F1EB 100%)">
+    <div aria-hidden="true" style="position:absolute;top:-14%;right:-8%;width:min(760px,78vw);aspect-ratio:1;border-radius:999px;background:radial-gradient(circle at 50% 50%,#FFE2D2 0%,rgba(255,226,210,0.45) 44%,rgba(255,226,210,0) 72%);pointer-events:none"></div>
+    <div style="position:relative;max-width:1200px;margin:0 auto;padding:clamp(40px,6vw,84px) 20px clamp(48px,6vw,88px);display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px);align-items:center">
+
+      <div style="animation:pmRise 700ms cubic-bezier(0.16,1,0.3,1) both">
+        <p style="display:inline-flex;align-items:center;gap:9px;border:1px solid #E7DDD5;background:rgba(251,248,244,0.8);color:#8F1C20;border-radius:999px;padding:9px 18px;font-size:0.72rem;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;white-space:nowrap">
+          <span aria-hidden="true" style="width:7px;height:7px;border-radius:999px;background:#FF6828"></span>
+          Tecnologia em peptídeos
+        </p>
+        <h1 style="margin-top:26px;font-size:clamp(2.15rem,5vw,4.5rem);font-weight:900;line-height:0.94;letter-spacing:-0.045em;color:#24191A;text-wrap:balance">
+          O padrão Pharmil em<br>
+          <span style="color:#C93424">peptídeos injetáveis</span><br>
+          de alta pureza.
+        </h1>
+        <p style="margin-top:24px;max-width:46ch;font-size:clamp(1rem,1.25vw,1.15rem);line-height:1.6;color:#6A5D5A">Tirzepatida, Retatrutida, GHK-Cu e blends — com laudo do lote, cadeia de frio e rastreio informados antes de você confirmar.</p>
+
+        <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-top:34px">
+          <li style="display:flex;gap:11px;align-items:flex-start">
+            <span aria-hidden="true" style="flex:0 0 auto;width:38px;height:38px;border-radius:12px;border:1px solid #E7DDD5;background:#FBF8F4;display:grid;place-items:center">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#8F1C20" stroke-width="1.7"><path d="M7 3h7l4 4v14H7z"/><path d="M10 12h5M10 16h5"/></svg>
+            </span>
+            <span style="font-size:0.88rem;font-weight:600;line-height:1.4;color:#24191A">Laudo de análise<br>por lote</span>
+          </li>
+          <li style="display:flex;gap:11px;align-items:flex-start">
+            <span aria-hidden="true" style="flex:0 0 auto;width:38px;height:38px;border-radius:12px;border:1px solid #E7DDD5;background:#FBF8F4;display:grid;place-items:center">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#102F49" stroke-width="1.7"><path d="M12 3v18M6.5 6.5l5.5-3.5 5.5 3.5M6.5 17.5l5.5 3.5 5.5-3.5M4 12h16"/></svg>
+            </span>
+            <span style="font-size:0.88rem;font-weight:600;line-height:1.4;color:#24191A">Envio entre<br>2 e 8 °C</span>
+          </li>
+          <li style="display:flex;gap:11px;align-items:flex-start">
+            <span aria-hidden="true" style="flex:0 0 auto;width:38px;height:38px;border-radius:12px;border:1px solid #E7DDD5;background:#FBF8F4;display:grid;place-items:center">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#FF6828" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>
+            </span>
+            <span style="font-size:0.88rem;font-weight:600;line-height:1.4;color:#24191A">Rastreio no<br>mesmo dia</span>
+          </li>
+        </ul>
+
+        <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:38px">
+          <a href="{{ waHref }}" target="_blank" rel="noopener noreferrer" style="background:#8F1C20;color:#FBF8F4;padding:18px 32px;border-radius:999px;font-size:0.92rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;display:inline-flex;align-items:center;gap:14px;box-shadow:0 1rem 2rem rgba(143,28,32,0.26);transition:transform 180ms cubic-bezier(0.16,1,0.3,1),background 180ms ease" style-hover="background:#C93424;color:#FBF8F4;transform:translateY(-3px)">
+            Garanta o seu agora
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="#loja" style="font-size:0.92rem;font-weight:700;color:#8F1C20;border-bottom:1.5px solid rgba(143,28,32,0.3);padding-bottom:2px" style-hover="color:#C93424;border-color:#C93424">Ver todos os produtos</a>
+        </div>
+        <p style="margin-top:20px;font-size:0.8rem;color:#6A5D5A">Produtos de alta pureza &nbsp;|&nbsp; Uso sob orientação profissional</p>
+      </div>
+
+      <div style="position:relative;display:grid;place-items:center;perspective:1500px;padding:clamp(10px,2vw,26px) 0 clamp(26px,3vw,40px)">
+        <div aria-hidden="true" style="position:absolute;width:min(94%,560px);aspect-ratio:1;border-radius:999px;background:radial-gradient(circle at 50% 50%,rgba(255,226,210,0.8) 0%,rgba(255,226,210,0) 68%);pointer-events:none"></div>
+        <span aria-hidden="true" style="position:absolute;top:6%;left:2%;width:9px;height:9px;border-radius:999px;background:#FF6828;animation:pmDrift 5200ms cubic-bezier(0.45,0,0.55,1) infinite alternate"></span>
+        <span aria-hidden="true" style="position:absolute;bottom:14%;right:1%;width:7px;height:7px;border-radius:999px;background:#C93424;opacity:0.7;animation:pmDrift 6400ms cubic-bezier(0.45,0,0.55,1) -2100ms infinite alternate"></span>
+
+        <div data-sway style="position:relative;z-index:2;width:100%;max-width:660px;transform-style:preserve-3d;animation:pmSway 8200ms cubic-bezier(0.45,0,0.55,1) infinite alternate;will-change:transform">
+          <img data-ground src="assets/hero-podium.png" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform-origin:50% 100%;filter:blur(13px) brightness(0);animation:pmGround3d 5200ms cubic-bezier(0.45,0,0.55,1) infinite alternate;pointer-events:none">
+          <img data-float src="assets/hero-podium.png" alt="Linha Pharmil sobre pódio: T.G. 15, Lipoless 15, GHKCU 100 mg, Klow 80 mg e GHK-Cu 50 mg" style="position:relative;z-index:1;display:block;width:100%;height:auto;filter:drop-shadow(0 9px 13px rgba(36,25,26,0.14));animation:pmFloat3d 5200ms cubic-bezier(0.45,0,0.55,1) infinite alternate;will-change:transform">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="categorias" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,92px) 20px 0">
+    <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:26px">
+      <h2 style="font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:900;letter-spacing:-0.035em;line-height:1;max-width:22ch;text-wrap:balance">Três linhas, um mesmo padrão de controle.</h2>
+      <p style="max-width:40ch;color:#6A5D5A;font-size:1rem;line-height:1.6">Escolha pela finalidade. Cada produto abre com dosagem, apresentação e orientação de conservação.</p>
+    </div>
+    <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+      <li>
+        <button type="button" onClick="{{ pickGlp }}" style="width:100%;text-align:left;border:1px solid #E7DDD5;background:#F4ECE5;border-radius:22px;padding:0;overflow:hidden;cursor:pointer;transition:transform 180ms ease,box-shadow 180ms ease" style-hover="transform:translateY(-3px);box-shadow:0 1.2rem 2.4rem rgba(143,28,32,0.14)">
+          <span style="display:block;height:168px;background:#FFE2D2;display:grid;place-items:center;padding:16px"><img src="assets/cut-lipoless.png" alt="" style="max-height:132px;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(36,25,26,0.16))"></span>
+          <span style="display:block;padding:18px 20px 20px">
+            <span style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#8F1C20">01</span>
+            <strong style="display:block;font-size:1.2rem;font-weight:800;margin-top:6px">GLP-1</strong>
+            <span style="display:block;color:#6A5D5A;font-size:0.9rem;line-height:1.5;margin-top:6px">Tirzepatida e Retatrutida, em frasco e em caneta.</span>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button type="button" onClick="{{ pickSkin }}" style="width:100%;text-align:left;border:1px solid #E7DDD5;background:#F4ECE5;border-radius:22px;padding:0;overflow:hidden;cursor:pointer;transition:transform 180ms ease,box-shadow 180ms ease" style-hover="transform:translateY(-3px);box-shadow:0 1.2rem 2.4rem rgba(143,28,32,0.14)">
+          <span style="display:block;height:168px;background:#E8EDF2;display:grid;place-items:center;padding:16px"><img src="assets/cut-ghkcu.png" alt="" style="max-height:146px;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(16,47,73,0.18))"></span>
+          <span style="display:block;padding:18px 20px 20px">
+            <span style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#102F49">02</span>
+            <strong style="display:block;font-size:1.2rem;font-weight:800;margin-top:6px">Skin</strong>
+            <span style="display:block;color:#6A5D5A;font-size:0.9rem;line-height:1.5;margin-top:6px">GHK-Cu e Glow, liofilizados com laudo por lote.</span>
+          </span>
+        </button>
+      </li>
+      <li>
+        <button type="button" onClick="{{ pickRecovery }}" style="width:100%;text-align:left;border:1px solid #E7DDD5;background:#F4ECE5;border-radius:22px;padding:0;overflow:hidden;cursor:pointer;transition:transform 180ms ease,box-shadow 180ms ease" style-hover="transform:translateY(-3px);box-shadow:0 1.2rem 2.4rem rgba(143,28,32,0.14)">
+          <span style="display:block;height:168px;background:#F7E7E4;display:grid;place-items:center;padding:16px"><img src="assets/cut-klow.png" alt="" style="max-height:146px;max-width:100%;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(143,28,32,0.18))"></span>
+          <span style="display:block;padding:18px 20px 20px">
+            <span style="display:block;font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#C93424">03</span>
+            <strong style="display:block;font-size:1.2rem;font-weight:800;margin-top:6px">Recovery</strong>
+            <span style="display:block;color:#6A5D5A;font-size:0.9rem;line-height:1.5;margin-top:6px">Blends de manutenção, como o Klow.</span>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </section>
+
+  <section id="loja" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,92px) 20px 0">
+    <div style="display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;justify-content:space-between">
+      <div>
+        <p style="font-size:0.76rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#8F1C20">Nossos produtos</p>
+        <h2 style="font-size:clamp(1.9rem,3.6vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1;margin-top:10px">A lojinha Pharmil.</h2>
+      </div>
+      <p style="max-width:42ch;color:#6A5D5A;font-size:1rem;line-height:1.6">Preço à vista em PIX. Toque em um produto para ver apresentação, conservação e o que acompanha.</p>
+    </div>
+
+    <div role="tablist" aria-label="Categorias" style="display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 24px;padding-bottom:4px">
+      <sc-for list="{{ tabs }}" as="tab" hint-placeholder-count="4">
+        <button type="button" role="tab" aria-selected="{{ tab.active }}" onClick="{{ tab.go }}" style="padding:11px 20px;border-radius:999px;border:1.5px solid {{ tab.border }};background:{{ tab.bg }};color:{{ tab.color }};font-size:0.88rem;font-weight:700;cursor:pointer;transition:all 160ms ease">{{ tab.label }} <span style="opacity:0.55;font-weight:600">{{ tab.count }}</span></button>
+      </sc-for>
+    </div>
+
+    <ul style="display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px">
+      <sc-for list="{{ visibleProducts }}" as="p" hint-placeholder-count="8">
+        <li style="display:flex">
+          <article style="display:flex;flex-direction:column;width:100%;background:#FBF8F4;border:1px solid #E7DDD5;border-radius:22px;overflow:hidden;transition:transform 180ms ease,box-shadow 180ms ease" style-hover="transform:translateY(-4px);box-shadow:0 1.4rem 2.8rem rgba(143,28,32,0.15)">
+            <button type="button" onClick="{{ p.open }}" style="border:0;padding:0;background:{{ p.tint }};cursor:pointer;display:block;position:relative;height:216px;width:100%">
+              <sc-if value="{{ p.isTile }}">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center">
+              </sc-if>
+              <sc-if value="{{ p.isCut }}">
+                <img src="{{ p.img }}" alt="{{ p.name }}" style="position:absolute;inset:16px;width:calc(100% - 32px);height:calc(100% - 32px);object-fit:contain;filter:drop-shadow(0 8px 12px rgba(36,25,26,0.14))">
+              </sc-if>
+              <sc-if value="{{ p.badge }}">
+                <span style="position:absolute;top:12px;left:12px;background:#8F1C20;color:#FBF8F4;font-size:0.68rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:6px 11px;border-radius:999px">{{ p.badge }}</span>
+              </sc-if>
+            </button>
+            <div style="padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1">
+              <p style="font-size:0.7rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#6A5D5A">{{ p.category }}</p>
+              <h3 style="font-size:1.12rem;font-weight:800;letter-spacing:-0.02em;line-height:1.2">{{ p.name }}</h3>
+              <p style="font-size:0.88rem;color:#6A5D5A;line-height:1.5">{{ p.spec }}</p>
+              <div style="margin-top:auto;padding-top:16px">
+                <sc-if value="{{ showPrice }}" hint-placeholder-val="{{ true }}">
+                  <p style="display:flex;align-items:baseline;gap:8px;margin-bottom:12px">
+                    <span style="font-size:1.5rem;font-weight:900;letter-spacing:-0.03em;color:#8F1C20">{{ p.price }}</span>
+                    <span style="font-size:0.76rem;color:#6A5D5A;font-weight:600">no PIX</span>
+                  </p>
+                </sc-if>
+                <div style="display:flex;gap:8px">
+                  <a href="{{ p.wa }}" target="_blank" rel="noopener noreferrer" style="flex:1;background:#8F1C20;color:#FBF8F4;text-align:center;padding:12px 10px;border-radius:999px;font-size:0.85rem;font-weight:700" style-hover="background:#C93424;color:#FBF8F4">Pedir no WhatsApp</a>
+                  <button type="button" onClick="{{ p.open }}" aria-label="Detalhes" style="flex:0 0 auto;width:44px;border:1.5px solid #E7DDD5;background:transparent;border-radius:999px;cursor:pointer;font-size:1.05rem;color:#8F1C20" style-hover="border-color:#8F1C20;background:#FFE2D2">＋</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </li>
+      </sc-for>
+    </ul>
+
+    <p style="margin-top:22px;font-size:0.8rem;color:#6A5D5A;line-height:1.6;max-width:70ch">Produtos sujeitos a disponibilidade de lote. A dispensação é feita por farmácia parceira habilitada, mediante prescrição e acompanhamento de profissional de saúde.</p>
+  </section>
+
+  <section id="cadeia-de-frio" style="margin-top:clamp(56px,8vw,92px);background:#102F49;color:#FBF8F4">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(52px,7vw,88px) 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(32px,5vw,64px);align-items:center">
+      <div>
+        <p style="font-size:0.76rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#FF6828">Cadeia de frio</p>
+        <h2 style="font-size:clamp(1.9rem,3.6vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1;margin-top:12px;text-wrap:balance">O que acontece entre o estoque e a sua porta.</h2>
+        <p style="margin-top:18px;max-width:46ch;font-size:1rem;line-height:1.65;color:rgba(251,248,244,0.82)">Nada sai sem conferência dupla de lote e temperatura. Você recebe fotos do lacre e o código de rastreio antes de a caixa deixar Brasília.</p>
+        <ul style="margin-top:28px;display:grid;gap:1px;background:rgba(251,248,244,0.16);border-radius:16px;overflow:hidden">
+          <li style="background:#102F49;padding:18px 20px;display:flex;gap:16px;align-items:baseline">
+            <strong style="color:#FF6828;font-size:1.05rem;font-weight:900;flex:0 0 52px">2–8&nbsp;°C</strong>
+            <span style="font-size:0.92rem;line-height:1.5;color:rgba(251,248,244,0.86)">faixa mantida do estoque à entrega, com registro no envio</span>
+          </li>
+          <li style="background:#102F49;padding:18px 20px;display:flex;gap:16px;align-items:baseline">
+            <strong style="color:#FF6828;font-size:1.05rem;font-weight:900;flex:0 0 52px">48h</strong>
+            <span style="font-size:0.92rem;line-height:1.5;color:rgba(251,248,244,0.86)">autonomia térmica da embalagem em rotas mais longas</span>
+          </li>
+          <li style="background:#102F49;padding:18px 20px;display:flex;gap:16px;align-items:baseline">
+            <strong style="color:#FF6828;font-size:1.05rem;font-weight:900;flex:0 0 52px">100%</strong>
+            <span style="font-size:0.92rem;line-height:1.5;color:rgba(251,248,244,0.86)">dos pedidos com lacre numerado e código de rastreio</span>
+          </li>
+        </ul>
+      </div>
+      <figure style="margin:0;border-radius:24px;overflow:hidden;background:rgba(251,248,244,0.06);border:1px solid rgba(251,248,244,0.14)">
+        <img src="assets/pharmil-products-hero.jpg" alt="Embalagens Pharmil prontas para envio" style="width:100%;height:clamp(240px,32vw,360px);object-fit:cover">
+        <figcaption style="padding:16px 20px;font-size:0.84rem;color:rgba(251,248,244,0.78);line-height:1.5">Conferência de lote antes do fechamento da caixa térmica. As embalagens variam conforme o fabricante do lote disponível.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="como-pedir" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,92px) 20px 0">
+    <h2 style="font-size:clamp(1.9rem,3.6vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1;max-width:24ch;text-wrap:balance">Quatro passos, sem enrolação.</h2>
+    <ol style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:32px">
+      <li style="background:#F4ECE5;border-radius:20px;padding:24px;border:1px solid #E7DDD5">
+        <span style="display:block;font-size:2.2rem;font-weight:900;color:#FF6828;letter-spacing:-0.04em;line-height:1">01</span>
+        <strong style="display:block;font-size:1.08rem;font-weight:800;margin-top:12px">Você escolhe</strong>
+        <p style="margin-top:8px;font-size:0.92rem;color:#6A5D5A;line-height:1.55">Manda o produto e a dosagem pelo WhatsApp. Confirmamos lote e disponibilidade na hora.</p>
+      </li>
+      <li style="background:#F4ECE5;border-radius:20px;padding:24px;border:1px solid #E7DDD5">
+        <span style="display:block;font-size:2.2rem;font-weight:900;color:#FF6828;letter-spacing:-0.04em;line-height:1">02</span>
+        <strong style="display:block;font-size:1.08rem;font-weight:800;margin-top:12px">Conferimos</strong>
+        <p style="margin-top:8px;font-size:0.92rem;color:#6A5D5A;line-height:1.55">Origem, validade e a orientação profissional que acompanha o pedido.</p>
+      </li>
+      <li style="background:#F4ECE5;border-radius:20px;padding:24px;border:1px solid #E7DDD5">
+        <span style="display:block;font-size:2.2rem;font-weight:900;color:#FF6828;letter-spacing:-0.04em;line-height:1">03</span>
+        <strong style="display:block;font-size:1.08rem;font-weight:800;margin-top:12px">Pagamento</strong>
+        <p style="margin-top:8px;font-size:0.92rem;color:#6A5D5A;line-height:1.55">PIX à vista ou cartão. Nota e comprovante enviados na mesma conversa.</p>
+      </li>
+      <li style="background:#8F1C20;color:#FBF8F4;border-radius:20px;padding:24px">
+        <span style="display:block;font-size:2.2rem;font-weight:900;color:#FFE2D2;letter-spacing:-0.04em;line-height:1">04</span>
+        <strong style="display:block;font-size:1.08rem;font-weight:800;margin-top:12px">Envio e rastreio</strong>
+        <p style="margin-top:8px;font-size:0.92rem;color:#FFE2D2;line-height:1.55">Caixa térmica lacrada, foto do lacre e código de rastreio no mesmo dia.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="rede" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,92px) 20px 0">
+    <div style="background:#F4ECE5;border:1px solid #E7DDD5;border-radius:28px;padding:clamp(28px,4.5vw,56px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,4vw,56px)">
+      <div>
+        <p style="font-size:0.76rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#8F1C20">Rede parceira</p>
+        <h2 style="font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:900;letter-spacing:-0.035em;line-height:1.02;margin-top:12px;text-wrap:balance">Quem dispensa está habilitado para isso.</h2>
+        <p style="margin-top:16px;max-width:46ch;color:#6A5D5A;font-size:1rem;line-height:1.65">A Pharmil organiza o atendimento e a logística. A dispensação fica com farmácias parceiras regularizadas, mediante prescrição válida.</p>
+        <a href="{{ waHref }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:#FBF8F4;border:1.5px solid #8F1C20;color:#8F1C20;padding:13px 22px;border-radius:999px;font-weight:700;font-size:0.9rem" style-hover="background:#8F1C20;color:#FBF8F4">Tirar uma dúvida <span aria-hidden="true">→</span></a>
+      </div>
+      <ul style="display:grid;gap:12px;align-content:start">
+        <li style="background:#FBF8F4;border:1px solid #E7DDD5;border-radius:16px;padding:18px 20px">
+          <strong style="display:block;font-size:1rem;font-weight:800">Farmácias habilitadas</strong>
+          <small style="display:block;margin-top:5px;color:#6A5D5A;font-size:0.88rem;line-height:1.5">Dispensação por estabelecimento regularizado</small>
+        </li>
+        <li style="background:#FBF8F4;border:1px solid #E7DDD5;border-radius:16px;padding:18px 20px">
+          <strong style="display:block;font-size:1rem;font-weight:800">Documentação verificada</strong>
+          <small style="display:block;margin-top:5px;color:#6A5D5A;font-size:0.88rem;line-height:1.5">Registro e origem confirmados a cada pedido</small>
+        </li>
+        <li style="background:#FBF8F4;border:1px solid #E7DDD5;border-radius:16px;padding:18px 20px">
+          <strong style="display:block;font-size:1rem;font-weight:800">Cobertura nacional</strong>
+          <small style="display:block;margin-top:5px;color:#6A5D5A;font-size:0.88rem;line-height:1.5">Rotas e prazos informados conforme o destino</small>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="depoimentos" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,92px) 20px 0">
+    <h2 style="font-size:clamp(1.9rem,3.6vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1;max-width:26ch;text-wrap:balance">O que dizem sobre o atendimento.</h2>
+    <ul style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:32px">
+      <li style="background:#FBF8F4;border:1px solid #E7DDD5;border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <span aria-hidden="true" style="font-size:2.4rem;line-height:0.6;color:#FF6828;font-weight:900">“</span>
+        <blockquote style="font-size:1rem;line-height:1.6;color:#24191A">Perguntei sobre o lote e me mandaram foto da caixa e do laudo em dois minutos. Não estou acostumada com esse nível de resposta.</blockquote>
+        <p style="margin-top:auto;font-size:0.85rem;color:#6A5D5A"><strong style="color:#24191A;font-weight:800">Camila R.</strong> · Goiânia/GO</p>
+      </li>
+      <li style="background:#FBF8F4;border:1px solid #E7DDD5;border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <span aria-hidden="true" style="font-size:2.4rem;line-height:0.6;color:#FF6828;font-weight:900">“</span>
+        <blockquote style="font-size:1rem;line-height:1.6;color:#24191A">Chegou gelado, lacre intacto e com o rastreio funcionando desde o primeiro dia. Embalagem melhor que a de farmácia grande.</blockquote>
+        <p style="margin-top:auto;font-size:0.85rem;color:#6A5D5A"><strong style="color:#24191A;font-weight:800">Diego M.</strong> · Belo Horizonte/MG</p>
+      </li>
+      <li style="background:#FBF8F4;border:1px solid #E7DDD5;border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:16px">
+        <span aria-hidden="true" style="font-size:2.4rem;line-height:0.6;color:#FF6828;font-weight:900">“</span>
+        <blockquote style="font-size:1rem;line-height:1.6;color:#24191A">Explicaram o que eu precisava levar para o meu médico antes de fechar o pedido. Ninguém tentou me empurrar nada.</blockquote>
+        <p style="margin-top:auto;font-size:0.85rem;color:#6A5D5A"><strong style="color:#24191A;font-weight:800">Renata P.</strong> · Curitiba/PR</p>
+      </li>
+    </ul>
+  </section>
+
+  <section id="faq" style="max-width:1200px;margin:0 auto;padding:clamp(56px,8vw,92px) 20px 0">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(28px,4vw,56px)">
+      <div>
+        <h2 style="font-size:clamp(1.9rem,3.6vw,3rem);font-weight:900;letter-spacing:-0.035em;line-height:1;text-wrap:balance">Dúvidas frequentes.</h2>
+        <p style="margin-top:16px;color:#6A5D5A;font-size:1rem;line-height:1.65;max-width:38ch">Se a sua pergunta não estiver aqui, é mais rápido no WhatsApp — respondemos em minutos no horário comercial.</p>
+        <a href="{{ waHref }}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:#8F1C20;color:#FBF8F4;padding:13px 22px;border-radius:999px;font-weight:700;font-size:0.9rem" style-hover="background:#C93424;color:#FBF8F4">Perguntar agora <span aria-hidden="true">→</span></a>
+      </div>
+      <ul style="display:grid;gap:10px;align-content:start">
+        <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="5">
+          <li style="border:1px solid #E7DDD5;border-radius:16px;background:#FBF8F4;overflow:hidden">
+            <button type="button" onClick="{{ f.toggle }}" aria-expanded="{{ f.open }}" style="width:100%;display:flex;gap:16px;align-items:center;justify-content:space-between;text-align:left;padding:18px 20px;background:transparent;border:0;cursor:pointer;font-size:1rem;font-weight:700;letter-spacing:-0.01em" style-hover="background:#F4ECE5">
+              {{ f.q }}
+              <span aria-hidden="true" style="flex:0 0 auto;color:#8F1C20;font-size:1.2rem;font-weight:800">{{ f.sign }}</span>
+            </button>
+            <sc-if value="{{ f.open }}">
+              <p style="padding:0 20px 20px;color:#6A5D5A;font-size:0.94rem;line-height:1.65;animation:pmFade 240ms ease both">{{ f.a }}</p>
+            </sc-if>
+          </li>
+        </sc-for>
+      </ul>
+    </div>
+  </section>
+
+  <section style="max-width:1200px;margin:clamp(56px,8vw,92px) auto 0;padding:0 20px">
+    <div style="background:#C93424;border-radius:28px;padding:clamp(32px,5vw,64px);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;align-items:center">
+      <div>
+        <h2 style="font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:900;letter-spacing:-0.035em;line-height:1;color:#FBF8F4;text-wrap:balance">Fale com quem vai acompanhar seu pedido.</h2>
+        <p style="margin-top:16px;color:#FFE2D2;font-size:1.02rem;line-height:1.6;max-width:44ch">Sem robô e sem formulário longo. Você manda o produto, a gente confirma o lote e resolve na conversa.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <a href="{{ waHref }}" target="_blank" rel="noopener noreferrer" style="background:#FBF8F4;color:#8F1C20;padding:16px 28px;border-radius:999px;font-weight:800;font-size:1rem;display:inline-flex;align-items:center;gap:10px;transition:transform 160ms ease" style-hover="transform:translateY(-2px);color:#8F1C20">Chamar no WhatsApp <span aria-hidden="true">→</span></a>
+        <p style="font-size:0.84rem;color:#FFE2D2">Seg a sáb, 9h às 19h · resposta média em 4 minutos</p>
+      </div>
+    </div>
+  </section>
+
+  <footer style="margin-top:clamp(56px,8vw,92px);background:#24191A;color:#FBF8F4">
+    <div style="max-width:1200px;margin:0 auto;padding:clamp(44px,6vw,72px) 20px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px">
+      <div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <img src="assets/pharmil-logo.jpg" alt="Pharmil" width="42" height="42" style="width:42px;height:42px;border-radius:999px;object-fit:cover">
+          <span style="font-size:1.2rem;font-weight:900;letter-spacing:-0.03em">Pharmil</span>
+        </div>
+        <p style="margin-top:16px;font-size:0.9rem;line-height:1.6;color:rgba(251,248,244,0.7);max-width:34ch">Procedência visível, atendimento claro e entrega acompanhada.</p>
+      </div>
+      <div>
+        <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#FF6828">Navegar</p>
+        <ul style="margin-top:14px;display:grid;gap:9px;font-size:0.92rem">
+          <li><a href="#loja" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">Produtos</a></li>
+          <li><a href="#cadeia-de-frio" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">Cadeia de frio</a></li>
+          <li><a href="#como-pedir" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">Como pedir</a></li>
+          <li><a href="#faq" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">Dúvidas</a></li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#FF6828">Contato</p>
+        <ul style="margin-top:14px;display:grid;gap:9px;font-size:0.92rem;color:rgba(251,248,244,0.82)">
+          <li><a href="{{ waHref }}" target="_blank" rel="noopener noreferrer" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">WhatsApp (61) 99996-9091</a></li>
+          <li>doctorminuto2025@gmail.com</li>
+          <li style="line-height:1.55">SAUS Q. 5, Bloco N, Sala 307<br>Asa Sul, Brasília/DF</li>
+        </ul>
+      </div>
+      <div>
+        <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;color:#FF6828">Legal</p>
+        <ul style="margin-top:14px;display:grid;gap:9px;font-size:0.92rem">
+          <li><a href="#faq" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">Termos de uso</a></li>
+          <li><a href="#faq" style="color:rgba(251,248,244,0.82)" style-hover="color:#FF6828">Privacidade</a></li>
+          <li style="color:rgba(251,248,244,0.6);font-size:0.82rem;line-height:1.5">CNPJ 60.273.707/0001-01</li>
+        </ul>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(251,248,244,0.14)">
+      <div style="max-width:1200px;margin:0 auto;padding:18px 20px 32px;display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between;font-size:0.78rem;color:rgba(251,248,244,0.55);line-height:1.6">
+        <p style="max-width:76ch">Conteúdo informativo. Não substitui avaliação profissional e não promete resultados. Dispensação por farmácia parceira habilitada, mediante prescrição.</p>
+        <p>© 2026 Pharmil</p>
+      </div>
+    </div>
+  </footer>
+
+  <template id="__bundler_thumbnail">
+    <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <rect width="120" height="120" fill="#C93424"/>
+      <circle cx="60" cy="60" r="27" fill="none" stroke="#FFE2D2" stroke-width="5"/>
+      <text x="60" y="70" text-anchor="middle" font-family="Archivo, Arial, sans-serif" font-size="26" font-weight="900" fill="#FBF8F4">P</text>
+    </svg>
+  </template>
+
+  <sc-if value="{{ detail }}">
+    <div onClick="{{ closeDetail }}" style="position:fixed;inset:0;z-index:80;background:rgba(36,25,26,0.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px;animation:pmFade 200ms ease both">
+      <div onClick="{{ stop }}" role="dialog" aria-modal="true" style="background:#FBF8F4;border-radius:26px;max-width:900px;width:100%;max-height:88vh;overflow:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));animation:pmRise 280ms cubic-bezier(0.16,1,0.3,1) both">
+        <div style="background:#F4ECE5;display:grid;place-items:center;padding:32px;min-height:260px;overflow:hidden">
+          <img src="{{ detail.img }}" alt="{{ detail.name }}" style="max-width:100%;max-height:340px;object-fit:contain;filter:drop-shadow(0 10px 16px rgba(36,25,26,0.16))">
+        </div>
+        <div style="padding:clamp(24px,3.5vw,40px);display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;justify-content:space-between;gap:16px;align-items:flex-start">
+            <p style="font-size:0.72rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#8F1C20">{{ detail.category }}</p>
+            <button type="button" onClick="{{ closeDetail }}" aria-label="Fechar" style="border:0;background:#F4ECE5;width:34px;height:34px;border-radius:999px;cursor:pointer;font-size:1rem;color:#24191A" style-hover="background:#FFE2D2">✕</button>
+          </div>
+          <h3 style="font-size:clamp(1.5rem,2.6vw,2.1rem);font-weight:900;letter-spacing:-0.035em;line-height:1.05">{{ detail.name }}</h3>
+          <p style="font-size:0.98rem;color:#6A5D5A;line-height:1.6">{{ detail.description }}</p>
+          <ul style="display:grid;gap:1px;background:#E7DDD5;border:1px solid #E7DDD5;border-radius:14px;overflow:hidden;margin-top:6px">
+            <sc-for list="{{ detail.facts }}" as="fact" hint-placeholder-count="3">
+              <li style="background:#FBF8F4;padding:12px 16px;display:flex;gap:14px;justify-content:space-between;font-size:0.88rem">
+                <span style="color:#6A5D5A">{{ fact.k }}</span>
+                <strong style="font-weight:700;text-align:right">{{ fact.v }}</strong>
+              </li>
+            </sc-for>
+          </ul>
+          <sc-if value="{{ showPrice }}" hint-placeholder-val="{{ true }}">
+            <p style="display:flex;align-items:baseline;gap:10px;margin-top:8px">
+              <span style="font-size:2rem;font-weight:900;letter-spacing:-0.035em;color:#8F1C20">{{ detail.price }}</span>
+              <span style="font-size:0.84rem;color:#6A5D5A;font-weight:600">à vista no PIX</span>
+            </p>
+          </sc-if>
+          <a href="{{ detail.wa }}" target="_blank" rel="noopener noreferrer" style="margin-top:6px;background:#8F1C20;color:#FBF8F4;text-align:center;padding:15px 24px;border-radius:999px;font-weight:800;font-size:0.96rem" style-hover="background:#C93424;color:#FBF8F4">Pedir este produto no WhatsApp</a>
+          <p style="font-size:0.78rem;color:#6A5D5A;line-height:1.55">Conservação sob refrigeração. Uso mediante prescrição e acompanhamento profissional.</p>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showPrices&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Loja&quot;},&quot;whatsappNumber&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5561999969091&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contato&quot;}}">
+const CATALOG = [
+  { id: "tg15", name: "TG 15", category: "GLP-1", spec: "Tirzepatida 15 mg/0,5 mL · 4 frascos", price: 599, badge: "+ GHK-Cu por R$ 249", img: "img/cut-tg.png", tint: "#FFF3E6", fit: "cut",
+    description: "Caixa com 4 frascos-ampola de solução injetável de Tirzepatida 15 mg/0,5 mL. Lote e validade confirmados no atendimento antes do fechamento do pedido.",
+    facts: [["Apresentação", "4 frascos de 0,5 mL"], ["Concentração", "15 mg/0,5 mL"], ["Conservação", "2–8 °C, protegido da luz"], ["Combo", "GHK-Cu por R$ 249"]] },
+  { id: "lipoless", name: "Lipoless MD 15", category: "GLP-1", spec: "Tirzepatida 15 mg/0,5 mL · 4 frascos", price: 549, img: "img/cut-lipoless.png", tint: "#ECF0F7", fit: "cut",
+    description: "Apresentação com 4 frascos de 0,5 mL de solução injetável, via subcutânea. Embalagem original do fabricante, com laudo do lote disponível sob solicitação.",
+    facts: [["Apresentação", "4 frascos de 0,5 mL"], ["Concentração", "15 mg/0,5 mL"], ["Via", "Subcutânea"], ["Conservação", "2–8 °C"]] },
+  { id: "tirze100", name: "Tirzepatida Pepking 100 mg", category: "GLP-1", spec: "Frasco liofilizado 100 mg", price: 1000, img: "img/tile-tirzepatida.jpg", tint: "#FFE2D2", fit: "tile",
+    description: "Frasco liofilizado de 100 mg para reconstituição. Fracionamento e diluição devem ser definidos por profissional de saúde habilitado.",
+    facts: [["Apresentação", "1 frasco liofilizado"], ["Quantidade", "100 mg"], ["Laudo", "Certificado de análise por lote"], ["Conservação", "2–8 °C após reconstituição"]] },
+  { id: "reta40", name: "Retatrutida Synedica 40 mg", category: "GLP-1", spec: "Caneta aplicadora · 40 mg", price: 1370, badge: "Foto em breve", img: "img/tile-brand-b.jpg", tint: "#FFF3EB", fit: "tile",
+    description: "Triplo agonista GLP-1, GIP e glucagon em caneta aplicadora. Orientação de uso e descarte enviadas junto com o pedido.",
+    facts: [["Apresentação", "Caneta aplicadora"], ["Quantidade", "40 mg"], ["Mecanismo", "GLP-1 / GIP / glucagon"], ["Conservação", "2–8 °C"]] },
+  { id: "reta60", name: "Retatrutida Pepking 60 mg", category: "GLP-1", spec: "Frasco liofilizado 60 mg", price: 1100, badge: "Foto em breve", img: "img/tile-brand-a.jpg", tint: "#FFF0EA", fit: "tile",
+    description: "Frasco liofilizado de 60 mg para reconstituição, com certificado de análise do lote. Indicado apenas sob prescrição e acompanhamento.",
+    facts: [["Apresentação", "1 frasco liofilizado"], ["Quantidade", "60 mg"], ["Laudo", "Certificado de análise por lote"], ["Conservação", "2–8 °C"]] },
+  { id: "ghkcu", name: "GHK-Cu 100 mg", category: "Skin", spec: "Frasco liofilizado · 99% de pureza", price: 350, img: "img/cut-ghkcu.png", tint: "#E9EFF7", fit: "cut",
+    description: "Peptídeo de cobre GHK-Cu em pó liofilizado, frasco de 100 mg. Pureza declarada de 99% conforme laudo do lote.",
+    facts: [["Apresentação", "1 frasco liofilizado"], ["Quantidade", "100 mg"], ["Pureza declarada", "99%"], ["Conservação", "2–8 °C, ao abrigo da luz"]] },
+  { id: "glow", name: "Glow", category: "Skin", spec: "Blend liofilizado para pele", price: 697, img: "img/cut-glow.png", tint: "#E7EDF6", fit: "cut",
+    description: "Blend liofilizado da linha Skin, com laudo de análise por lote. Protocolo de reconstituição enviado junto com o pedido.",
+    facts: [["Apresentação", "1 frasco liofilizado"], ["Linha", "Skin"], ["Laudo", "Certificado de análise por lote"], ["Conservação", "2–8 °C"]] },
+  { id: "klow", name: "Klow", category: "Recovery", spec: "Blend liofilizado 80 mg", price: 797, img: "img/cut-klow.png", tint: "#F4E9E8", fit: "cut",
+    description: "Blend liofilizado da linha Recovery, frasco de 80 mg. Uso e fracionamento definidos por profissional de saúde.",
+    facts: [["Apresentação", "1 frasco liofilizado"], ["Quantidade", "80 mg"], ["Linha", "Recovery"], ["Conservação", "2–8 °C"]] }
+];
+
+const FAQ = [
+  ["Preciso de prescrição para comprar?", "Sim. A dispensação é feita por farmácia parceira habilitada, mediante prescrição válida e acompanhamento de profissional de saúde. Ajudamos você a organizar a documentação antes do pedido."],
+  ["Como vocês garantem a temperatura no envio?", "O pedido sai em caixa térmica com gelo em gel e lacre numerado, com autonomia de até 48 horas. Enviamos foto do lacre e o código de rastreio no mesmo dia da postagem."],
+  ["Quais formas de pagamento?", "PIX à vista (preço da vitrine) ou cartão. O comprovante e a nota chegam pela mesma conversa do WhatsApp."],
+  ["Em quanto tempo chega?", "O prazo depende da rota e é informado antes da confirmação. Capitais costumam receber entre 1 e 3 dias úteis após a postagem."],
+  ["Posso conferir o laudo do lote?", "Sim. O certificado de análise do lote disponível é enviado sob solicitação, antes de você fechar o pedido."]
+];
+
+const WA_NUMBER_DEFAULT = "5561999969091";
+
+class Component extends DCLogic {
+  state = { cat: "Todos", faqOpen: 0, detailId: null };
+
+  wa(text) {
+    const n = (this.props.whatsappNumber ?? WA_NUMBER_DEFAULT).replace(/\D/g, "");
+    return "https://wa.me/" + n + "?text=" + encodeURIComponent(text);
+  }
+  brl(v) { return "R$ " + v.toLocaleString("pt-BR"); }
+
+  renderVals() {
+    const cats = ["Todos", "GLP-1", "Skin", "Recovery"];
+    const cat = this.state.cat;
+    const showPrice = this.props.showPrices !== false;
+
+    const decorate = p => ({
+      ...p,
+      price: this.brl(p.price),
+      badge: p.badge || "",
+      isTile: p.fit === "tile",
+      isCut: p.fit !== "tile",
+      facts: p.facts.map(([k, v]) => ({ k, v })),
+      wa: this.wa("Olá, vim pelo site da Pharmil e quero pedir: " + p.name + " (" + p.spec + ")."),
+      open: () => this.setState({ detailId: p.id })
+    });
+
+    const visible = CATALOG.filter(p => cat === "Todos" || p.category === cat).map(decorate);
+    const found = CATALOG.find(p => p.id === this.state.detailId);
+
+    return {
+      waHref: this.wa("Olá, vim pelo site da Pharmil e gostaria de consultar a disponibilidade."),
+      showPrice,
+      tabs: cats.map(c => {
+        const active = c === cat;
+        return {
+          label: c, active,
+          count: c === "Todos" ? CATALOG.length : CATALOG.filter(p => p.category === c).length,
+          bg: active ? "#8F1C20" : "transparent",
+          color: active ? "#FBF8F4" : "#24191A",
+          border: active ? "#8F1C20" : "#E7DDD5",
+          go: () => this.setState({ cat: c })
+        };
+      }),
+      visibleProducts: visible,
+      pickGlp: () => this.setState({ cat: "GLP-1" }),
+      pickSkin: () => this.setState({ cat: "Skin" }),
+      pickRecovery: () => this.setState({ cat: "Recovery" }),
+      faqs: FAQ.map(([q, a], i) => ({
+        q, a,
+        open: this.state.faqOpen === i,
+        sign: this.state.faqOpen === i ? "−" : "+",
+        toggle: () => this.setState(s => ({ faqOpen: s.faqOpen === i ? -1 : i }))
+      })),
+      detail: found ? decorate(found) : null,
+      closeDetail: () => this.setState({ detailId: null }),
+      stop: e => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

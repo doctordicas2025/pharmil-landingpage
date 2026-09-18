@@ -1,6 +1,4 @@
-"use client";
-
-import { useState } from "react";
+import { Accordion, TextLink } from "@/design-system";
 
 const faqItems = [
   {
@@ -40,8 +38,6 @@ export type FaqProps = {
 };
 
 export default function Faq({ contactHref }: FaqProps) {
-  const [openIndex, setOpenIndex] = useState(0);
-
   return (
     <section aria-labelledby="faq-title" className="faq" id="faq">
       <div className="faq__inner">
@@ -53,37 +49,14 @@ export default function Faq({ contactHref }: FaqProps) {
             Se a sua pergunta não estiver aqui, é mais rápido no WhatsApp —
             respondemos em minutos no horário comercial.
           </p>
-          <a
-            className="faq__link"
-            href={contactHref}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Perguntar agora <span aria-hidden="true">→</span>
-          </a>
+          <div className="faq__action">
+            <TextLink external href={contactHref}>
+              Perguntar agora <span aria-hidden="true">→</span>
+            </TextLink>
+          </div>
         </div>
 
-        <ul className="faq__list">
-          {faqItems.map((item, index) => {
-            const open = openIndex === index;
-            return (
-              <li className="faq-item" key={item.question}>
-                <button
-                  aria-expanded={open}
-                  className="faq-item__question"
-                  onClick={() => setOpenIndex(open ? -1 : index)}
-                  type="button"
-                >
-                  {item.question}
-                  <span aria-hidden="true" className="faq-item__marker">
-                    {open ? "−" : "+"}
-                  </span>
-                </button>
-                {open ? <p className="faq-item__answer">{item.answer}</p> : null}
-              </li>
-            );
-          })}
-        </ul>
+        <Accordion items={faqItems} />
       </div>
     </section>
   );

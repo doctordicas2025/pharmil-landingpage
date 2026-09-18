@@ -3,6 +3,21 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import {
+  Badge,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardMedia,
+  Eyebrow,
+  FactList,
+  FilterPill,
+  IconButton,
+  Modal,
+  ModalBody,
+  ModalMedia,
+} from "@/design-system";
 import { Category, formatPrice, products } from "@/lib/catalog";
 import { getWhatsappHref } from "@/lib/site-config";
 
@@ -88,7 +103,7 @@ export default function Shop() {
 
       <section aria-labelledby="loja-title" className="shop" id="loja">
         <div className="shop__header">
-          <p className="shop__label">Nossos produtos</p>
+          <Eyebrow>Nossos produtos</Eyebrow>
           <h2 className="section-title" id="loja-title">
             A lojinha Pharmil.
           </h2>
@@ -98,72 +113,68 @@ export default function Shop() {
           </p>
         </div>
 
-        <div aria-label="Filtrar por linha" className="shop__filters" role="tablist">
+        <div aria-label="Filtrar por linha" className="shop__filters" role="group">
           {filters.map((f) => (
-            <button
-              aria-selected={cat === f}
-              className={`shop__filter${cat === f ? " is-active" : ""}`}
+            <FilterPill
+              active={cat === f}
+              count={countFor(f)}
               key={f}
               onClick={() => setCat(f)}
-              role="tab"
-              type="button"
             >
-              {f} <span>{countFor(f)}</span>
-            </button>
+              {f}
+            </FilterPill>
           ))}
         </div>
 
         <ul className="shop__grid">
           {visible.map((p) => (
-            <li className="product" key={p.id}>
+            <Card as="li" interactive key={p.id}>
               <button
                 aria-label={`Ver detalhes de ${p.name}`}
-                className="product__media"
+                className="shop__media-trigger"
                 onClick={() => setDetailId(p.id)}
-                style={{ background: p.tint }}
                 type="button"
               >
-                <Image
-                  alt={p.name}
-                  className={`product__image product__image--${p.fit}`}
-                  height={432}
-                  sizes="(max-width: 640px) 90vw, 300px"
-                  src={p.image}
-                  width={432}
-                />
-                {p.badge ? <span className="product__badge">{p.badge}</span> : null}
+                <CardMedia fit={p.fit} tint={p.tint}>
+                  <Image
+                    alt={p.name}
+                    height={432}
+                    sizes="(max-width: 640px) 90vw, 300px"
+                    src={p.image}
+                    width={432}
+                  />
+                  {p.badge ? <Badge>{p.badge}</Badge> : null}
+                </CardMedia>
               </button>
 
-              <div className="product__body">
-                <p className="product__category">{p.category}</p>
+              <CardBody>
+                <Eyebrow tone="muted">{p.category}</Eyebrow>
                 <h3 className="product__name">{p.name}</h3>
                 <p className="product__presentation">{p.presentation}</p>
-              </div>
+              </CardBody>
 
-              <div className="product__footer">
+              <CardFooter>
                 <p className="product__price">
                   {formatPrice(p.price)} <small>no PIX</small>
                 </p>
                 <div className="product__actions">
-                  <a
-                    className="product__buy"
+                  <Button
                     href={orderHref(p.name, p.presentation)}
                     rel="noopener noreferrer"
                     target="_blank"
+                    variant="inline"
                   >
                     Pedir no WhatsApp
-                  </a>
-                  <button
-                    aria-label={`Ver detalhes de ${p.name}`}
-                    className="product__more"
+                  </Button>
+                  <IconButton
+                    label={`Ver detalhes de ${p.name}`}
                     onClick={() => setDetailId(p.id)}
-                    type="button"
                   >
                     <span aria-hidden="true">+</span>
-                  </button>
+                  </IconButton>
                 </div>
-              </div>
-            </li>
+              </CardFooter>
+            </Card>
           ))}
         </ul>
 
@@ -174,25 +185,14 @@ export default function Shop() {
         </p>
       </section>
 
-      {detail ? (
-        <div className="modal" onClick={() => setDetailId(null)} role="presentation">
-          <div
-            aria-labelledby="modal-title"
-            aria-modal="true"
-            className="modal__dialog"
-            onClick={(e) => e.stopPropagation()}
-            role="dialog"
-          >
-            <button
-              aria-label="Fechar"
-              className="modal__close"
-              onClick={() => setDetailId(null)}
-              type="button"
-            >
-              <span aria-hidden="true">✕</span>
-            </button>
-
-            <div className="modal__media">
+      <Modal
+        onClose={() => setDetailId(null)}
+        open={detail !== null}
+        title={detail?.name ?? ""}
+      >
+        {detail ? (
+          <>
+            <ModalMedia>
               <Image
                 alt={detail.name}
                 height={520}
@@ -200,43 +200,34 @@ export default function Shop() {
                 src={detail.image}
                 width={520}
               />
-            </div>
+            </ModalMedia>
 
-            <div className="modal__body">
-              <p className="product__category">{detail.category}</p>
-              <h3 className="modal__title" id="modal-title">
-                {detail.name}
-              </h3>
+            <ModalBody>
+              <Eyebrow tone="muted">{detail.category}</Eyebrow>
+              <h3 className="modal__title">{detail.name}</h3>
               <p className="modal__description">{detail.description}</p>
 
-              <dl className="modal__facts">
-                {detail.facts.map((fact) => (
-                  <div key={fact.label}>
-                    <dt>{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
+              <FactList facts={detail.facts} />
 
               <p className="modal__price">{formatPrice(detail.price)}</p>
 
-              <a
-                className="modal__cta"
+              <Button
+                block
                 href={orderHref(detail.name, detail.presentation)}
                 rel="noopener noreferrer"
                 target="_blank"
               >
                 Pedir este produto no WhatsApp
-              </a>
+              </Button>
 
               <p className="modal__note">
                 Conservação sob refrigeração. Uso mediante prescrição e
                 acompanhamento profissional.
               </p>
-            </div>
-          </div>
-        </div>
-      ) : null}
+            </ModalBody>
+          </>
+        ) : null}
+      </Modal>
     </>
   );
 }

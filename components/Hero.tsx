@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { Button, Chip, DotPill, TextLink } from "@/design-system";
+
 const chips = [
   {
     label: ["Laudo de análise", "por lote"],
@@ -29,10 +31,7 @@ export function Hero({ contactHref }: HeroProps) {
 
       <div className="hero__inner">
         <div className="hero__copy">
-          <p className="hero__pill">
-            <span aria-hidden="true" />
-            Tecnologia em peptídeos
-          </p>
+          <DotPill>Tecnologia em peptídeos</DotPill>
 
           <h1 className="hero__title" id="hero-title">
             O padrão Pharmil em
@@ -49,41 +48,35 @@ export function Hero({ contactHref }: HeroProps) {
 
           <ul className="hero__chips">
             {chips.map((chip) => (
-              <li className="hero__chip" key={chip.label.join(" ")}>
-                <span aria-hidden="true" className="hero__chip-icon">
-                  <svg
-                    fill="none"
-                    height="18"
-                    stroke={chip.stroke}
-                    strokeWidth="1.7"
-                    viewBox="0 0 24 24"
-                    width="18"
-                  >
-                    {chip.path}
-                  </svg>
-                </span>
-                <span>
+              <li key={chip.label.join(" ")}>
+                <Chip
+                  icon={
+                    <svg
+                      fill="none"
+                      height="18"
+                      stroke={chip.stroke}
+                      strokeWidth="1.7"
+                      viewBox="0 0 24 24"
+                      width="18"
+                    >
+                      {chip.path}
+                    </svg>
+                  }
+                >
                   {chip.label[0]}
                   <br />
                   {chip.label[1]}
-                </span>
+                </Chip>
               </li>
             ))}
           </ul>
 
           <div className="hero__actions">
-            <a
-              className="hero__cta"
-              href={contactHref}
-              rel="noopener noreferrer"
-              target="_blank"
-            >
+            <Button href={contactHref} rel="noopener noreferrer" target="_blank">
               Garanta o seu agora
               <span aria-hidden="true">→</span>
-            </a>
-            <a className="hero__link" href="#loja">
-              Ver todos os produtos
-            </a>
+            </Button>
+            <TextLink href="#loja">Ver todos os produtos</TextLink>
           </div>
 
           <p className="hero__fineprint">

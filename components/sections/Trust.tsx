@@ -1,3 +1,5 @@
+import { Eyebrow, TextLink } from "@/design-system";
+
 const networkItems = [
   {
     title: "Farmácias habilitadas",
@@ -22,7 +24,7 @@ export default function Trust({ contactHref }: TrustProps) {
     <section aria-labelledby="rede-title" className="network" id="rede">
       <div className="network__inner">
         <div>
-          <p className="network__label">Rede parceira</p>
+          <Eyebrow>Rede parceira</Eyebrow>
           <h2 className="section-title" id="rede-title">
             Quem dispensa está habilitado para isso.
           </h2>
@@ -30,14 +32,11 @@ export default function Trust({ contactHref }: TrustProps) {
             A Pharmil organiza o atendimento e a logística. A dispensação fica com
             farmácias parceiras regularizadas, mediante prescrição válida.
           </p>
-          <a
-            className="network__link"
-            href={contactHref}
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Tirar uma dúvida <span aria-hidden="true">→</span>
-          </a>
+          <div className="network__action">
+            <TextLink external href={contactHref}>
+              Tirar uma dúvida <span aria-hidden="true">→</span>
+            </TextLink>
+          </div>
         </div>
 
         <ul className="network__list">

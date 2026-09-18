@@ -15,15 +15,15 @@ colors:
 typography:
   display:
     fontFamily: "Archivo, Arial, sans-serif"
-    fontSize: "clamp(3.35rem, 6.5vw, 6.6rem)"
-    fontWeight: 800
-    lineHeight: 0.92
-    letterSpacing: "-0.04em"
+    fontSize: "clamp(2.15rem, 5vw, 4.5rem)"
+    fontWeight: 900
+    lineHeight: 0.94
+    letterSpacing: "-0.045em"
   headline:
     fontFamily: "Archivo, Arial, sans-serif"
-    fontSize: "clamp(2.25rem, 4.5vw, 4.75rem)"
-    fontWeight: 800
-    lineHeight: 0.98
+    fontSize: "clamp(1.9rem, 3.6vw, 3rem)"
+    fontWeight: 900
+    lineHeight: 1
     letterSpacing: "-0.035em"
   body:
     fontFamily: "Archivo, Arial, sans-serif"
@@ -37,32 +37,55 @@ typography:
     lineHeight: 1.2
     letterSpacing: "0.08em"
 rounded:
-  sm: "8px"
-  md: "16px"
-  lg: "28px"
+  control: "12px"
+  thumb: "16px"
+  card: "22px"
+  modal: "26px"
+  band: "28px"
   pill: "999px"
 spacing:
-  xs: "8px"
-  sm: "16px"
-  md: "24px"
-  lg: "40px"
-  xl: "72px"
+  base: "2px"
+  scale: "4, 8, 12, 14, 16, 18, 20, 22, 24, 28, 32, 48"
+  gutter: "20px"
+  sectionRhythm: "clamp(56px, 8vw, 92px)"
 components:
   button-primary:
     backgroundColor: "{colors.pharmil-red}"
     textColor: "{colors.paper-warm}"
     rounded: "{rounded.pill}"
-    padding: "14px 22px"
+    padding: "18px 32px"
   button-primary-hover:
     backgroundColor: "{colors.signal-red}"
+    transform: "translateY(-3px)"
   button-secondary:
-    backgroundColor: "{colors.paper-warm}"
+    borderColor: "{colors.pharmil-red}"
     textColor: "{colors.pharmil-red}"
     rounded: "{rounded.pill}"
-    padding: "14px 22px"
+    padding: "18px 32px"
+  button-inline:
+    backgroundColor: "{colors.pharmil-red}"
+    textColor: "{colors.paper-warm}"
+    rounded: "{rounded.pill}"
+    padding: "12px 16px"
+  card:
+    border: "1px solid {colors.line-soft}"
+    rounded: "{rounded.card}"
+    backgroundColor: "{colors.paper-warm}"
+  icon-button:
+    size: "44px"
+    rounded: "{rounded.pill}"
 ---
 
 # Design System: Pharmil
+
+> **Implementação.** Os valores acima vivem como tokens CSS em
+> `design-system/tokens/tokens.css` e os componentes em `design-system/`.
+> A rota `/design-system` renderiza a biblioteca inteira com todos os estados.
+> Nenhum valor de cor, fonte, espaçamento ou raio deve ser escrito direto no
+> código: tudo resolve para um token.
+>
+> A extração medida do código — contagem de frequência, conflitos encontrados e
+> dívida conhecida — está em `.interface-design/system.md`.
 
 ## 1. Overview
 
@@ -145,6 +168,10 @@ O sistema é plano por padrão e cria profundidade com sobreposição, escala e 
 **The Object-Only Shadow Rule.** Sombras pertencem a produtos e controles interativos. Seções inteiras e textos permanecem planos.
 
 ## 5. Components
+
+Os componentes abaixo existem como código tipado em `design-system/components/`.
+Componente novo nasce lá, não na pasta da página — veja `design-system/README.md`
+para o mapa da biblioteca e o passo a passo.
 
 ### Buttons
 

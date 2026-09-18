@@ -22,7 +22,7 @@ export const products: Product[] = [
     presentation: "Tirzepatida 15 mg/0,5 mL · 4 frascos",
     price: 599,
     image: "/images/cut-tg.png",
-    tint: "#FFF3E6",
+    tint: "var(--tint-tg)",
     fit: "contain",
     badge: "+ GHK-Cu por R$ 249",
     description:
@@ -41,7 +41,7 @@ export const products: Product[] = [
     presentation: "Tirzepatida 15 mg/0,5 mL · 4 frascos",
     price: 549,
     image: "/images/cut-lipoless.png",
-    tint: "#ECF0F7",
+    tint: "var(--tint-lipoless)",
     fit: "contain",
     description:
       "Mesma concentração do TG 15 em apresentação de outro fabricante. Lote e validade confirmados no atendimento antes do envio.",
@@ -59,7 +59,7 @@ export const products: Product[] = [
     presentation: "Frasco liofilizado 100 mg",
     price: 1000,
     image: "/images/tile-tirzepatida.jpg",
-    tint: "#FFE2D2",
+    tint: "var(--tint-tirze)",
     fit: "cover",
     description:
       "Frasco liofilizado de maior quantidade, para quem já tem orientação profissional definida. Reconstituição conforme instrução do profissional responsável.",
@@ -77,7 +77,7 @@ export const products: Product[] = [
     presentation: "Caneta aplicadora · 40 mg",
     price: 1370,
     image: "/images/tile-brand-b.jpg",
-    tint: "#FFF3EB",
+    tint: "var(--tint-reta-synedica)",
     fit: "cover",
     badge: "Foto em breve",
     description:
@@ -96,7 +96,7 @@ export const products: Product[] = [
     presentation: "Frasco liofilizado 60 mg",
     price: 1100,
     image: "/images/tile-brand-a.jpg",
-    tint: "#FFF0EA",
+    tint: "var(--tint-reta-pepking)",
     fit: "cover",
     badge: "Foto em breve",
     description:
@@ -115,7 +115,7 @@ export const products: Product[] = [
     presentation: "Frasco liofilizado · 99% de pureza",
     price: 350,
     image: "/images/cut-ghkcu.png",
-    tint: "#E9EFF7",
+    tint: "var(--tint-ghkcu)",
     fit: "contain",
     description:
       "Peptídeo de cobre em frasco liofilizado, com laudo de pureza do lote correspondente.",
@@ -133,7 +133,7 @@ export const products: Product[] = [
     presentation: "Blend liofilizado para pele",
     price: 697,
     image: "/images/cut-glow.png",
-    tint: "#E7EDF6",
+    tint: "var(--tint-glow)",
     fit: "contain",
     description:
       "Blend liofilizado. A composição do lote disponível é informada durante o atendimento.",
@@ -151,7 +151,7 @@ export const products: Product[] = [
     presentation: "Blend liofilizado 80 mg",
     price: 797,
     image: "/images/cut-klow.png",
-    tint: "#F4E9E8",
+    tint: "var(--tint-klow)",
     fit: "contain",
     description:
       "Blend liofilizado de manutenção. Composição e orientação de uso informadas no atendimento.",

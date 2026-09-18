@@ -1,3 +1,5 @@
+import { Button } from "@/design-system";
+
 export type FinalCtaProps = {
   contactHref: string;
 };
@@ -17,14 +19,14 @@ export default function FinalCta({ contactHref }: FinalCtaProps) {
         </div>
 
         <div className="final-cta__action">
-          <a
+          <Button
             className="final-cta__button"
             href={contactHref}
             rel="noopener noreferrer"
             target="_blank"
           >
             Chamar no WhatsApp <span aria-hidden="true">→</span>
-          </a>
+          </Button>
           <p className="final-cta__hours">
             Seg a sáb, 9h às 19h · resposta média em 4 minutos
           </p>

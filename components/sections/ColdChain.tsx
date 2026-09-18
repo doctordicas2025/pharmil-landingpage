@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+import { Eyebrow, Stat } from "@/design-system";
+
 const stats = [
   { value: "2–8 °C", detail: "faixa mantida do estoque à entrega, com registro no envio" },
   { value: "48h", detail: "autonomia térmica da embalagem em rotas mais longas" },
@@ -15,7 +17,7 @@ export default function ColdChain() {
     >
       <div className="cold-chain__inner">
         <div>
-          <p className="cold-chain__label">Cadeia de frio</p>
+          <Eyebrow tone="orange">Cadeia de frio</Eyebrow>
           <h2 className="section-title cold-chain__title" id="cold-chain-title">
             O que acontece entre o estoque e a sua porta.
           </h2>
@@ -27,8 +29,7 @@ export default function ColdChain() {
           <ul className="cold-chain__stats">
             {stats.map((stat) => (
               <li key={stat.value}>
-                <strong>{stat.value}</strong>
-                <span>{stat.detail}</span>
+                <Stat detail={stat.detail} onDark value={stat.value} />
               </li>
             ))}
           </ul>
