@@ -179,6 +179,65 @@ export default function GrupoPage() {
           </div>
         </section>
 
+        <section aria-labelledby="banner-title" className="lp-banner">
+          <div className="lp-banner__inner">
+            <div className="lp-banner__copy">
+              <span className="lp-banner__tag">Toda semana no grupo</span>
+              <h2 className="lp-banner__title" id="banner-title">
+                Promoções e condições
+                <br />
+                exclusivas de <em>Tirzepatida</em>
+              </h2>
+              <p className="lp-banner__lede">
+                Segunda, quarta e sexta a equipe publica as condições da semana
+                para quem está no grupo — com lote, validade e laudo à vista.
+              </p>
+
+              <ul className="lp-banner__days">
+                <li>
+                  <strong>SEG</strong>
+                  <span>Condição de entrada</span>
+                </li>
+                <li>
+                  <strong>QUA</strong>
+                  <span>Exclusivo de cliente</span>
+                </li>
+                <li>
+                  <strong>SEX</strong>
+                  <span>Lote da semana</span>
+                </li>
+              </ul>
+
+              <Button
+                className="lp-banner__button"
+                href={groupHref}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Quero participar
+                <span aria-hidden="true">→</span>
+              </Button>
+            </div>
+
+            <div className="lp-banner__stage">
+              <div aria-hidden="true" className="lp-banner__glow" />
+              <Image
+                alt="T.G. 15 — Tirzepatida 15 mg/0,5 mL, caixa com 4 frascos"
+                className="lp-banner__product"
+                height={464}
+                priority
+                sizes="(max-width: 900px) 78vw, 420px"
+                src="/images/cut-tg.png"
+                width={468}
+              />
+              <span className="lp-banner__seal">
+                <strong>4</strong>
+                <small>frascos por caixa</small>
+              </span>
+            </div>
+          </div>
+        </section>
+
         <section aria-labelledby="beneficios-title" className="lp-section">
           <Eyebrow>O que acontece lá dentro</Eyebrow>
           <h2 className="section-title" id="beneficios-title">
