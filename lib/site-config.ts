@@ -32,6 +32,28 @@ export function getWhatsappHref(message: string) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
+/**
+ * Convite do grupo de clientes. Enquanto o link nao existir, os CTAs da pagina
+ * /grupo caem no atendimento normal — a pagina converte de qualquer forma e
+ * nenhum botao morto vai ao ar.
+ *
+ * PREENCHER: defina NEXT_PUBLIC_GROUP_URL na Vercel, ou troque a constante.
+ */
+const groupInviteUrl = "";
+
+export function getGroupHref() {
+  return (
+    readHttpsUrl(process.env.NEXT_PUBLIC_GROUP_URL)?.toString() ??
+    (groupInviteUrl || getContactHref())
+  );
+}
+
+export function hasGroupLink() {
+  return Boolean(
+    readHttpsUrl(process.env.NEXT_PUBLIC_GROUP_URL) || groupInviteUrl,
+  );
+}
+
 export const companyInfo = {
   legalName: "DOCTOR INSTITUIÇÃO DE PAGAMENTO LTDA",
   tradeName: "Pharmil",
