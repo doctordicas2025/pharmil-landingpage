@@ -41,12 +41,21 @@
   );
 }
 
+/* Mesmo esqueleto da primeira secao da home: duas colunas fluidas que
+   colapsam sozinhas, copy a esquerda e vitrine a direita. */
 .lp-hero__inner {
   position: relative;
-  max-width: 54rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  align-items: center;
+  gap: clamp(32px, 5vw, 64px);
+  max-width: var(--content-width);
   margin: 0 auto;
-  padding: clamp(48px, 8vw, 96px) var(--page-gutter) clamp(40px, 6vw, 72px);
-  text-align: center;
+  padding: clamp(40px, 6vw, 84px) var(--page-gutter) clamp(48px, 6vw, 88px);
+}
+
+.lp-hero__copy {
+  animation: pmRise 700ms var(--ease-out) both;
 }
 
 .lp-hero__title {
@@ -65,16 +74,48 @@
 }
 
 .lp-hero__lede {
-  margin: var(--space-9) auto 0;
-  max-width: 52ch;
+  margin-top: var(--space-9);
+  max-width: 46ch;
   color: var(--text-secondary);
   font-size: var(--size-lede);
   line-height: 1.6;
 }
 
+.lp-hero__days {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-9) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lp-hero__days li {
+  padding: var(--space-3) var(--space-4);
+  border: var(--border);
+  border-radius: var(--radius-control);
+  background: color-mix(in oklch, var(--color-paper) 70%, transparent);
+}
+
+.lp-hero__days strong {
+  display: block;
+  color: var(--color-orange);
+  font-size: var(--size-label);
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-label);
+}
+
+.lp-hero__days span {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-secondary);
+  font-size: var(--size-xs);
+  line-height: 1.35;
+}
+
 .lp-hero__cta {
   display: grid;
-  justify-items: center;
+  justify-items: start;
   gap: var(--space-5);
   margin-top: clamp(28px, 4vw, 40px);
 }
@@ -90,7 +131,7 @@
 }
 
 .lp-hero__pending {
-  margin: var(--space-7) auto 0;
+  margin-top: var(--space-7);
   max-width: 46ch;
   padding: var(--space-3) var(--space-5);
   border: var(--border);
@@ -101,177 +142,97 @@
   line-height: 1.5;
 }
 
-/* ---- Banner de produto ---- */
+/* ---- Vitrine 3D ---- */
 
-.lp-banner {
-  max-width: var(--content-width);
-  margin: var(--section-rhythm) auto 0;
-  padding: 0 var(--page-gutter);
-}
-
-.lp-banner__inner {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  align-items: center;
-  gap: clamp(24px, 4vw, 56px);
-  overflow: hidden;
-  padding: clamp(32px, 5vw, 56px);
-  border-radius: var(--radius-band);
-  background:
-    radial-gradient(
-      circle at 78% 30%,
-      color-mix(in oklch, var(--color-orange) 34%, transparent) 0%,
-      transparent 58%
-    ),
-    linear-gradient(140deg, var(--color-wine-deep) 0%, var(--color-wine) 62%, var(--color-red) 100%);
-  color: var(--color-paper);
-}
-
-.lp-banner__tag {
-  display: inline-block;
-  padding: 7px var(--space-4);
-  border: 1px solid color-mix(in oklch, var(--color-paper) 32%, transparent);
-  border-radius: var(--radius-pill);
-  color: var(--color-paper);
-  font-size: var(--size-label);
-  font-weight: var(--weight-strong);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-.lp-banner__title {
-  margin-top: var(--space-6);
-  font-size: var(--size-title-sm);
-  font-weight: var(--weight-display);
-  line-height: 1.02;
-  letter-spacing: var(--tracking-title);
-  text-wrap: balance;
-}
-
-.lp-banner__title em {
-  color: var(--color-orange);
-  font-style: normal;
-}
-
-.lp-banner__lede {
-  margin-top: var(--space-5);
-  max-width: 44ch;
-  color: color-mix(in oklch, var(--color-paper) 84%, transparent);
-  font-size: var(--size-body);
-  line-height: 1.6;
-}
-
-.lp-banner__days {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin: var(--space-7) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.lp-banner__days li {
-  flex: 1 1 128px;
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid color-mix(in oklch, var(--color-paper) 26%, transparent);
-  border-radius: var(--radius-control);
-  background: color-mix(in oklch, var(--color-ink) 16%, transparent);
-}
-
-.lp-banner__days strong {
-  display: block;
-  color: var(--color-orange);
-  font-size: var(--size-label);
-  font-weight: var(--weight-display);
-  letter-spacing: var(--tracking-label);
-}
-
-.lp-banner__days span {
-  display: block;
-  margin-top: 2px;
-  color: color-mix(in oklch, var(--color-paper) 80%, transparent);
-  font-size: var(--size-xs);
-  line-height: 1.35;
-}
-
-/* Inverte o Button da biblioteca sobre o fundo vinho. */
-.lp-banner__button.ds-button--primary {
-  margin-top: var(--space-7);
-  background: var(--color-paper);
-  color: var(--color-wine);
-  box-shadow: none;
-}
-
-.lp-banner__button.ds-button--primary:hover {
-  background: var(--color-paper);
-  transform: translateY(-3px);
-}
-
-.lp-banner__stage {
+.lp-stage {
   position: relative;
   display: grid;
   place-items: center;
-  min-height: 260px;
+  padding: clamp(10px, 2vw, 26px) 0 clamp(26px, 3vw, 40px);
+  perspective: 1500px;
 }
 
-.lp-banner__glow {
+.lp-stage__halo {
   position: absolute;
-  width: min(100%, 420px);
+  width: min(94%, 520px);
   aspect-ratio: 1;
   border-radius: var(--radius-pill);
   background: radial-gradient(
     circle at 50% 50%,
-    color-mix(in oklch, var(--color-orange) 52%, transparent) 0%,
-    transparent 66%
+    color-mix(in oklch, var(--color-peach) 80%, transparent) 0%,
+    transparent 68%
   );
   pointer-events: none;
 }
 
-/* O recorte de origem tem 468px: exibir acima de ~360px amacia em tela 2x.
-   Trocar por um recorte maior deixa aumentar este limite. */
-.lp-banner__product {
+.lp-stage__dot {
+  position: absolute;
+  border-radius: 50%;
+  animation: pmDrift 6400ms var(--ease-loop) infinite alternate;
+}
+
+.lp-stage__dot--a {
+  top: 4%;
+  left: 3%;
+  width: 9px;
+  height: 9px;
+  background: var(--color-orange);
+}
+
+.lp-stage__dot--b {
+  right: 2%;
+  bottom: 12%;
+  width: 7px;
+  height: 7px;
+  background: var(--color-red);
+  opacity: 0.7;
+  animation-duration: 7600ms;
+}
+
+.lp-stage__frame {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 420px;
+  transform-style: preserve-3d;
+}
+
+.lp-stage__art {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 360px;
   height: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 18px 28px oklch(0.18 0.04 25 / 0.45));
+  border-radius: var(--radius-card);
+  box-shadow: 0 18px 30px oklch(0.22 0.022 22 / 0.22);
 }
 
-.lp-banner__seal {
+/* A arte e retangular e opaca, entao a sombra de chao nao pode ser a
+   silhueta espelhada da home — vira elipse difusa sob a peca. Mantem o
+   principio: encolhe e clareia na subida, que e o que vende a altura. */
+.lp-stage__ground {
   position: absolute;
-  z-index: 2;
-  right: clamp(4px, 3vw, 24px);
-  bottom: clamp(0px, 2vw, 16px);
-  display: grid;
-  place-items: center;
-  width: 92px;
-  height: 92px;
-  border: 2px solid color-mix(in oklch, var(--color-orange) 70%, transparent);
+  z-index: 0;
+  bottom: -5%;
+  left: 50%;
+  width: 74%;
+  height: 26px;
   border-radius: var(--radius-pill);
-  background: color-mix(in oklch, var(--color-ink) 72%, transparent);
-  backdrop-filter: blur(4px);
-  text-align: center;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    oklch(0.22 0.022 22 / 0.55) 0%,
+    transparent 70%
+  );
+  filter: blur(10px);
+  pointer-events: none;
 }
 
-.lp-banner__seal strong {
-  display: block;
-  color: var(--color-orange);
-  font-size: 1.9rem;
-  font-weight: var(--weight-display);
-  line-height: 1;
-  letter-spacing: var(--tracking-tight);
+.lp-stage__ground[data-ground] {
+  animation-name: pmGroundSoft;
 }
 
-.lp-banner__seal small {
-  display: block;
-  margin-top: 2px;
-  max-width: 9ch;
-  color: color-mix(in oklch, var(--color-paper) 82%, transparent);
-  font-size: 0.62rem;
-  line-height: 1.2;
+@keyframes pmGroundSoft {
+  from { transform: translateX(-50%) scale(1); opacity: 0.5; }
+  to   { transform: translateX(-50%) scale(0.82); opacity: 0.18; }
 }
 
 /* ---- Secoes ---- */
@@ -441,10 +402,26 @@
   line-height: 1.55;
 }
 
+@media (max-width: 62rem) {
+  .lp-stage__frame {
+    max-width: 320px;
+  }
+}
+
 @media (max-width: 40rem) {
+  /* So quando a grade ja colapsou numa coluna: a arte sobe porque e ela que
+     segura a rolagem. Acima disso as duas colunas ficam lado a lado e
+     inverter a ordem espelharia o layout em relacao ao desktop. */
+  .lp-stage {
+    order: -1;
+  }
+
+  .lp-hero__cta {
+    justify-items: stretch;
+  }
+
   .lp-hero__cta .ds-button,
-  .lp-final__button.ds-button--primary,
-  .lp-banner__button.ds-button--primary {
+  .lp-final__button.ds-button--primary {
     width: 100%;
   }
 
@@ -452,51 +429,22 @@
     display: none;
   }
 
-  /* No mobile a imagem vem primeiro: o produto e o que segura a rolagem. */
-  .lp-banner__inner {
+  .lp-hero__days {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .lp-banner__stage {
-    order: -1;
-    min-height: 0;
-  }
-
-  .lp-banner__product {
-    max-width: 260px;
-  }
-
-  /* 92px sobre um produto de 260px tapa o rotulo — encolhe e recolhe. */
-  .lp-banner__seal {
-    right: 0;
-    bottom: 0;
-    width: 68px;
-    height: 68px;
-  }
-
-  .lp-banner__seal strong {
-    font-size: 1.35rem;
-  }
-
-  .lp-banner__seal small {
-    font-size: 0.55rem;
-  }
-
-  /* Tres dias em linha unica ficam com 2+1 orfao; empilha em coluna. */
-  .lp-banner__days {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-2);
-  }
-
-  .lp-banner__days li {
+  .lp-hero__days li {
     display: grid;
     grid-template-columns: 3.2rem minmax(0, 1fr);
     align-items: center;
     gap: var(--space-3);
   }
 
-  .lp-banner__days span {
+  .lp-hero__days span {
     margin-top: 0;
+  }
+
+  .lp-stage__frame {
+    max-width: 268px;
   }
 }

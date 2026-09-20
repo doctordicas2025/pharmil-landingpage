@@ -18,7 +18,7 @@ import { getContactHref, getGroupHref, hasGroupLink } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Grupo de clientes",
   description:
-    "Condição de cliente, aviso de chegada de lote e laudo publicado a cada entrada. O canal direto com a equipe Pharmil.",
+    "Sorteios e promoções de Tirzepatida toda semana no grupo, com lote, validade e laudo à vista.",
   robots: { index: false, follow: false },
 };
 
@@ -141,99 +141,76 @@ export default function GrupoPage() {
           <div aria-hidden="true" className="hero__halo" />
 
           <div className="lp-hero__inner">
-            <DotPill>Grupo de clientes Pharmil</DotPill>
+            <div className="lp-hero__copy">
+              <DotPill>Toda semana no grupo</DotPill>
 
-            <h1 className="lp-hero__title" id="grupo-title">
-              O lote novo é avisado
-              <br />
-              <em>no grupo primeiro.</em>
-            </h1>
-
-            <p className="lp-hero__lede">
-              Condição de cliente, chegada de lote com quantidade e validade, e o
-              laudo de análise publicado a cada entrada. É onde a equipe responde
-              e onde quem compra recorrente acompanha.
-            </p>
-
-            <div className="lp-hero__cta">
-              <Button
-                href={groupHref}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Entrar no grupo
-                <span aria-hidden="true">→</span>
-              </Button>
-              <p className="lp-hero__meta">
-                <strong>400 pessoas</strong> já acompanham · entrada gratuita ·
-                saia quando quiser
-              </p>
-            </div>
-
-            {linkPronto ? null : (
-              <p className="lp-hero__pending" role="status">
-                Convite sendo liberado. Enquanto isso, o botão leva ao atendimento
-                e a equipe adiciona você.
-              </p>
-            )}
-          </div>
-        </section>
-
-        <section aria-labelledby="banner-title" className="lp-banner">
-          <div className="lp-banner__inner">
-            <div className="lp-banner__copy">
-              <span className="lp-banner__tag">Toda semana no grupo</span>
-              <h2 className="lp-banner__title" id="banner-title">
-                Promoções e condições
+              <h1 className="lp-hero__title" id="grupo-title">
+                Grupo de sorteios
                 <br />
-                exclusivas de <em>Tirzepatida</em>
-              </h2>
-              <p className="lp-banner__lede">
-                Segunda, quarta e sexta a equipe publica as condições da semana
-                para quem está no grupo — com lote, validade e laudo à vista.
+                e promoções de <em>Tirzepatida</em>
+              </h1>
+
+              <p className="lp-hero__lede">
+                Segunda, quarta e sexta tem sorteio e condição da semana para quem
+                está no grupo — com lote, validade e laudo à vista.
               </p>
 
-              <ul className="lp-banner__days">
+              <ul className="lp-hero__days">
                 <li>
                   <strong>SEG</strong>
-                  <span>Condição de entrada</span>
+                  <span>Sorteio aberto a todos</span>
                 </li>
                 <li>
                   <strong>QUA</strong>
-                  <span>Exclusivo de cliente</span>
+                  <span>Sorteio de clientes</span>
                 </li>
                 <li>
                   <strong>SEX</strong>
-                  <span>Lote da semana</span>
+                  <span>Sorteio de clientes</span>
                 </li>
               </ul>
 
-              <Button
-                className="lp-banner__button"
-                href={groupHref}
-                rel="noopener noreferrer"
-                target="_blank"
-              >
-                Quero participar
-                <span aria-hidden="true">→</span>
-              </Button>
+              <div className="lp-hero__cta">
+                <Button
+                  href={groupHref}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  Entrar no grupo
+                  <span aria-hidden="true">→</span>
+                </Button>
+                <p className="lp-hero__meta">
+                  <strong>400 pessoas</strong> já acompanham · entrada gratuita ·
+                  saia quando quiser
+                </p>
+              </div>
+
+              {linkPronto ? null : (
+                <p className="lp-hero__pending" role="status">
+                  Convite sendo liberado. Enquanto isso, o botão leva ao
+                  atendimento e a equipe adiciona você.
+                </p>
+              )}
             </div>
 
-            <div className="lp-banner__stage">
-              <div aria-hidden="true" className="lp-banner__glow" />
-              <Image
-                alt="T.G. 15 — Tirzepatida 15 mg/0,5 mL, caixa com 4 frascos"
-                className="lp-banner__product"
-                height={464}
-                priority
-                sizes="(max-width: 900px) 78vw, 420px"
-                src="/images/cut-tg.png"
-                width={468}
-              />
-              <span className="lp-banner__seal">
-                <strong>4</strong>
-                <small>frascos por caixa</small>
-              </span>
+            <div className="lp-stage">
+              <div aria-hidden="true" className="lp-stage__halo" />
+              <span aria-hidden="true" className="lp-stage__dot lp-stage__dot--a" />
+              <span aria-hidden="true" className="lp-stage__dot lp-stage__dot--b" />
+
+              <div className="lp-stage__frame" data-sway>
+                <span aria-hidden="true" className="lp-stage__ground" data-ground />
+                <Image
+                  alt="Arte do sorteio da semana: T.G. 15, Tirzepatida 15 mg/0,5 mL, quatro ganhadores"
+                  className="lp-stage__art"
+                  data-float
+                  height={1402}
+                  priority
+                  sizes="(max-width: 992px) 78vw, 420px"
+                  src="/images/sorteio-semana.webp"
+                  width={1122}
+                />
+              </div>
             </div>
           </div>
         </section>
