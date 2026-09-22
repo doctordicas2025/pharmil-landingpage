@@ -33,13 +33,11 @@ export function getWhatsappHref(message: string) {
 }
 
 /**
- * Convite do grupo de clientes. Enquanto o link nao existir, os CTAs da pagina
- * /grupo caem no atendimento normal — a pagina converte de qualquer forma e
- * nenhum botao morto vai ao ar.
- *
- * PREENCHER: defina NEXT_PUBLIC_GROUP_URL na Vercel, ou troque a constante.
+ * Convite do grupo de clientes. NEXT_PUBLIC_GROUP_URL na Vercel sobrepoe a
+ * constante; se ambos faltarem, os CTAs da pagina /grupo caem no atendimento
+ * normal para nenhum botao morto ir ao ar.
  */
-const groupInviteUrl = "";
+const groupInviteUrl = "https://chat.whatsapp.com/Lou3gi58mOg9yek52fSpof";
 
 export function getGroupHref() {
   return (
