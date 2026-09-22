@@ -158,6 +158,16 @@
 .ds-eyebrow--orange { color: var(--color-orange); }
 .ds-eyebrow--muted { color: var(--text-secondary); }
 
+/* Dentro do poco de imagem o selo e sobreposto, nao faz parte do fluxo.
+   O posicionamento mora aqui e nao no proprio selo porque o mesmo componente
+   tambem e usado solto, em linha com texto. */
+.ds-card__media > .ds-badge {
+  position: absolute;
+  z-index: 2;
+  top: var(--space-3);
+  left: var(--space-3);
+}
+
 .ds-badge {
   display: inline-block;
   padding: 6px 11px;

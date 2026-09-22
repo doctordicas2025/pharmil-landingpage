@@ -39,12 +39,11 @@
   --color-success: oklch(0.52 0.11 155);
 
   /* Fundos fotograficos dos produtos. Sao dado, nao superficie de UI:
-     cada um e o cenario de um produto especifico. */
-  --tint-tg: #fff3e6;
-  --tint-lipoless: #ecf0f7;
-  --tint-tirze: #ffe2d2;
-  --tint-reta-synedica: #fff3eb;
-  --tint-reta-pepking: #fff0ea;
+     cada um e o cenario de um produto especifico.
+     Regra: foto com fundo branco recebe --tint-photo, senao o branco da foto
+     aparece como um quadrado recortado sobre a cor. Cor so em recorte com
+     alpha, que assenta em qualquer fundo. */
+  --tint-photo: #fefefe;
   --tint-ghkcu: #e9eff7;
   --tint-glow: #e7edf6;
   --tint-klow: #f4e9e8;

@@ -22,7 +22,7 @@ export const products: Product[] = [
     presentation: "Tirzepatida 15 mg/0,5 mL · 4 frascos",
     price: 599,
     image: "/images/cut-tg.png",
-    tint: "var(--tint-tg)",
+    tint: "var(--tint-photo)",
     fit: "contain",
     badge: "+ GHK-Cu por R$ 249",
     description:
@@ -41,7 +41,7 @@ export const products: Product[] = [
     presentation: "Tirzepatida 15 mg/0,5 mL · 4 frascos",
     price: 549,
     image: "/images/cut-lipoless.png",
-    tint: "var(--tint-lipoless)",
+    tint: "var(--tint-photo)",
     fit: "contain",
     description:
       "Mesma concentração do TG 15 em apresentação de outro fabricante. Lote e validade confirmados no atendimento antes do envio.",
@@ -59,7 +59,7 @@ export const products: Product[] = [
     presentation: "Frasco liofilizado 100 mg",
     price: 1000,
     image: "/images/cut-tirze-pepking.webp",
-    tint: "var(--tint-tirze)",
+    tint: "var(--tint-photo)",
     fit: "contain",
     description:
       "Frasco liofilizado de maior quantidade, para quem já tem orientação profissional definida. Reconstituição conforme instrução do profissional responsável.",
@@ -77,7 +77,7 @@ export const products: Product[] = [
     presentation: "Caneta aplicadora · 40 mg",
     price: 1370,
     image: "/images/cut-reta-synedica.webp",
-    tint: "var(--tint-reta-synedica)",
+    tint: "var(--tint-photo)",
     fit: "contain",
     description:
       "Apresentação em caneta aplicadora. Disponibilidade confirmada por lote no atendimento.",
@@ -96,7 +96,7 @@ export const products: Product[] = [
     price: 1100,
     // Mesma arte da apresentacao de 40 mg: a caixa e a mesma, muda a dosagem.
     image: "/images/cut-reta-synedica.webp",
-    tint: "var(--tint-reta-pepking)",
+    tint: "var(--tint-photo)",
     fit: "contain",
     description:
       "Frasco liofilizado. Reconstituição e uso conforme orientação do profissional responsável.",
