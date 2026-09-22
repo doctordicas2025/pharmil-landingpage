@@ -18,7 +18,7 @@ import { getContactHref, getGroupHref, hasGroupLink } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Grupo de clientes",
   description:
-    "Sorteios e promoções de Tirzepatida toda semana no grupo, com lote, validade e laudo à vista.",
+    "Sorteios e promoções da Pharmil toda semana no grupo, com lote, validade e laudo à vista.",
   robots: { index: false, follow: false },
 };
 
@@ -147,7 +147,7 @@ export default function GrupoPage() {
               <h1 className="lp-hero__title" id="grupo-title">
                 Grupo de sorteios
                 <br />
-                e promoções de <em>Tirzepatida</em>
+                e promoções da Pharmil
               </h1>
 
               <p className="lp-hero__lede">
@@ -201,14 +201,14 @@ export default function GrupoPage() {
               <div className="lp-stage__frame" data-sway>
                 <span aria-hidden="true" className="lp-stage__ground" data-ground />
                 <Image
-                  alt="Arte do sorteio da semana: T.G. 15, Tirzepatida 15 mg/0,5 mL, quatro ganhadores"
+                  alt="Sorteio gratuito: participe da comunidade Pharmil"
                   className="lp-stage__art"
                   data-float
-                  height={1402}
+                  height={1254}
                   priority
                   sizes="(max-width: 992px) 78vw, 420px"
-                  src="/images/sorteio-semana.webp"
-                  width={1122}
+                  src="/images/grupo-sorteio.png"
+                  width={1254}
                 />
               </div>
             </div>
