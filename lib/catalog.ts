@@ -58,9 +58,9 @@ export const products: Product[] = [
     category: "GLP-1",
     presentation: "Frasco liofilizado 100 mg",
     price: 1000,
-    image: "/images/tile-tirzepatida.jpg",
+    image: "/images/cut-tirze-pepking.webp",
     tint: "var(--tint-tirze)",
-    fit: "cover",
+    fit: "contain",
     description:
       "Frasco liofilizado de maior quantidade, para quem já tem orientação profissional definida. Reconstituição conforme instrução do profissional responsável.",
     facts: [
@@ -76,10 +76,9 @@ export const products: Product[] = [
     category: "GLP-1",
     presentation: "Caneta aplicadora · 40 mg",
     price: 1370,
-    image: "/images/tile-brand-b.jpg",
+    image: "/images/cut-reta-synedica.webp",
     tint: "var(--tint-reta-synedica)",
-    fit: "cover",
-    badge: "Foto em breve",
+    fit: "contain",
     description:
       "Apresentação em caneta aplicadora. Disponibilidade confirmada por lote no atendimento.",
     facts: [
@@ -95,10 +94,10 @@ export const products: Product[] = [
     category: "GLP-1",
     presentation: "Frasco liofilizado 60 mg",
     price: 1100,
-    image: "/images/tile-brand-a.jpg",
+    // Mesma arte da apresentacao de 40 mg: a caixa e a mesma, muda a dosagem.
+    image: "/images/cut-reta-synedica.webp",
     tint: "var(--tint-reta-pepking)",
-    fit: "cover",
-    badge: "Foto em breve",
+    fit: "contain",
     description:
       "Frasco liofilizado. Reconstituição e uso conforme orientação do profissional responsável.",
     facts: [

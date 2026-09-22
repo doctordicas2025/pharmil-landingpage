@@ -28,8 +28,8 @@
 }
 
 /* A arte tem ~12% de margem branca em volta do círculo; o zoom recorta essa
-   folga para o círculo preencher a caixa. multiply funde o fundo branco do
-   JPG com o papel do cabeçalho. */
+   folga para o círculo preencher a caixa. O PNG tem alpha real, então não
+   precisa de mix-blend-mode para esconder fundo. */
 .brand__logo {
   position: absolute;
   top: -0.475rem;
@@ -37,7 +37,6 @@
   width: 3.7rem;
   height: 3.7rem;
   max-width: none;
-  mix-blend-mode: multiply;
 }
 
 .desktop-nav {

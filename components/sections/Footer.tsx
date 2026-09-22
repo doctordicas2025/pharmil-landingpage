@@ -20,7 +20,7 @@ export default function Footer({ contactHref }: FooterProps) {
       <div className="site-footer__inner">
         <div className="site-footer__brand">
           <Link className="site-footer__logo" href="/#inicio">
-            <Image alt="" height={42} src="/images/pharmil-logo.jpg" width={42} />
+            <Image alt="" height={42} src="/images/pharmil-logo.png" width={42} />
             <span>Pharmil</span>
           </Link>
           <p>Procedência visível, atendimento claro e entrega acompanhada.</p>

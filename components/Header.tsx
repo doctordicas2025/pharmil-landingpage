@@ -14,7 +14,7 @@ function Brand() {
       <span className="brand__logo-crop" aria-hidden="true">
         <Image
           className="brand__logo"
-          src="/brand/pharmil-logo.jpg"
+          src="/brand/pharmil-logo.png"
           alt=""
           width={1254}
           height={1254}

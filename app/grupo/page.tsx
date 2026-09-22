@@ -128,7 +128,7 @@ export default function GrupoPage() {
               className="brand__logo"
               height={1254}
               sizes="60px"
-              src="/brand/pharmil-logo.jpg"
+              src="/brand/pharmil-logo.png"
               width={1254}
             />
           </span>
