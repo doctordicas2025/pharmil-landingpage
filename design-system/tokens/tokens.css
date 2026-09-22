@@ -9,29 +9,39 @@
 
 :root {
   /* ---- Cor ---------------------------------------------------------- */
-  /* Uma familia de acento em tres registros: wine age, red aquece,
-     orange marca. Navy e escasso de proposito — so a cadeia de frio. */
-  --color-wine: oklch(0.42 0.16 24);
-  --color-wine-deep: oklch(0.33 0.13 24);
-  --color-red: oklch(0.55 0.19 30);
-  --color-orange: oklch(0.7 0.2 42);
-  --color-navy: oklch(0.28 0.07 247);
-  --color-navy-light: oklch(0.36 0.07 243);
+  /* O mundo do produto e vidro frio com tampa quente. A base e branco-gelo
+     e a marca entra como calor concentrado — o oposto do creme morno que
+     havia antes, que tirava o brilho de tudo.
+     Uma familia de acento em tres registros: wine age, red aquece, orange
+     marca. Navy e escasso de proposito — so a cadeia de frio.
+     Todo par de texto/fundo aqui foi conferido em WCAG; os valores nao sao
+     estetica solta, sao o ponto mais vibrante que ainda passa em AA. */
+  --color-wine: oklch(0.5 0.21 26);
+  --color-wine-deep: oklch(0.38 0.17 25);
+  --color-red: oklch(0.58 0.24 30);
+  --color-orange: oklch(0.72 0.21 45);
+  --color-navy: oklch(0.26 0.08 250);
+  --color-navy-light: oklch(0.34 0.08 248);
 
-  /* Neutros sempre aquecidos: preto e branco puros sao proibidos. */
-  --color-paper: oklch(0.984 0.008 55);
-  --color-surface: oklch(0.958 0.014 55);
-  --color-peach: oklch(0.925 0.045 48);
-  --color-ink: oklch(0.22 0.022 22);
-  --color-muted: oklch(0.49 0.024 40);
-  --color-line: oklch(0.88 0.022 52);
-  --color-focus: oklch(0.71 0.2 43);
+  /* Laranja pleno tem 2.79:1 sobre branco — reprova para texto pequeno.
+     Esta variante escura e a que vai em numeral, marcador e rotulo. */
+  --color-orange-text: oklch(0.52 0.19 45);
+
+  /* Neutros frios de vidro. Preto e branco puros continuam proibidos: ha
+     um fio de azul em todos. */
+  --color-paper: oklch(0.995 0.002 250);
+  --color-surface: oklch(0.972 0.005 250);
+  --color-peach: oklch(0.93 0.05 40);
+  --color-ink: oklch(0.2 0.015 265);
+  --color-muted: oklch(0.5 0.015 265);
+  --color-line: oklch(0.9 0.006 250);
+  --color-focus: oklch(0.72 0.21 45);
 
   /* Hierarquia de texto em tres niveis. `subtle` fecha a lacuna que o
      sistema tinha: antes `muted` acumulava secundario e metadado. */
   --text-primary: var(--color-ink);
   --text-secondary: var(--color-muted);
-  --text-subtle: oklch(0.62 0.02 40);
+  --text-subtle: oklch(0.54 0.012 265);
   --text-on-dark: var(--color-paper);
 
   /* Semanticos. Derivados da familia quente para nao destoar. */
@@ -121,11 +131,23 @@
   --border: var(--border-width) solid var(--color-line);
   --border-strong: var(--border-width-strong) solid var(--color-line);
 
-  /* Sombras sao tingidas de wine: cinza neutro suja esta paleta. */
-  --shadow-lift: 0 1.2rem 2.4rem color-mix(in oklch, var(--color-wine) 14%, transparent);
-  --shadow-lift-strong: 0 1.4rem 2.8rem color-mix(in oklch, var(--color-wine) 15%, transparent);
-  --shadow-control: 0 1rem 2rem color-mix(in oklch, var(--color-wine) 26%, transparent);
-  --shadow-object: 0 8px 12px oklch(0.22 0.022 22 / 0.14);
+  /* Sombras sao tingidas de wine: cinza neutro suja esta paleta.
+     Em duas camadas — um contato curto e opaco logo abaixo do objeto, e um
+     halo largo e difuso. Uma camada so achata; e a diferenca entre as duas
+     que o olho le como altura. */
+  --shadow-rest:
+    0 1px 2px color-mix(in oklch, var(--color-wine) 8%, transparent),
+    0 4px 12px color-mix(in oklch, var(--color-wine) 6%, transparent);
+  --shadow-lift:
+    0 2px 4px color-mix(in oklch, var(--color-wine) 10%, transparent),
+    0 12px 28px color-mix(in oklch, var(--color-wine) 14%, transparent);
+  --shadow-lift-strong:
+    0 3px 6px color-mix(in oklch, var(--color-wine) 12%, transparent),
+    0 18px 40px color-mix(in oklch, var(--color-wine) 18%, transparent);
+  --shadow-control:
+    0 2px 4px color-mix(in oklch, var(--color-wine) 22%, transparent),
+    0 10px 24px color-mix(in oklch, var(--color-wine) 26%, transparent);
+  --shadow-object: 0 8px 12px oklch(0.2 0.015 265 / 0.16);
 
   /* ---- Movimento ----------------------------------------------------- */
   /* Desaceleracao para o que o usuario causou; senoidal para o que roda

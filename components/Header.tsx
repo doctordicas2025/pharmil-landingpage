@@ -58,7 +58,6 @@ export function Header({ contactHref }: HeaderProps) {
           target="_blank"
         >
           Falar no WhatsApp
-          <span aria-hidden="true">→</span>
         </a>
 
         <details className="mobile-menu">
@@ -77,7 +76,6 @@ export function Header({ contactHref }: HeaderProps) {
               target="_blank"
             >
               Falar no WhatsApp
-              <span aria-hidden="true">→</span>
             </a>
           </nav>
         </details>

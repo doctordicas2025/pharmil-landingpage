@@ -177,7 +177,6 @@ export default function GrupoPage() {
                   target="_blank"
                 >
                   Entrar no grupo
-                  <span aria-hidden="true">→</span>
                 </Button>
                 <p className="lp-hero__meta">
                   <strong>400 pessoas</strong> já acompanham · entrada gratuita ·
@@ -314,7 +313,6 @@ export default function GrupoPage() {
               target="_blank"
             >
               Entrar no grupo
-              <span aria-hidden="true">→</span>
             </Button>
             <p className="lp-final__note">
               Uso sob orientação profissional. A dispensação é feita por farmácia

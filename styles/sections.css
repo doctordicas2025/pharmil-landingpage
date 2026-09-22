@@ -81,7 +81,7 @@
 }
 
 .order-step__number {
-  color: var(--color-orange);
+  color: var(--color-orange-text);
   font-size: 0.76rem;
   font-weight: 800;
   letter-spacing: 0.1em;

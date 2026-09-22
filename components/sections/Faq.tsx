@@ -51,7 +51,7 @@ export default function Faq({ contactHref }: FaqProps) {
           </p>
           <div className="faq__action">
             <TextLink external href={contactHref}>
-              Perguntar agora <span aria-hidden="true">→</span>
+              Perguntar agora
             </TextLink>
           </div>
         </div>

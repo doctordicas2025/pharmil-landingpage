@@ -74,7 +74,6 @@ export function Hero({ contactHref }: HeroProps) {
           <div className="hero__actions">
             <Button href={contactHref} rel="noopener noreferrer" target="_blank">
               Garanta o seu agora
-              <span aria-hidden="true">→</span>
             </Button>
             <TextLink href="#loja">Ver todos os produtos</TextLink>
           </div>

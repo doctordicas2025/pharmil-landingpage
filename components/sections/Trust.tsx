@@ -34,7 +34,7 @@ export default function Trust({ contactHref }: TrustProps) {
           </p>
           <div className="network__action">
             <TextLink external href={contactHref}>
-              Tirar uma dúvida <span aria-hidden="true">→</span>
+              Tirar uma dúvida
             </TextLink>
           </div>
         </div>

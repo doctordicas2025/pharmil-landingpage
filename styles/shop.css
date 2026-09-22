@@ -70,7 +70,7 @@
 }
 
 .category-card__index {
-  color: var(--color-orange);
+  color: var(--color-orange-text);
   font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 0.1em;

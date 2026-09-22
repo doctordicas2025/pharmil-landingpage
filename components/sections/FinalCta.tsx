@@ -25,7 +25,7 @@ export default function FinalCta({ contactHref }: FinalCtaProps) {
             rel="noopener noreferrer"
             target="_blank"
           >
-            Chamar no WhatsApp <span aria-hidden="true">→</span>
+            Chamar no WhatsApp
           </Button>
           <p className="final-cta__hours">
             Seg a sáb, 9h às 19h · resposta média em 4 minutos

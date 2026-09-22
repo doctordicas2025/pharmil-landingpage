@@ -155,7 +155,12 @@
 }
 
 .ds-eyebrow--wine { color: var(--color-wine); }
-.ds-eyebrow--orange { color: var(--color-orange); }
+/* Sobre claro o laranja pleno reprova no contraste; a variante escura e a
+   que vale para texto. Em superficie escura volta o pleno. */
+.ds-eyebrow--orange { color: var(--color-orange-text); }
+.cold-chain .ds-eyebrow--orange,
+.lp-proof .ds-eyebrow--orange,
+.site-footer .ds-eyebrow--orange { color: var(--color-orange); }
 .ds-eyebrow--muted { color: var(--text-secondary); }
 
 /* Dentro do poco de imagem o selo e sobreposto, nao faz parte do fluxo.
@@ -275,6 +280,7 @@
   flex-direction: column;
   border: var(--border);
   border-radius: var(--radius-card);
+  box-shadow: var(--shadow-rest);
   transition: transform var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out),
     border-color var(--dur-fast) var(--ease-out);
@@ -585,7 +591,7 @@
 
 .ds-accordion__marker {
   flex: 0 0 auto;
-  color: var(--color-orange);
+  color: var(--color-orange-text);
   font-size: 1.3rem;
   font-weight: var(--weight-strong);
   line-height: 1;

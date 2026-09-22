@@ -1,27 +1,42 @@
+/* A pagina inteira e disciplinada; a energia da marca e gasta aqui e so
+   aqui. Tres focos de luz sobre o branco-gelo, em vez de um degrade reto:
+   e o que faz o fundo ter profundidade em vez de ser uma chapa. */
 .hero {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    180deg,
-    oklch(0.99 0.004 60) 0%,
-    var(--color-paper) 62%,
-    oklch(0.965 0.012 52) 100%
-  );
+  background:
+    radial-gradient(
+      62% 55% at 82% 8%,
+      color-mix(in oklch, var(--color-orange) 26%, transparent) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      48% 46% at 96% 52%,
+      color-mix(in oklch, var(--color-red) 20%, transparent) 0%,
+      transparent 66%
+    ),
+    radial-gradient(
+      70% 60% at 12% 96%,
+      color-mix(in oklch, var(--color-peach) 52%, transparent) 0%,
+      transparent 70%
+    ),
+    var(--color-paper);
 }
 
 .hero__halo {
   position: absolute;
-  top: -14%;
-  right: -8%;
-  width: min(760px, 78vw);
+  top: -22%;
+  right: -12%;
+  width: min(820px, 88vw);
   aspect-ratio: 1;
   border-radius: 999px;
   background: radial-gradient(
     circle at 50% 50%,
-    var(--color-peach) 0%,
-    color-mix(in oklch, var(--color-peach) 45%, transparent) 44%,
-    transparent 72%
+    color-mix(in oklch, var(--color-orange) 34%, transparent) 0%,
+    color-mix(in oklch, var(--color-peach) 40%, transparent) 42%,
+    transparent 70%
   );
+  filter: blur(18px);
   pointer-events: none;
 }
 
