@@ -24,7 +24,6 @@ export const products: Product[] = [
     image: "/images/cut-tg.png",
     tint: "var(--tint-photo)",
     fit: "contain",
-    badge: "+ GHK-Cu por R$ 249",
     description:
       "Apresentação em frasco com quatro unidades, acompanhada do laudo do lote. Envio em caixa térmica com registro de temperatura e código de rastreio.",
     facts: [

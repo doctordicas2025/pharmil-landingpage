@@ -83,7 +83,7 @@ export default function Showcase() {
         <Eyebrow>Nossos produtos</Eyebrow>
         <Eyebrow tone="orange">Cadeia de frio</Eyebrow>
         <Eyebrow tone="muted">Metadado</Eyebrow>
-        <Badge>+ GHK-Cu por R$ 249</Badge>
+        <Badge>Destaque</Badge>
         <DotPill>Tecnologia em peptideos</DotPill>
       </Row>
 
