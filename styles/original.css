@@ -1,0 +1,195 @@
+/* Pagina /original. Reaproveita a estrutura lp-* da /grupo; aqui fica so o
+   que e proprio desta pagina: o visor de camera, o numero e a lista de
+   verificacoes. */
+
+.og-title span {
+  display: block;
+  color: var(--color-red);
+}
+
+.og-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(14px, 2vw, 24px);
+  margin-top: clamp(28px, 4vw, 40px);
+}
+
+/* ---- Visor de camera ---- */
+
+.og-stage {
+  max-width: 380px;
+}
+
+.og-scan {
+  position: relative;
+  z-index: 1;
+}
+
+.og-scan__art {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-card);
+  background: var(--tint-photo);
+  box-shadow: var(--shadow-lift-strong);
+}
+
+/* Cantos do visor ficam um pouco para fora da foto, como a mira de um app
+   de camera, e nao colados na borda. */
+.og-scan__corner {
+  position: absolute;
+  z-index: 2;
+  width: 17%;
+  aspect-ratio: 1;
+  border: 3px solid var(--color-red);
+  pointer-events: none;
+}
+
+.og-scan__corner--tl {
+  top: -5%;
+  left: -5%;
+  border-right: 0;
+  border-bottom: 0;
+  border-top-left-radius: var(--radius-control);
+}
+
+.og-scan__corner--tr {
+  top: -5%;
+  right: -5%;
+  border-bottom: 0;
+  border-left: 0;
+  border-top-right-radius: var(--radius-control);
+}
+
+.og-scan__corner--bl {
+  bottom: -5%;
+  left: -5%;
+  border-top: 0;
+  border-right: 0;
+  border-bottom-left-radius: var(--radius-control);
+}
+
+.og-scan__corner--br {
+  right: -5%;
+  bottom: -5%;
+  border-top: 0;
+  border-left: 0;
+  border-bottom-right-radius: var(--radius-control);
+}
+
+/* A linha percorre a foto como a leitura de um QR. O degrade tem o dobro da
+   altura do elemento, entao mover o background-position de 100% a 0% leva a
+   linha do topo a base sem animar propriedade de layout. */
+.og-scan__line {
+  position: absolute;
+  z-index: 2;
+  inset: 8% 6%;
+  background: linear-gradient(
+    to bottom,
+    transparent calc(50% - 5px),
+    color-mix(in oklch, var(--color-red) 30%, transparent) calc(50% - 2px),
+    var(--color-red) 50%,
+    color-mix(in oklch, var(--color-red) 30%, transparent) calc(50% + 2px),
+    transparent calc(50% + 5px)
+  );
+  background-size: 100% 200%;
+  animation: ogScan 3200ms var(--ease-loop) infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes ogScan {
+  from { background-position: 0 100%; }
+  to   { background-position: 0 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .og-scan__line {
+    display: none;
+  }
+}
+
+/* ---- Medo ---- */
+
+.og-fear .section-title {
+  max-width: 18ch;
+}
+
+.og-fear__text {
+  margin-top: var(--space-5);
+  max-width: 50ch;
+  color: var(--text-secondary);
+  font-size: var(--size-lede);
+  line-height: 1.6;
+}
+
+.og-valiq {
+  margin-top: var(--space-9);
+}
+
+/* ---- Numero ---- */
+
+.og-count__inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 82px) var(--page-gutter);
+  text-align: center;
+}
+
+.og-count__number {
+  color: var(--color-orange);
+  font-size: clamp(3.5rem, 12vw, 8rem);
+  font-weight: var(--weight-display);
+  line-height: 0.9;
+  letter-spacing: var(--tracking-display);
+}
+
+.og-count__label {
+  margin-top: var(--space-5);
+  color: color-mix(in oklch, var(--color-paper) 80%, transparent);
+  font-size: var(--size-lede);
+}
+
+/* ---- O que mais dá pra conferir ---- */
+
+/* Lista, e nao grade de cards: cada item e uma linha curta de verificacao,
+   e o fio vinho em cima e o que agrupa. */
+.og-checks {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-9);
+  margin: clamp(28px, 4vw, 40px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.og-checks li {
+  padding-top: var(--space-5);
+  border-top: 2px solid var(--color-wine);
+}
+
+.og-checks strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: 1.05rem;
+  font-weight: var(--weight-strong);
+  letter-spacing: var(--tracking-tight);
+}
+
+.og-checks span {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+  line-height: 1.5;
+}
+
+@media (max-width: 40rem) {
+  .og-actions .ds-button {
+    width: 100%;
+  }
+
+  .og-stage {
+    max-width: 260px;
+  }
+}
