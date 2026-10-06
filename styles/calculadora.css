@@ -53,17 +53,45 @@
   gap: var(--space-4);
 }
 
-/* Tipo de frasco: dois rotulos longos. Empilhados no celular para nao
-   quebrar um embaixo do outro com larguras diferentes. */
-.calc__form > .ds-options:first-child .ds-options__list {
+/* Produto: foto da caixa ao lado do nome, para a pessoa reconhecer o que
+   tem em maos antes de ler a concentracao. */
+.calc-product {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--space-4);
 }
 
-@media (min-width: 30rem) {
-  .calc__form > .ds-options:first-child .ds-options__list {
-    grid-template-columns: repeat(2, minmax(0, max-content));
-  }
+.calc-product__thumb {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  background: var(--tint-photo);
+}
+
+.calc-product__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.calc-product__text {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.calc-product__name {
+  font-weight: var(--weight-strong);
+}
+
+.calc-product__detail {
+  color: var(--text-secondary);
+  font-size: var(--size-xs);
+  font-weight: var(--weight-body);
+  line-height: 1.4;
 }
 
 .calc__group .ds-options--list .ds-options__list {

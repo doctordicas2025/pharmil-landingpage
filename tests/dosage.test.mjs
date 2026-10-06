@@ -3,10 +3,7 @@
 
 import assert from "node:assert/strict";
 import { test } from "node:test";
-
 import {
-  POWDER_VIAL_MG,
-  SOLUTION_GROUPS,
   calculateDose,
   concentration,
   formatMgPerMl,
@@ -14,36 +11,54 @@ import {
   isOnMark,
   syringeStepUnits,
 } from "../lib/dosage.ts";
+import { products } from "../lib/catalog.ts";
 
-const grupo = (id) => SOLUTION_GROUPS.find((g) => g.id === id);
+const solucao = (id) => products.find((p) => p.id === id).solution;
+const mgPorMl = (s) => concentration(s.labelMg, s.labelMl);
 
-test("grupos de solucao pronta tem a concentracao do rotulo", () => {
-  assert.equal(grupo("a").mgPerMl, 30); // 15 mg / 0,5 mL
-  assert.equal(grupo("b").mgPerMl, 25); // 15 mg / 0,6 mL
-  assert.equal(grupo("c").mgPerMl, 15); // 15 mg / 1 mL
+test("so produtos de solucao pronta entram na calculadora", () => {
+  // Caneta e frasco sem concentracao conhecida ficam de fora.
+  assert.deepEqual(
+    products.filter((p) => p.solution).map((p) => p.id),
+    ["tg15", "lipoless"],
+  );
 });
 
-test("grupo A, 5 mg: 16,7 unidades e 3 doses completas", () => {
-  const r = calculateDose({ mgPerMl: 30, doseMg: 5, syringeMl: 1, vialMg: 15 });
+test("TG 15 e Lipoless MD tem a concentracao impressa na caixa", () => {
+  assert.equal(mgPorMl(solucao("tg15")), 30); // 15 mg / 0,5 mL
+  assert.equal(mgPorMl(solucao("lipoless")), 25); // 15 mg / 0,6 mL
+});
+
+test("TG 15, 5 mg: 16,7 unidades e 3 doses no frasco de 15 mg", () => {
+  const tg = solucao("tg15");
+  const r = calculateDose({ mgPerMl: mgPorMl(tg), doseMg: 5, syringeMl: 1, vialMg: tg.vialMg });
   assert.ok(Math.abs(r.units - 16.6667) < 0.001);
   assert.equal(formatUnits(r.units), "16,7");
   assert.equal(r.fullDoses, 3);
   assert.equal(r.remainderMg, 0);
 });
 
-test("grupo A, 9,5 mg: 31,7 unidades, e nao 33 como na tabela impressa", () => {
+test("TG 15, 9,5 mg: 31,7 unidades, e nao 33 como na tabela impressa", () => {
   const r = calculateDose({ mgPerMl: 30, doseMg: 9.5, syringeMl: 1, vialMg: 15 });
   assert.equal(formatUnits(r.units), "31,7");
 });
 
-test("grupo B, 10 mg: 40 unidades e 1 dose completa, e nao 2", () => {
-  const r = calculateDose({ mgPerMl: 25, doseMg: 10, syringeMl: 1, vialMg: 15 });
+test("Lipoless MD, 10 mg: 40 unidades e 6 doses no frasco multidose de 60 mg", () => {
+  // Caixa: "Vial Multidosis ... contiene 4 dosis de 15 mg / 0,6 mL"
+  const md = solucao("lipoless");
+  assert.equal(md.vialMg, 60);
+  const r = calculateDose({ mgPerMl: mgPorMl(md), doseMg: 10, syringeMl: 1, vialMg: md.vialMg });
   assert.equal(formatUnits(r.units), "40");
-  assert.equal(r.fullDoses, 1);
-  assert.equal(r.remainderMg, 5);
+  assert.equal(r.fullDoses, 6);
 });
 
-test("de 8,5 a 13,5 mg a ampola de 15 mg tem 1 dose completa", () => {
+test("a mesma dose da unidades diferentes no TG e no Lipoless MD", () => {
+  const u = (id) => calculateDose({ mgPerMl: mgPorMl(solucao(id)), doseMg: 5, syringeMl: 1, vialMg: 15 }).units;
+  assert.equal(formatUnits(u("tg15")), "16,7");
+  assert.equal(formatUnits(u("lipoless")), "20");
+});
+
+test("de 8,5 a 13,5 mg o frasco de 15 mg do TG tem 1 dose completa", () => {
   for (const d of [8.5, 9.5, 10, 11.5, 12.5, 13.5]) {
     const r = calculateDose({ mgPerMl: 30, doseMg: d, syringeMl: 1, vialMg: 15 });
     assert.equal(r.fullDoses, 1, `dose ${d} mg`);
@@ -131,25 +146,4 @@ test("valor que cai entre dois riscos e sinalizado", () => {
 test("concentracao aparece com ate duas casas", () => {
   assert.equal(formatMgPerMl(30), "30 mg/mL");
   assert.equal(formatMgPerMl(10 / 3), "3,33 mg/mL");
-});
-
-test("frasco de GHK-Cu de 100 mg esta entre as opcoes de po", () => {
-  assert.ok(POWDER_VIAL_MG.includes(100));
-  // 100 mg em 2 mL = 50 mg/mL; 2 mg = 0,04 mL = 4 unidades
-  const r = calculateDose({ mgPerMl: concentration(100, 2), doseMg: 2, syringeMl: 0.3, vialMg: 100 });
-  assert.equal(formatUnits(r.units), "4");
-  assert.equal(r.fullDoses, 50);
-});
-
-test("frasco multidose de 0,6 mL tem 4 doses de 15 mg; os outros, 15 mg", () => {
-  // Caixa do Lipoless MD: "Vial Multidosis ... contiene 4 dosis de 15 mg / 0,6 mL"
-  assert.equal(grupo("b").vialMg, 60);
-  assert.equal(grupo("a").vialMg, 15);
-  assert.equal(grupo("c").vialMg, 15);
-  // A concentracao continua sendo a do rotulo: 15 mg / 0,6 mL
-  assert.equal(grupo("b").labelMg / grupo("b").labelMl, grupo("b").mgPerMl);
-  // 10 mg no frasco de 60 mg: 6 doses, e nao 1
-  const r = calculateDose({ mgPerMl: 25, doseMg: 10, syringeMl: 1, vialMg: grupo("b").vialMg });
-  assert.equal(formatUnits(r.units), "40");
-  assert.equal(r.fullDoses, 6);
 });

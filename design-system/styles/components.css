@@ -466,6 +466,11 @@
   font-weight: var(--weight-body);
 }
 
+/* Sobre o pessego do selecionado, subtle cai para 3.99:1; secondary passa. */
+.ds-options--list .ds-option.is-selected .ds-option__detail {
+  color: var(--text-secondary);
+}
+
 .ds-options__hint {
   margin: calc(var(--space-1) * -1) 0 var(--space-3);
 }

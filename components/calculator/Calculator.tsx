@@ -1,16 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 import { Button, Field, Notice, OptionGroup } from "@/design-system";
 import type { OptionItem } from "@/design-system";
+import { products } from "@/lib/catalog";
+import type { Product, Solution } from "@/lib/catalog";
 import {
+  DOSES_MG,
   LABEL_DOSES_MG,
-  POWDER_DILUENT_ML,
-  POWDER_DOSES_MG,
-  POWDER_VIAL_MG,
-  SOLUTION_DOSES_MG,
-  SOLUTION_GROUPS,
   SYRINGES_ML,
   calculateDose,
   concentration,
@@ -24,34 +23,27 @@ import {
 
 import { SyringeGauge } from "./SyringeGauge";
 
-type Mode = "solucao" | "po";
+// So entra o que o catalogo marca como solucao pronta para seringa.
+type CalcProduct = Product & { solution: Solution };
+const CALC_PRODUCTS = products.filter((p): p is CalcProduct => Boolean(p.solution));
 
 const OUTRO = "outro";
 
 type State = {
-  mode: Mode;
-  group: string;
+  product: string;
   labelMg: string;
   labelMl: string;
-  powderMg: string;
-  powderMgCustom: string;
-  diluentMl: string;
-  diluentMlCustom: string;
   syringeMl: string;
   dose: string;
   doseCustom: string;
 };
 
-// Nenhuma dose vem marcada: a calculadora converte, nao sugere.
+// Nada vem marcado alem da seringa: a pessoa precisa dizer qual e o produto
+// dela, porque a mesma dose da unidades diferentes em cada um.
 const INITIAL: State = {
-  mode: "solucao",
-  group: "a",
+  product: "",
   labelMg: "",
   labelMl: "",
-  powderMg: "",
-  powderMgCustom: "",
-  diluentMl: "",
-  diluentMlCustom: "",
   syringeMl: "1",
   dose: "",
   doseCustom: "",
@@ -61,22 +53,29 @@ const toNumber = (s: string) => (s.trim() === "" ? Number.NaN : Number(s.trim().
 const pick = (choice: string, custom: string) => toNumber(choice === OUTRO ? custom : choice);
 const decimal = (n: number) => String(n).replace(".", ",");
 const valido = (n: number) => Number.isFinite(n) && n > 0;
+const rotulo = (s: Solution) => `${formatMg(s.labelMg)}/${formatMl(s.labelMl)}`;
 
 const customError = (s: string) =>
   s.trim() !== "" && !valido(toNumber(s)) ? "Digite um número maior que zero, como 4,2." : undefined;
 
-const modeOptions: OptionItem[] = [
-  { value: "solucao", label: "Solução pronta", detail: "Tirzepatida líquida" },
-  { value: "po", label: "Pó para reconstituir", detail: "GHK-Cu e outros peptídeos" },
-];
-
-const groupOptions: OptionItem[] = [
-  ...SOLUTION_GROUPS.map((g) => ({
-    value: g.id,
-    label: g.label,
-    detail: `${formatMgPerMl(g.mgPerMl)}${g.vialNote ? ` · ${g.vialNote}` : ""} · ex.: ${g.products}`,
+const productOptions: OptionItem[] = [
+  ...CALC_PRODUCTS.map((p) => ({
+    value: p.id,
+    label: (
+      <span className="calc-product">
+        <span className="calc-product__thumb">
+          <Image alt="" height={56} sizes="56px" src={p.image} width={56} />
+        </span>
+        <span className="calc-product__text">
+          <span className="calc-product__name">{p.name}</span>
+          <span className="calc-product__detail">
+            {p.solution.substance} {rotulo(p.solution)} · {p.solution.vialNote}
+          </span>
+        </span>
+      </span>
+    ),
   })),
-  { value: OUTRO, label: "Outra concentração", detail: "Digite o que está no rótulo" },
+  { value: OUTRO, label: "Outro produto", detail: "Digite os mg e os mL que estão no rótulo" },
 ];
 
 const syringeOptions: OptionItem[] = SYRINGES_ML.map((ml) => ({
@@ -85,9 +84,13 @@ const syringeOptions: OptionItem[] = SYRINGES_ML.map((ml) => ({
   detail: `${ml * 100} UI`,
 }));
 
-const chips = (values: readonly number[], unit: string): OptionItem[] => [
-  ...values.map((v) => ({ value: String(v), label: `${decimal(v)} ${unit}` })),
-  { value: OUTRO, label: "Outro" },
+const doseOptions: OptionItem[] = [
+  ...DOSES_MG.map((d) => ({
+    value: String(d),
+    label: `${decimal(d)} mg`,
+    marked: LABEL_DOSES_MG.includes(d),
+  })),
+  { value: OUTRO, label: "Outra" },
 ];
 
 // labelMg em labelMl e a concentracao (a conta das unidades); vialMg e o total
@@ -98,52 +101,41 @@ type Vial = {
   labelMl: number;
   mgPerMl: number | null;
   description: string;
+  substance: string | null;
   multidose: boolean;
 };
 
 function resolveVial(s: State): Vial {
-  if (s.mode === "po") {
-    const vialMg = pick(s.powderMg, s.powderMgCustom);
-    const vialMl = pick(s.diluentMl, s.diluentMlCustom);
+  const product = CALC_PRODUCTS.find((p) => p.id === s.product);
+  if (product) {
+    const sol = product.solution;
     return {
-      vialMg,
-      labelMg: vialMg,
-      labelMl: vialMl,
-      mgPerMl: concentration(vialMg, vialMl),
-      description: `${formatMg(vialMg)} de pó com ${formatMl(vialMl)} de diluente`,
-      multidose: false,
+      vialMg: sol.vialMg,
+      labelMg: sol.labelMg,
+      labelMl: sol.labelMl,
+      mgPerMl: concentration(sol.labelMg, sol.labelMl),
+      description: `${product.name} (${rotulo(sol)})`,
+      substance: sol.substance,
+      multidose: sol.vialMg > sol.labelMg,
     };
   }
-  const group = SOLUTION_GROUPS.find((g) => g.id === s.group);
-  if (group) {
-    return {
-      vialMg: group.vialMg,
-      labelMg: group.labelMg,
-      labelMl: group.labelMl,
-      mgPerMl: group.mgPerMl,
-      description: group.vialNote ? `${group.label}, ${group.vialNote}` : group.label,
-      multidose: group.vialMg > group.labelMg,
-    };
-  }
-  const vialMg = toNumber(s.labelMg);
-  const vialMl = toNumber(s.labelMl);
+  const vialMg = s.product === OUTRO ? toNumber(s.labelMg) : Number.NaN;
+  const vialMl = s.product === OUTRO ? toNumber(s.labelMl) : Number.NaN;
   return {
     vialMg,
     labelMg: vialMg,
     labelMl: vialMl,
     mgPerMl: concentration(vialMg, vialMl),
-    description: `${formatMg(vialMg)} / ${formatMl(vialMl)}`,
+    description: `${formatMg(vialMg)}/${formatMl(vialMl)}`,
+    substance: null,
     multidose: false,
   };
 }
 
 // O que falta para haver resultado, na ordem em que a pessoa preenche.
 function missingStep(s: State, vial: Vial, doseMg: number): string {
-  if (s.mode === "solucao" && s.group === OUTRO && vial.mgPerMl === null) {
-    return "Preencha os mg e os mL que estão no rótulo.";
-  }
-  if (s.mode === "po" && !valido(vial.vialMg)) return "Escolha quanto pó tem no frasco.";
-  if (s.mode === "po" && !valido(vial.labelMl)) return "Escolha quanto diluente você colocou.";
+  if (s.product === "") return "Escolha o seu produto.";
+  if (vial.mgPerMl === null) return "Preencha os mg e os mL que estão no rótulo.";
   if (!valido(doseMg)) return "Escolha a dose prescrita.";
   return "Confira os valores digitados.";
 }
@@ -164,17 +156,6 @@ export function Calculator({ shareUrl }: CalculatorProps) {
   const set = <K extends keyof State>(key: K) => (value: State[K]) =>
     setState((s) => ({ ...s, [key]: value }));
 
-  // Trocar o tipo de frasco nao pode esconder a dose escolhida: se ela nao
-  // existe na outra lista, vira "Outro" com o mesmo valor.
-  const setMode = (value: string) =>
-    setState((s) => {
-      const mode = value as Mode;
-      if (s.mode === mode) return s;
-      const list = mode === "solucao" ? SOLUTION_DOSES_MG : POWDER_DOSES_MG;
-      const keep = s.dose === "" || s.dose === OUTRO || list.includes(Number(s.dose));
-      return keep ? { ...s, mode } : { ...s, mode, dose: OUTRO, doseCustom: decimal(Number(s.dose)) };
-    });
-
   const vial = resolveVial(state);
   const doseMg = pick(state.dose, state.doseCustom);
   const syringeMl = Number(state.syringeMl);
@@ -194,7 +175,7 @@ export function Calculator({ shareUrl }: CalculatorProps) {
     result && vial.mgPerMl !== null
       ? [
           "Conversão de dose para seringa U-100",
-          `Frasco: ${vial.description} (${formatMgPerMl(vial.mgPerMl)})`,
+          `Produto: ${vial.description}`,
           `Dose: ${formatMg(doseMg)}`,
           `Seringa: ${formatMl(syringeMl)}`,
           `Puxar até: ${formatUnits(result.units)} unidades (${formatMl(result.volumeMl)})`,
@@ -241,103 +222,40 @@ export function Calculator({ shareUrl }: CalculatorProps) {
     resultRef.current?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
   }
 
-  const doseOptions =
-    state.mode === "solucao"
-      ? chips(SOLUTION_DOSES_MG, "mg").map((o) => ({
-          ...o,
-          marked: LABEL_DOSES_MG.includes(Number(o.value)),
-        }))
-      : chips(POWDER_DOSES_MG, "mg");
-
   return (
     <>
       <div className="calc" id="calculadora">
         <div className="calc__form" ref={formRef}>
-          <OptionGroup
-            label="Como vem o seu frasco"
-            layout="chips"
-            name="modo"
-            onChange={setMode}
-            options={modeOptions}
-            value={state.mode}
-          />
-
-          {state.mode === "solucao" ? (
-            <div className="calc__group">
-              <OptionGroup
-                hint="Todos de tirzepatida. Confira no rótulo: a concentração impressa vale mais que esta lista."
-                label="Concentração no rótulo"
-                name="concentracao"
-                onChange={set("group")}
-                options={groupOptions}
-                value={state.group}
-              />
-              {state.group === OUTRO ? (
-                <div className="calc__pair">
-                  <Field
-                    error={customError(state.labelMg)}
-                    inputMode="decimal"
-                    label="mg no frasco"
-                    onChange={(e) => set("labelMg")(e.target.value)}
-                    placeholder="Ex.: 15"
-                    value={state.labelMg}
-                  />
-                  <Field
-                    error={customError(state.labelMl)}
-                    inputMode="decimal"
-                    label="mL no frasco"
-                    onChange={(e) => set("labelMl")(e.target.value)}
-                    placeholder="Ex.: 0,5"
-                    value={state.labelMl}
-                  />
-                </div>
-              ) : null}
-            </div>
-          ) : (
-            <>
-              <div className="calc__group">
-                <OptionGroup
-                  label="Quanto pó tem no frasco"
-                  layout="chips"
-                  name="po"
-                  onChange={set("powderMg")}
-                  options={chips(POWDER_VIAL_MG, "mg")}
-                  value={state.powderMg}
+          <div className="calc__group">
+            <OptionGroup
+              hint="A mesma dose dá unidades diferentes em cada produto. Confira o nome na caixa."
+              label="Qual é o seu produto"
+              name="produto"
+              onChange={set("product")}
+              options={productOptions}
+              value={state.product}
+            />
+            {state.product === OUTRO ? (
+              <div className="calc__pair">
+                <Field
+                  error={customError(state.labelMg)}
+                  inputMode="decimal"
+                  label="mg no rótulo"
+                  onChange={(e) => set("labelMg")(e.target.value)}
+                  placeholder="Ex.: 15"
+                  value={state.labelMg}
                 />
-                {state.powderMg === OUTRO ? (
-                  <Field
-                    error={customError(state.powderMgCustom)}
-                    inputMode="decimal"
-                    label="mg de pó no frasco"
-                    onChange={(e) => set("powderMgCustom")(e.target.value)}
-                    placeholder="Ex.: 40"
-                    value={state.powderMgCustom}
-                  />
-                ) : null}
-              </div>
-              <div className="calc__group">
-                <OptionGroup
-                  hint="Use o volume da bula ou da prescrição. A calculadora não escolhe por você."
-                  label="Quanto diluente você colocou"
-                  layout="chips"
-                  name="diluente"
-                  onChange={set("diluentMl")}
-                  options={chips(POWDER_DILUENT_ML, "mL")}
-                  value={state.diluentMl}
+                <Field
+                  error={customError(state.labelMl)}
+                  inputMode="decimal"
+                  label="mL no rótulo"
+                  onChange={(e) => set("labelMl")(e.target.value)}
+                  placeholder="Ex.: 0,5"
+                  value={state.labelMl}
                 />
-                {state.diluentMl === OUTRO ? (
-                  <Field
-                    error={customError(state.diluentMlCustom)}
-                    inputMode="decimal"
-                    label="mL de diluente"
-                    onChange={(e) => set("diluentMlCustom")(e.target.value)}
-                    placeholder="Ex.: 1,2"
-                    value={state.diluentMlCustom}
-                  />
-                ) : null}
               </div>
-            </>
-          )}
+            ) : null}
+          </div>
 
           <OptionGroup
             hint="Seringa de insulina U-100: 100 unidades = 1 mL."
@@ -351,12 +269,8 @@ export function Calculator({ shareUrl }: CalculatorProps) {
 
           <div className="calc__group">
             <OptionGroup
-              hint={
-                state.mode === "solucao"
-                  ? "Com ponto: doses da bula da tirzepatida. Use sempre a dose prescrita."
-                  : "Vale para qualquer peptídeo em pó: a conta só depende dos mg e do diluente. Use sempre a dose prescrita."
-              }
-              label={state.mode === "solucao" ? "Dose prescrita de tirzepatida" : "Dose prescrita"}
+              hint="Com ponto: doses da bula da tirzepatida. Use sempre a dose prescrita."
+              label={vial.substance ? `Dose prescrita de ${vial.substance.toLowerCase()}` : "Dose prescrita"}
               layout="chips"
               name="dose"
               onChange={set("dose")}
@@ -469,7 +383,7 @@ export function Calculator({ shareUrl }: CalculatorProps) {
                     : "Confirme a dose e a concentração com quem prescreveu."}
                 </Notice>
               ) : null}
-              {state.mode === "solucao" && !vial.multidose && result.fullDoses > 1 ? (
+              {!vial.multidose && result.fullDoses > 1 ? (
                 <Notice title="Confira se o frasco é multidose">
                   Algumas apresentações são de dose única e não têm conservante. Furar a tampa de novo
                   abre caminho para contaminação. Só divida o frasco se o rótulo disser multidose.
@@ -514,58 +428,52 @@ export function Calculator({ shareUrl }: CalculatorProps) {
 
 type ReferenceTableProps = { state: State; vial: Vial; doseMg: number };
 
-/** Todas as doses na mesma conta, para conferir de relance ou imprimir. */
+/** Todas as doses na mesma conta, para conferir de relance. */
 function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
   const isCurrent = (d: number) => valido(doseMg) && Math.abs(d - doseMg) < 1e-9;
-  const groupSelected = state.mode === "solucao" && state.group !== OUTRO;
 
-  if (groupSelected) {
+  if (state.product !== OUTRO) {
     return (
       <section aria-labelledby="tabela-titulo" className="calc-table">
         <h2 className="calc-table__title" id="tabela-titulo">
-          A mesma dose de tirzepatida em cada frasco
+          A mesma dose em cada produto
         </h2>
         <p className="calc-table__intro">
-          Unidades na seringa U-100. A dose de tirzepatida é a mesma: muda só o volume de cada
-          frasco, e com ele o número de unidades. A coluna destacada é a do frasco que você
-          escolheu. A última coluna conta doses a cada 15 mg; o frasco multidose de 0,6 mL tem 4 ×
-          15 mg e rende quatro vezes isso.
+          Unidades na seringa U-100. A tirzepatida é a mesma: muda o volume em que ela vem, e com
+          ele o número de unidades. A coluna destacada é a do produto que você escolheu; quantas
+          doses o frasco rende aparece no resultado.
         </p>
         <div aria-labelledby="tabela-titulo" className="calc-table__scroll" role="region" tabIndex={0}>
           <table>
             <thead>
               <tr>
                 <th scope="col">Dose</th>
-                {SOLUTION_GROUPS.map((g) => (
-                  <th className={g.id === state.group ? "is-current" : undefined} key={g.id} scope="col">
-                    {g.label}
-                    <span>{formatMgPerMl(g.mgPerMl)}</span>
+                {CALC_PRODUCTS.map((p) => (
+                  <th className={p.id === state.product ? "is-current" : undefined} key={p.id} scope="col">
+                    {p.name}
+                    <span>{rotulo(p.solution)}</span>
                   </th>
                 ))}
-                <th scope="col">
-                  Doses
-                  <span>a cada 15 mg</span>
-                </th>
               </tr>
             </thead>
             <tbody>
-              {SOLUTION_DOSES_MG.map((d) => {
-                const doses = calculateDose({ mgPerMl: 30, doseMg: d, syringeMl: 1, vialMg: 15 });
-                return (
-                  <tr className={isCurrent(d) ? "is-current" : undefined} key={d}>
-                    <th scope="row">{formatMg(d)}</th>
-                    {SOLUTION_GROUPS.map((g) => {
-                      const r = calculateDose({ mgPerMl: g.mgPerMl, doseMg: d, syringeMl: 1, vialMg: g.vialMg });
-                      return (
-                        <td className={g.id === state.group ? "is-current" : undefined} key={g.id}>
-                          {r ? formatUnits(r.units) : "–"}
-                        </td>
-                      );
-                    })}
-                    <td>{doses?.fullDoses ?? "–"}</td>
-                  </tr>
-                );
-              })}
+              {DOSES_MG.map((d) => (
+                <tr className={isCurrent(d) ? "is-current" : undefined} key={d}>
+                  <th scope="row">{formatMg(d)}</th>
+                  {CALC_PRODUCTS.map((p) => {
+                    const mgPerMl = concentration(p.solution.labelMg, p.solution.labelMl);
+                    const r =
+                      mgPerMl === null
+                        ? null
+                        : calculateDose({ mgPerMl, doseMg: d, syringeMl: 1, vialMg: p.solution.vialMg });
+                    return (
+                      <td className={p.id === state.product ? "is-current" : undefined} key={p.id}>
+                        {r ? formatUnits(r.units) : "–"}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -576,9 +484,7 @@ function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
   if (vial.mgPerMl === null || !valido(vial.vialMg)) return null;
 
   const mgPerMl = vial.mgPerMl;
-  const list = (state.mode === "solucao" ? SOLUTION_DOSES_MG : POWDER_DOSES_MG).filter(
-    (d) => d <= vial.vialMg + 1e-9,
-  );
+  const list = DOSES_MG.filter((d) => d <= vial.vialMg + 1e-9);
   if (list.length === 0) return null;
 
   return (

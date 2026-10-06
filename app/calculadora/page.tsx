@@ -9,7 +9,7 @@ import { getContactHref, getSiteUrl } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Calculadora de dose em unidades",
   description:
-    "Converta a dose prescrita em mg para unidades da seringa de insulina U-100. Para tirzepatida pronta e peptídeos em pó, como GHK-Cu. Conta aberta, sem cadastro.",
+    "Converta a dose prescrita em mg para unidades da seringa de insulina U-100, de acordo com o seu produto: TG 15, Lipoless MD 15 ou outro. Conta aberta, sem cadastro.",
   alternates: { canonical: "/calculadora" },
 };
 
@@ -17,14 +17,14 @@ const VALIQ_URL = "https://valiq.app";
 
 const faq = [
   {
-    question: "Por que a mesma dose dá unidades diferentes em cada marca?",
+    question: "Por que a mesma dose dá unidades diferentes no TG e no Lipoless MD?",
     answer:
-      "Porque cada frasco tem uma concentração. A unidade da seringa mede volume, não quantidade de remédio. 5 mg num frasco de 15 mg/0,5 mL são 16,7 unidades; no de 15 mg/1 mL, são 33,3. Trocou de marca, refaça a conta.",
+      "Porque a concentração muda. No TG 15, cada 15 mg vêm em 0,5 mL; no Lipoless MD 15, em 0,6 mL. A unidade da seringa mede volume, não quantidade de remédio: 5 mg são 16,7 unidades no TG e 20 no Lipoless MD. Trocou de produto, refaça a conta.",
   },
   {
-    question: "Serve para GHK-Cu e outros peptídeos?",
+    question: "Meu produto não está na lista. E agora?",
     answer:
-      "Serve para a conversão. Escolha \"Pó para reconstituir\", informe os mg do frasco, os mL de diluente que você colocou e a dose que foi prescrita. A calculadora não diz qual dose usar: isso é com quem acompanha você.",
+      "Escolha \"Outro produto\" e digite os mg e os mL que estão no rótulo. A conta é a mesma para qualquer produto: só depende da concentração.",
   },
   {
     question: "Serve para qualquer seringa?",
@@ -39,12 +39,7 @@ const faq = [
   {
     question: "Dá para tirar várias doses do mesmo frasco?",
     answer:
-      "Só se o rótulo indicar multidose. Algumas apresentações são de dose única e não têm conservante: furar a tampa de novo abre caminho para contaminação. Na dúvida, siga a bula do seu produto.",
-  },
-  {
-    question: "Quanto diluente devo colocar no pó?",
-    answer:
-      "O que estiver na bula ou na prescrição. A calculadora não escolhe esse volume: ela converte a partir do que você colocou. Mais diluente aumenta o número de unidades da mesma dose, sem mudar a quantidade de remédio.",
+      "O Lipoless MD 15 é multidose: o frasco traz 4 doses de 15 mg. Nos demais, siga o rótulo. Frasco de dose única não tem conservante, e furar a tampa de novo abre caminho para contaminação.",
   },
   {
     question: "A calculadora substitui a orientação médica?",
@@ -64,8 +59,8 @@ export default function CalculadoraPage() {
         <header className="calc-hero page-shell">
           <h1 className="calc-hero__title">Quantas unidades puxar na seringa</h1>
           <p className="calc-hero__lede">
-            Escolha o frasco, a seringa e a dose prescrita. Serve para tirzepatida pronta e para
-            peptídeos em pó, como a GHK-Cu: a conta só depende da concentração do frasco.
+            Escolha o seu produto, a seringa e a dose prescrita. A conta converte miligramas em
+            unidades da seringa de insulina U-100.
           </p>
         </header>
 

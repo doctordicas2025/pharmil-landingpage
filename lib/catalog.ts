@@ -12,6 +12,20 @@ export type Product = {
   badge?: string;
   description: string;
   facts: { label: string; value: string }[];
+  /** Solucao pronta para seringa U-100. So quem tem este campo entra na
+   *  calculadora de dose: caneta e frasco sem concentracao ficam de fora. */
+  solution?: Solution;
+};
+
+export type Solution = {
+  substance: string;
+  /** Concentracao impressa na caixa: labelMg em labelMl. */
+  labelMg: number;
+  labelMl: number;
+  /** Total em um frasco. Define quantas doses ele rende. */
+  vialMg: number;
+  /** Como a caixa vem, em uma linha. */
+  vialNote: string;
 };
 
 export const products: Product[] = [
@@ -32,6 +46,14 @@ export const products: Product[] = [
       { label: "Conservação", value: "Refrigerado, entre 2 e 8 °C" },
       { label: "Laudo", value: "Disponível por lote" },
     ],
+    // Caixa: "4 frascos viales con 0,5 mL"; "cada 0,5 mL contiene 15 mg"
+    solution: {
+      substance: "Tirzepatida",
+      labelMg: 15,
+      labelMl: 0.5,
+      vialMg: 15,
+      vialNote: "caixa com 4 frascos de 15 mg",
+    },
   },
   {
     id: "lipoless",
@@ -50,6 +72,14 @@ export const products: Product[] = [
       { label: "Conservação", value: "Refrigerado, entre 2 e 8 °C" },
       { label: "Laudo", value: "Disponível por lote" },
     ],
+    // Caixa: "Vial Multidosis ... contiene 4 dosis de 15 mg / 0,6 mL"
+    solution: {
+      substance: "Tirzepatida",
+      labelMg: 15,
+      labelMl: 0.6,
+      vialMg: 60,
+      vialNote: "1 frasco multidose com 4 doses de 15 mg",
+    },
   },
   {
     id: "tirze100",
