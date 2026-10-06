@@ -47,16 +47,33 @@ export function Field({ label, error, hint, className, ...rest }: FieldProps) {
 export type OptionGroupProps = {
   label: string;
   name: string;
-  options: readonly string[];
+  options: readonly (string | OptionItem)[];
   value: string;
   onChange: (value: string) => void;
   error?: string;
   disabled?: boolean;
+  /** `list` empilha cartoes; `chips` alinha pilulas que quebram linha. */
+  layout?: "list" | "chips";
+  /** Texto de apoio abaixo da legenda. */
+  hint?: string;
 };
 
+export type OptionItem = {
+  value: string;
+  label: ReactNode;
+  /** Linha secundaria, menor, abaixo do rotulo. */
+  detail?: ReactNode;
+  /** Destaca a opcao sem seleciona-la (ex.: valor de referencia). */
+  marked?: boolean;
+};
+
+const normalizar = (o: string | OptionItem): OptionItem =>
+  typeof o === "string" ? { value: o, label: o } : o;
+
 /**
- * Escolha unica apresentada como cartoes tocaveis. O radio nativo fica
- * acessivel mas invisivel: o estado selecionado e desenhado no rotulo.
+ * Escolha unica. O radio nativo fica acessivel mas invisivel: o estado
+ * selecionado e desenhado no rotulo. `chips` serve para listas longas de
+ * valores curtos, que em cartoes empilhados ocupariam a tela inteira.
  */
 export function OptionGroup({
   label,
@@ -66,32 +83,41 @@ export function OptionGroup({
   onChange,
   error,
   disabled = false,
+  layout = "list",
+  hint,
 }: OptionGroupProps) {
   return (
-    <fieldset className={["ds-options", error && "has-error"].filter(Boolean).join(" ")}>
+    <fieldset
+      className={["ds-options", `ds-options--${layout}`, error && "has-error"]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <legend className="ds-field__label">{label}</legend>
+      {hint ? <p className="ds-field__hint ds-options__hint">{hint}</p> : null}
       <div className="ds-options__list">
-        {options.map((option) => (
+        {options.map(normalizar).map((option) => (
           <label
             className={[
               "ds-option",
-              value === option && "is-selected",
+              value === option.value && "is-selected",
+              option.marked && "is-marked",
               disabled && "is-disabled",
             ]
               .filter(Boolean)
               .join(" ")}
-            key={option}
+            key={option.value}
           >
             <input
-              checked={value === option}
+              checked={value === option.value}
               className="ds-sr-only"
               disabled={disabled}
               name={name}
               onChange={(e) => onChange(e.target.value)}
               type="radio"
-              value={option}
+              value={option.value}
             />
-            <span>{option}</span>
+            <span className="ds-option__label">{option.label}</span>
+            {option.detail ? <span className="ds-option__detail">{option.detail}</span> : null}
           </label>
         ))}
       </div>

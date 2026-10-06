@@ -22,6 +22,7 @@ import {
   IconButton,
   Modal,
   ModalBody,
+  Notice,
   OptionGroup,
   Skeleton,
   Spinner,
@@ -51,6 +52,7 @@ const clock = (
 export default function Showcase() {
   const [filter, setFilter] = useState("Todos");
   const [choice, setChoice] = useState("Entender como funciona");
+  const [chip, setChip] = useState("5");
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -139,7 +141,7 @@ export default function Showcase() {
         </div>
       </Row>
 
-      <Row title="OptionGroup" note="Escolha unica. O radio nativo fica acessivel mas invisivel.">
+      <Row title="OptionGroup" note="Escolha unica. O radio nativo fica acessivel mas invisivel. Layout list (cartoes) ou chips (pilulas em linha, com detail e marcacao de referencia).">
         <div className="ds-demo__stack">
           <OptionGroup
             label="Como podemos ajudar?"
@@ -148,6 +150,35 @@ export default function Showcase() {
             options={["Entender como funciona", "Consultar disponibilidade", "Tirar duvidas sobre entrega"]}
             value={choice}
           />
+        </div>
+        <div className="ds-demo__stack">
+          <OptionGroup
+            hint="Com ponto: valor de referencia."
+            label="Dose"
+            layout="chips"
+            name="demo-chips"
+            onChange={setChip}
+            options={[
+              { value: "2.5", label: "2,5 mg", marked: true },
+              { value: "3.5", label: "3,5 mg" },
+              { value: "5", label: "5 mg", marked: true },
+              { value: "0.5", label: "0,5 mL", detail: "50 UI" },
+              { value: "outro", label: "Outro" },
+            ]}
+            value={chip}
+          />
+        </div>
+      </Row>
+
+      <Row title="Notice" note="Aviso em linha. Tom sempre com icone e texto, nunca so cor. Sem faixa lateral.">
+        <div className="ds-demo__stack">
+          <Notice title="Confira se o frasco e multidose">Informacao que muda a decisao, sem alarme.</Notice>
+        </div>
+        <div className="ds-demo__stack">
+          <Notice title="Valor entre dois riscos" tone="warning">Pede atencao antes de seguir.</Notice>
+        </div>
+        <div className="ds-demo__stack">
+          <Notice title="Nao cabe nesta seringa" tone="danger">Bloqueia o caminho: diga o que fazer.</Notice>
         </div>
       </Row>
 

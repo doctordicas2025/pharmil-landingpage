@@ -454,6 +454,64 @@
   border-color: var(--color-danger);
 }
 
+.ds-option__label,
+.ds-option__detail {
+  display: block;
+}
+
+.ds-option__detail {
+  margin-top: var(--space-1);
+  color: var(--text-subtle);
+  font-size: var(--size-xs);
+  font-weight: var(--weight-body);
+}
+
+.ds-options__hint {
+  margin: calc(var(--space-1) * -1) 0 var(--space-3);
+}
+
+/* Pilulas em linha: valores curtos que quebram linha. Alvo de toque de 44px. */
+.ds-options--chips .ds-options__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ds-options--chips .ds-option {
+  display: inline-grid;
+  place-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  line-height: 1.15;
+}
+
+.ds-options--chips .ds-option.is-selected {
+  border-color: var(--color-wine);
+  background: var(--color-wine);
+  color: var(--text-on-dark);
+}
+
+.ds-options--chips .ds-option.is-selected .ds-option__detail {
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Marca de referencia: ponto antes do rotulo, porque cor sozinha nao basta. */
+.ds-options--chips .ds-option.is-marked .ds-option__label::before {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-right: 0.4em;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  vertical-align: 0.12em;
+}
+
 /* ---- Modal ----------------------------------------------------------- */
 
 .ds-modal {
@@ -706,6 +764,49 @@
 
 .ds-state__action {
   margin-top: var(--space-5);
+}
+
+/* ---- Notice ---------------------------------------------------------- */
+/* Fundo tingido inteiro, sem faixa lateral: a listra grossa e proibida no
+   DESIGN.md. O tom se repete no icone e no titulo. */
+
+.ds-notice {
+  --notice-tone: var(--color-navy);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-width) solid color-mix(in oklch, var(--notice-tone) 22%, var(--color-line));
+  border-radius: var(--radius-control);
+  background: color-mix(in oklch, var(--notice-tone) 6%, var(--color-paper));
+  color: var(--text-primary);
+}
+
+.ds-notice--warning { --notice-tone: var(--color-orange-text); }
+.ds-notice--danger { --notice-tone: var(--color-danger); }
+
+.ds-notice__icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  fill: none;
+  stroke: var(--notice-tone);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+.ds-notice__title {
+  margin-bottom: var(--space-1);
+  color: var(--notice-tone);
+  font-size: var(--size-sm);
+  font-weight: var(--weight-strong);
+}
+
+.ds-notice__text {
+  color: var(--text-primary);
+  font-size: var(--size-sm);
+  line-height: 1.5;
 }
 
 /* ---- Spinner / Skeleton ---------------------------------------------- */

@@ -5,6 +5,7 @@ const navigation = [
   { href: "/#loja", label: "Produtos" },
   { href: "/#cadeia-de-frio", label: "Cadeia de frio" },
   { href: "/#como-pedir", label: "Como pedir" },
+  { href: "/calculadora", label: "Calculadora" },
   { href: "/#faq", label: "Dúvidas" },
 ] as const;
 

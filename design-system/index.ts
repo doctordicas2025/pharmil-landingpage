@@ -16,11 +16,11 @@ export type { CardMediaProps, CardProps } from "./components/Card";
 export { Accordion, Stat, TextLink } from "./components/Disclosure";
 export type { AccordionItem, AccordionProps, StatProps, TextLinkProps } from "./components/Disclosure";
 
-export { EmptyState, ErrorState, Skeleton, Spinner } from "./components/Feedback";
-export type { EmptyStateProps, ErrorStateProps } from "./components/Feedback";
+export { EmptyState, ErrorState, Notice, Skeleton, Spinner } from "./components/Feedback";
+export type { EmptyStateProps, ErrorStateProps, NoticeProps, NoticeTone } from "./components/Feedback";
 
 export { Field, FieldSet, OptionGroup } from "./components/Field";
-export type { FieldProps, OptionGroupProps } from "./components/Field";
+export type { FieldProps, OptionGroupProps, OptionItem } from "./components/Field";
 
 export { FactList, Modal, ModalBody, ModalMedia } from "./components/Modal";
 export type { FactListProps, ModalProps } from "./components/Modal";

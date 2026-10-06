@@ -31,7 +31,7 @@ Os documentos que acompanham a biblioteca:
 | `Card` | `Card.tsx` | repouso, `interactive` (elevação no hover), `selected`, foco interno · tons `paper` / `surface` · polimórfico via `as` |
 | `CardBody` `CardFooter` `CardMedia` | `Card.tsx` | `CardMedia` aceita `tint` (token `--tint-*`) e `fit` contain/cover |
 | `Field` | `Field.tsx` | default, hover, focus, erro, desabilitado · com `hint` ou `error` |
-| `OptionGroup` | `Field.tsx` | default, hover, focus, selecionado, desabilitado, erro |
+| `OptionGroup` | `Field.tsx` | default, hover, focus, selecionado, desabilitado, erro · `layout` `list` / `chips` · opções como texto ou `{ value, label, detail, marked }` · `hint` |
 | `FieldSet` | `Field.tsx` | agrupamento com o espaçamento do sistema |
 | `Modal` | `Modal.tsx` | aberto/fechado · fecha no clique fora, no botão e no Escape |
 | `ModalMedia` `ModalBody` `FactList` | `Modal.tsx` | composição do diálogo |
@@ -45,6 +45,7 @@ Os documentos que acompanham a biblioteca:
 | `Chip` `IconBox` | `Pill.tsx` | sinal de confiança com ícone |
 | `EmptyState` | `Feedback.tsx` | ausência de dado, com ação de saída |
 | `ErrorState` | `Feedback.tsx` | falha recuperável, com ação de saída |
+| `Notice` | `Feedback.tsx` | aviso em linha · tons `info` / `warning` / `danger`, sempre com ícone e texto |
 | `Spinner` `Skeleton` | `Feedback.tsx` | carregamento |
 
 ## Como usar

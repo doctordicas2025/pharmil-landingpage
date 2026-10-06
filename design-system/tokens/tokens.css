@@ -84,6 +84,9 @@
   --size-sm: 0.88rem;
   --size-xs: 0.78rem;
   --size-label: 0.72rem;
+  /* Numero de resultado: o dado que a pessoa veio buscar. Maior que o
+     display no celular, onde a leitura acontece com o frasco na outra mao. */
+  --size-figure: clamp(3.75rem, 16vw, 6rem);
 
   /* ---- Espacamento -------------------------------------------------- */
   /* Base 2px. A escala e px porque e o que a producao renderiza. */
