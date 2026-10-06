@@ -5,17 +5,24 @@
 export type SolutionGroup = {
   id: "a" | "b" | "c";
   label: string;
-  vialMg: number;
-  vialMl: number;
+  /** Concentracao como impressa no rotulo: labelMg em labelMl. */
+  labelMg: number;
+  labelMl: number;
   mgPerMl: number;
+  /** Total de tirzepatida no frasco. Define quantas doses ele rende. */
+  vialMg: number;
+  /** Presente so quando o frasco tem mais que a dose do rotulo. */
+  vialNote?: string;
   products: string;
 };
 
-// Solucoes prontas: a concentracao vem do rotulo, nao precisa reconstituir.
+// Solucoes prontas de tirzepatida: a concentracao vem do rotulo, nao precisa
+// reconstituir. As unidades dependem so da concentracao; o rendimento depende
+// do total no frasco, que no multidose (MD) e 4 x 15 mg.
 export const SOLUTION_GROUPS: readonly SolutionGroup[] = [
-  { id: "a", label: "15 mg / 0,5 mL", vialMg: 15, vialMl: 0.5, mgPerMl: 30, products: "T.G., Lipoless, Tirzec, Lipoland, Trizedral" },
-  { id: "b", label: "15 mg / 0,6 mL", vialMg: 15, vialMl: 0.6, mgPerMl: 25, products: "Lipoless MD, Tirzedral MD" },
-  { id: "c", label: "15 mg / 1 mL", vialMg: 15, vialMl: 1, mgPerMl: 15, products: "Gluconex" },
+  { id: "a", label: "15 mg / 0,5 mL", labelMg: 15, labelMl: 0.5, mgPerMl: 30, vialMg: 15, products: "T.G., Lipoless, Tirzec, Lipoland, Trizedral" },
+  { id: "b", label: "15 mg / 0,6 mL", labelMg: 15, labelMl: 0.6, mgPerMl: 25, vialMg: 60, vialNote: "frasco multidose com 4 doses de 15 mg", products: "Lipoless MD, Tirzedral MD" },
+  { id: "c", label: "15 mg / 1 mL", labelMg: 15, labelMl: 1, mgPerMl: 15, vialMg: 15, products: "Gluconex" },
 ];
 
 // Escalonamento da bula de tirzepatida (ANVISA, nov/2024): comeca em 2,5 mg e
@@ -27,8 +34,10 @@ export const SOLUTION_DOSES_MG: readonly number[] = [
   2.5, 3.5, 3.75, 5, 6, 6.5, 7.5, 8.5, 9.5, 10, 11.5, 12.5, 13.5, 15,
 ];
 
-// Po liofilizado: mesmas opcoes da calculadora publica que os clientes usam.
-export const POWDER_VIAL_MG: readonly number[] = [5, 10, 15, 20, 30, 60];
+// Po liofilizado: mesmas opcoes da calculadora publica que os clientes usam,
+// mais 50 e 100 mg, que cobrem a GHK-Cu do catalogo. A conta nao depende da
+// substancia, so dos mg do frasco e dos mL de diluente.
+export const POWDER_VIAL_MG: readonly number[] = [5, 10, 15, 20, 30, 50, 60, 100];
 export const POWDER_DILUENT_ML: readonly number[] = [0.5, 1, 1.5, 2, 2.5, 3];
 export const POWDER_DOSES_MG: readonly number[] = [
   0.25, 0.5, 1, 1.7, 2, 2.4, 2.5, 4, 5, 7.5, 10, 12, 12.5, 15, 17.5, 20, 25, 30,

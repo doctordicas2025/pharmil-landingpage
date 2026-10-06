@@ -37,15 +37,15 @@ export const products: Product[] = [
     id: "lipoless",
     name: "Lipoless MD 15",
     category: "GLP-1",
-    presentation: "Tirzepatida 15 mg/0,6 mL · 4 frascos",
+    presentation: "Tirzepatida 15 mg/0,6 mL · frasco multidose",
     price: 549,
     image: "/images/cut-lipoless.png",
     tint: "var(--tint-photo)",
     fit: "contain",
     description:
-      "Tirzepatida de outro fabricante, em concentração diferente da do TG 15: 15 mg em 0,6 mL. Lote e validade confirmados no atendimento antes do envio.",
+      "Tirzepatida de outro fabricante, num frasco multidose com 4 doses. Cada dose de 15 mg vem em 0,6 mL, concentração diferente da do TG 15. Lote e validade confirmados no atendimento antes do envio.",
     facts: [
-      { label: "Apresentação", value: "4 frascos de 0,6 mL" },
+      { label: "Apresentação", value: "1 frasco multidose, 4 doses de 15 mg" },
       { label: "Concentração", value: "15 mg/0,6 mL" },
       { label: "Conservação", value: "Refrigerado, entre 2 e 8 °C" },
       { label: "Laudo", value: "Disponível por lote" },

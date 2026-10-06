@@ -5,6 +5,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 
 import {
+  POWDER_VIAL_MG,
   SOLUTION_GROUPS,
   calculateDose,
   concentration,
@@ -130,4 +131,25 @@ test("valor que cai entre dois riscos e sinalizado", () => {
 test("concentracao aparece com ate duas casas", () => {
   assert.equal(formatMgPerMl(30), "30 mg/mL");
   assert.equal(formatMgPerMl(10 / 3), "3,33 mg/mL");
+});
+
+test("frasco de GHK-Cu de 100 mg esta entre as opcoes de po", () => {
+  assert.ok(POWDER_VIAL_MG.includes(100));
+  // 100 mg em 2 mL = 50 mg/mL; 2 mg = 0,04 mL = 4 unidades
+  const r = calculateDose({ mgPerMl: concentration(100, 2), doseMg: 2, syringeMl: 0.3, vialMg: 100 });
+  assert.equal(formatUnits(r.units), "4");
+  assert.equal(r.fullDoses, 50);
+});
+
+test("frasco multidose de 0,6 mL tem 4 doses de 15 mg; os outros, 15 mg", () => {
+  // Caixa do Lipoless MD: "Vial Multidosis ... contiene 4 dosis de 15 mg / 0,6 mL"
+  assert.equal(grupo("b").vialMg, 60);
+  assert.equal(grupo("a").vialMg, 15);
+  assert.equal(grupo("c").vialMg, 15);
+  // A concentracao continua sendo a do rotulo: 15 mg / 0,6 mL
+  assert.equal(grupo("b").labelMg / grupo("b").labelMl, grupo("b").mgPerMl);
+  // 10 mg no frasco de 60 mg: 6 doses, e nao 1
+  const r = calculateDose({ mgPerMl: 25, doseMg: 10, syringeMl: 1, vialMg: grupo("b").vialMg });
+  assert.equal(formatUnits(r.units), "40");
+  assert.equal(r.fullDoses, 6);
 });

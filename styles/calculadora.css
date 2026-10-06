@@ -53,6 +53,19 @@
   gap: var(--space-4);
 }
 
+/* Tipo de frasco: dois rotulos longos. Empilhados no celular para nao
+   quebrar um embaixo do outro com larguras diferentes. */
+.calc__form > .ds-options:first-child .ds-options__list {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 30rem) {
+  .calc__form > .ds-options:first-child .ds-options__list {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+  }
+}
+
 .calc__group .ds-options--list .ds-options__list {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
 }

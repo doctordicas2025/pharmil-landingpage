@@ -66,15 +66,15 @@ const customError = (s: string) =>
   s.trim() !== "" && !valido(toNumber(s)) ? "Digite um número maior que zero, como 4,2." : undefined;
 
 const modeOptions: OptionItem[] = [
-  { value: "solucao", label: "Solução pronta", detail: "Já vem líquido" },
-  { value: "po", label: "Pó para reconstituir", detail: "Você mistura o diluente" },
+  { value: "solucao", label: "Solução pronta", detail: "Tirzepatida líquida" },
+  { value: "po", label: "Pó para reconstituir", detail: "GHK-Cu e outros peptídeos" },
 ];
 
 const groupOptions: OptionItem[] = [
   ...SOLUTION_GROUPS.map((g) => ({
     value: g.id,
     label: g.label,
-    detail: `${formatMgPerMl(g.mgPerMl)} · ex.: ${g.products}`,
+    detail: `${formatMgPerMl(g.mgPerMl)}${g.vialNote ? ` · ${g.vialNote}` : ""} · ex.: ${g.products}`,
   })),
   { value: OUTRO, label: "Outra concentração", detail: "Digite o que está no rótulo" },
 ];
@@ -90,7 +90,16 @@ const chips = (values: readonly number[], unit: string): OptionItem[] => [
   { value: OUTRO, label: "Outro" },
 ];
 
-type Vial = { vialMg: number; vialMl: number; mgPerMl: number | null; description: string };
+// labelMg em labelMl e a concentracao (a conta das unidades); vialMg e o total
+// no frasco (a conta do rendimento). So diferem no frasco multidose.
+type Vial = {
+  vialMg: number;
+  labelMg: number;
+  labelMl: number;
+  mgPerMl: number | null;
+  description: string;
+  multidose: boolean;
+};
 
 function resolveVial(s: State): Vial {
   if (s.mode === "po") {
@@ -98,22 +107,33 @@ function resolveVial(s: State): Vial {
     const vialMl = pick(s.diluentMl, s.diluentMlCustom);
     return {
       vialMg,
-      vialMl,
+      labelMg: vialMg,
+      labelMl: vialMl,
       mgPerMl: concentration(vialMg, vialMl),
       description: `${formatMg(vialMg)} de pó com ${formatMl(vialMl)} de diluente`,
+      multidose: false,
     };
   }
   const group = SOLUTION_GROUPS.find((g) => g.id === s.group);
   if (group) {
-    return { vialMg: group.vialMg, vialMl: group.vialMl, mgPerMl: group.mgPerMl, description: group.label };
+    return {
+      vialMg: group.vialMg,
+      labelMg: group.labelMg,
+      labelMl: group.labelMl,
+      mgPerMl: group.mgPerMl,
+      description: group.vialNote ? `${group.label}, ${group.vialNote}` : group.label,
+      multidose: group.vialMg > group.labelMg,
+    };
   }
   const vialMg = toNumber(s.labelMg);
   const vialMl = toNumber(s.labelMl);
   return {
     vialMg,
-    vialMl,
+    labelMg: vialMg,
+    labelMl: vialMl,
     mgPerMl: concentration(vialMg, vialMl),
     description: `${formatMg(vialMg)} / ${formatMl(vialMl)}`,
+    multidose: false,
   };
 }
 
@@ -123,7 +143,7 @@ function missingStep(s: State, vial: Vial, doseMg: number): string {
     return "Preencha os mg e os mL que estão no rótulo.";
   }
   if (s.mode === "po" && !valido(vial.vialMg)) return "Escolha quanto pó tem no frasco.";
-  if (s.mode === "po" && !valido(vial.vialMl)) return "Escolha quanto diluente você colocou.";
+  if (s.mode === "po" && !valido(vial.labelMl)) return "Escolha quanto diluente você colocou.";
   if (!valido(doseMg)) return "Escolha a dose prescrita.";
   return "Confira os valores digitados.";
 }
@@ -245,7 +265,7 @@ export function Calculator({ shareUrl }: CalculatorProps) {
           {state.mode === "solucao" ? (
             <div className="calc__group">
               <OptionGroup
-                hint="Confira no rótulo: a concentração impressa vale mais que esta lista."
+                hint="Todos de tirzepatida. Confira no rótulo: a concentração impressa vale mais que esta lista."
                 label="Concentração no rótulo"
                 name="concentracao"
                 onChange={set("group")}
@@ -334,9 +354,9 @@ export function Calculator({ shareUrl }: CalculatorProps) {
               hint={
                 state.mode === "solucao"
                   ? "Com ponto: doses da bula da tirzepatida. Use sempre a dose prescrita."
-                  : "Use sempre a dose prescrita."
+                  : "Vale para qualquer peptídeo em pó: a conta só depende dos mg e do diluente. Use sempre a dose prescrita."
               }
-              label="Dose prescrita"
+              label={state.mode === "solucao" ? "Dose prescrita de tirzepatida" : "Dose prescrita"}
               layout="chips"
               name="dose"
               onChange={set("dose")}
@@ -411,7 +431,7 @@ export function Calculator({ shareUrl }: CalculatorProps) {
                   <summary>Ver a conta</summary>
                   <ol>
                     <li>
-                      {decimal(vial.vialMg)} mg ÷ {formatMl(vial.vialMl)} ={" "}
+                      {decimal(vial.labelMg)} mg ÷ {formatMl(vial.labelMl)} ={" "}
                       <strong>{formatMgPerMl(vial.mgPerMl)}</strong>
                     </li>
                     <li>
@@ -449,7 +469,7 @@ export function Calculator({ shareUrl }: CalculatorProps) {
                     : "Confirme a dose e a concentração com quem prescreveu."}
                 </Notice>
               ) : null}
-              {state.mode === "solucao" && result.fullDoses > 1 ? (
+              {state.mode === "solucao" && !vial.multidose && result.fullDoses > 1 ? (
                 <Notice title="Confira se o frasco é multidose">
                   Algumas apresentações são de dose única e não têm conservante. Furar a tampa de novo
                   abre caminho para contaminação. Só divida o frasco se o rótulo disser multidose.
@@ -503,11 +523,13 @@ function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
     return (
       <section aria-labelledby="tabela-titulo" className="calc-table">
         <h2 className="calc-table__title" id="tabela-titulo">
-          A mesma dose em cada concentração
+          A mesma dose de tirzepatida em cada frasco
         </h2>
         <p className="calc-table__intro">
-          Unidades na seringa U-100. A coluna destacada é a do frasco que você escolheu. Os três
-          frascos têm 15 mg, por isso o rendimento é o mesmo.
+          Unidades na seringa U-100. A dose de tirzepatida é a mesma: muda só o volume de cada
+          frasco, e com ele o número de unidades. A coluna destacada é a do frasco que você
+          escolheu. A última coluna conta doses a cada 15 mg; o frasco multidose de 0,6 mL tem 4 ×
+          15 mg e rende quatro vezes isso.
         </p>
         <div aria-labelledby="tabela-titulo" className="calc-table__scroll" role="region" tabIndex={0}>
           <table>
@@ -522,7 +544,7 @@ function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
                 ))}
                 <th scope="col">
                   Doses
-                  <span>no frasco</span>
+                  <span>a cada 15 mg</span>
                 </th>
               </tr>
             </thead>

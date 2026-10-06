@@ -9,7 +9,7 @@ import { getContactHref, getSiteUrl } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: "Calculadora de dose em unidades",
   description:
-    "Converta a dose prescrita em mg para unidades da seringa de insulina U-100, conforme a concentração do seu frasco. Conta aberta, sem cadastro.",
+    "Converta a dose prescrita em mg para unidades da seringa de insulina U-100. Para tirzepatida pronta e peptídeos em pó, como GHK-Cu. Conta aberta, sem cadastro.",
   alternates: { canonical: "/calculadora" },
 };
 
@@ -20,6 +20,11 @@ const faq = [
     question: "Por que a mesma dose dá unidades diferentes em cada marca?",
     answer:
       "Porque cada frasco tem uma concentração. A unidade da seringa mede volume, não quantidade de remédio. 5 mg num frasco de 15 mg/0,5 mL são 16,7 unidades; no de 15 mg/1 mL, são 33,3. Trocou de marca, refaça a conta.",
+  },
+  {
+    question: "Serve para GHK-Cu e outros peptídeos?",
+    answer:
+      "Serve para a conversão. Escolha \"Pó para reconstituir\", informe os mg do frasco, os mL de diluente que você colocou e a dose que foi prescrita. A calculadora não diz qual dose usar: isso é com quem acompanha você.",
   },
   {
     question: "Serve para qualquer seringa?",
@@ -59,8 +64,8 @@ export default function CalculadoraPage() {
         <header className="calc-hero page-shell">
           <h1 className="calc-hero__title">Quantas unidades puxar na seringa</h1>
           <p className="calc-hero__lede">
-            Escolha o frasco, a seringa e a dose prescrita. A conta converte miligramas em
-            unidades da seringa de insulina U-100.
+            Escolha o frasco, a seringa e a dose prescrita. Serve para tirzepatida pronta e para
+            peptídeos em pó, como a GHK-Cu: a conta só depende da concentração do frasco.
           </p>
         </header>
 
@@ -75,8 +80,8 @@ export default function CalculadoraPage() {
                 Conta certa só adianta com frasco original.
               </h2>
               <p className="calc-valiq__text">
-                Aponte a câmera para o QR da caixa. Quem responde é o laboratório que fabricou e a
-                DINAVISA, o órgão sanitário do Paraguai.
+                Toda caixa que chega pela Pharmil tem QR code. Aponte a câmera para ele e valide no
+                Valiq antes da primeira dose.
               </p>
             </div>
             <div className="calc-valiq__actions">
