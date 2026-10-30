@@ -34,7 +34,7 @@ export const products: Product[] = [
     name: "TG 15",
     category: "GLP-1",
     presentation: "Tirzepatida 15 mg/0,5 mL · 4 frascos",
-    price: 599,
+    price: 649,
     image: "/images/cut-tg.png",
     tint: "var(--tint-photo)",
     fit: "contain",
