@@ -60,7 +60,7 @@ export const products: Product[] = [
     name: "Lipoless MD 15",
     category: "GLP-1",
     presentation: "Tirzepatida 15 mg/0,6 mL · frasco multidose",
-    price: 549,
+    price: 599,
     image: "/images/cut-lipoless.png",
     tint: "var(--tint-photo)",
     fit: "contain",
