@@ -18,7 +18,20 @@ import {
 export const metadata: Metadata = {
   title: { absolute: "Pharmil · Avaliação Rápida de Rotina" },
   description:
-    "Responda 4 perguntas rápidas para liberar o acesso ao Grupo VIP oficial da Pharmil no WhatsApp.",
+    "Responda 4 perguntas rápidas para organizar seus objetivos e receber atendimento informativo da equipe Pharmil.",
+  openGraph: {
+    title: "Pharmil · Avaliação Rápida de Rotina",
+    description:
+      "Responda 4 perguntas rápidas para organizar seus objetivos e receber atendimento informativo da equipe Pharmil.",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Pharmil · Avaliação Rápida de Rotina",
+    description:
+      "Responda 4 perguntas rápidas para organizar seus objetivos e receber atendimento informativo da equipe Pharmil.",
+  },
   robots: { index: false, follow: false },
 };
 

@@ -15,6 +15,19 @@ export const metadata: Metadata = {
   title: { absolute: "Pharmil · Saúde, Rotina e Hábitos Saudáveis" },
   description:
     "Portal institucional dedicado à organização de rotina, hábitos saudáveis, bem-estar e informações claras com responsabilidade.",
+  openGraph: {
+    title: "Pharmil · Saúde, Rotina e Hábitos Saudáveis",
+    description:
+      "Organização de rotina, hábitos saudáveis e informações claras com responsabilidade.",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Pharmil · Saúde, Rotina e Hábitos Saudáveis",
+    description:
+      "Organização de rotina, hábitos saudáveis e informações claras com responsabilidade.",
+  },
 };
 
 const EDITORIAL_PRINCIPLES = [

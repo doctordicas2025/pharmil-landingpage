@@ -14,9 +14,22 @@ import {
 } from "@/lib/funnel/quiz-config";
 
 export const metadata: Metadata = {
-  title: { absolute: "Pharmil · Grupo VIP Oficial" },
+  title: { absolute: "Pharmil · Canal Oficial" },
   description:
-    "Acesso direto ao Grupo VIP oficial da Pharmil no WhatsApp com avisos, atualizações e acompanhamento da equipe.",
+    "Acesso direto ao canal oficial da Pharmil no WhatsApp para avisos, atualizações e acompanhamento da equipe.",
+  openGraph: {
+    title: "Pharmil · Canal Oficial",
+    description:
+      "Acesso direto ao canal oficial da Pharmil no WhatsApp para avisos, atualizações e acompanhamento da equipe.",
+    locale: "pt_BR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Pharmil · Canal Oficial",
+    description:
+      "Acesso direto ao canal oficial da Pharmil no WhatsApp para avisos, atualizações e acompanhamento da equipe.",
+  },
   robots: { index: false, follow: false },
 };
 
