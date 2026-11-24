@@ -1,0 +1,274 @@
+/* Funil de aquisição (/avaliacao, /vip e /institucional).
+   Todos os valores resolvem para tokens em design-system/tokens/tokens.css. */
+
+.funnel-page {
+  min-height: 100dvh;
+  background: var(--color-surface);
+  color: var(--text-primary);
+}
+
+.funnel-main {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 56px) var(--page-gutter);
+}
+
+.funnel-progress {
+  padding: var(--space-5) var(--space-7);
+  border-bottom: var(--border);
+  background: var(--color-paper);
+}
+
+.funnel-progress__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--text-subtle);
+  font-size: var(--size-xs);
+  font-weight: var(--weight-medium);
+}
+
+.funnel-progress__pct {
+  font-variant-numeric: tabular-nums;
+}
+
+.funnel-progress__track {
+  overflow: hidden;
+  width: 100%;
+  height: 6px;
+  margin-top: var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+}
+
+.funnel-progress__bar {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--color-wine);
+  transition: width var(--dur-fast) var(--ease-out);
+}
+
+.funnel-card__body {
+  padding-bottom: var(--space-7);
+}
+
+.funnel-card__title {
+  margin-top: var(--space-3);
+  color: var(--text-primary);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: var(--weight-strong);
+  line-height: 1.15;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+
+.funnel-card__subtitle {
+  margin-top: var(--space-3);
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+  line-height: 1.6;
+}
+
+.funnel-options {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-7);
+}
+
+.funnel-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: 56px;
+  padding: var(--space-4) var(--space-5);
+  border: var(--border-strong);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--text-primary);
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.funnel-option:hover {
+  border-color: var(--color-wine);
+}
+
+.funnel-option:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.funnel-option.is-selected {
+  border-color: var(--color-wine);
+  background: var(--color-peach);
+}
+
+.funnel-option__content {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.funnel-option__label {
+  color: var(--text-primary);
+  font-size: var(--size-sm);
+  font-weight: var(--weight-medium);
+  line-height: 1.3;
+}
+
+.funnel-option__detail {
+  color: var(--text-subtle);
+  font-size: var(--size-xs);
+  line-height: 1.45;
+}
+
+.funnel-option.is-selected .funnel-option__detail {
+  color: var(--text-secondary);
+}
+
+.funnel-option__arrow {
+  flex: 0 0 auto;
+  color: var(--color-wine);
+  font-weight: var(--weight-strong);
+}
+
+.funnel-back {
+  margin-top: var(--space-6);
+}
+
+.funnel-form {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.funnel-actions {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-3);
+}
+
+.funnel-actions--stack {
+  flex-direction: column;
+  margin-top: var(--space-7);
+}
+
+.funnel-summary {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: var(--border);
+  border-radius: var(--radius-control);
+  background: var(--color-surface);
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: var(--size-xs);
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.funnel-secondary-link {
+  margin-top: var(--space-4);
+  color: var(--text-subtle);
+  font-size: var(--size-xs);
+  line-height: 1.5;
+  text-align: center;
+}
+
+.funnel-secondary-link a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-secondary);
+  font-weight: var(--weight-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--color-line);
+  text-underline-offset: 4px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.funnel-secondary-link a:hover {
+  color: var(--color-wine);
+}
+
+.funnel-secondary-link a:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.funnel-lgpd {
+  color: var(--text-subtle);
+  font-size: var(--size-xs);
+  text-align: center;
+}
+
+/* ---- Rota /institucional ---- */
+
+.funnel-institucional {
+  min-height: 100dvh;
+  background: var(--color-paper);
+  color: var(--text-primary);
+}
+
+.funnel-institucional__main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 76px) var(--page-gutter);
+}
+
+.funnel-institucional__hero {
+  max-width: 42rem;
+}
+
+.funnel-institucional__title {
+  margin-top: var(--space-4);
+  color: var(--text-primary);
+  font-size: var(--size-title);
+  font-weight: var(--weight-display);
+  line-height: 1.04;
+  letter-spacing: var(--tracking-title);
+  text-wrap: balance;
+}
+
+.funnel-institucional__lede {
+  margin-top: var(--space-5);
+  color: var(--text-secondary);
+  font-size: var(--size-lede);
+  line-height: 1.6;
+}
+
+.funnel-institucional__cta {
+  margin-top: var(--space-8);
+}
+
+.funnel-institucional__pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-6);
+  margin-top: var(--space-12);
+}
+
+.funnel-pillar__body {
+  padding-bottom: var(--space-7);
+}
+
+.funnel-pillar__text {
+  margin-top: var(--space-2);
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+  line-height: 1.55;
+}
+
+.funnel-institucional__notice {
+  margin-top: var(--space-9);
+}
+
+@media (min-width: 40rem) {
+  .funnel-actions:not(.funnel-actions--stack) {
+    flex-direction: row;
+    align-items: center;
+  }
+}
