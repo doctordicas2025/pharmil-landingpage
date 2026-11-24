@@ -4,40 +4,57 @@ import Link from "next/link";
 
 import {
   ChatBubbleIcon,
-  ColdChainIcon,
-  PackageTrackIcon,
+  CheckIcon,
   ShieldIcon,
 } from "@/components/funnel/FunnelIcons";
-import Footer from "@/components/sections/Footer";
-import { Button, Card, CardBody, DotPill, Eyebrow, IconBox, Notice, Stat } from "@/design-system";
+import { Button, Card, CardBody, DotPill, Eyebrow, IconBox, Notice } from "@/design-system";
 import { resolveOfficialWhatsAppNumber } from "@/lib/funnel/quiz-config";
+import { companyInfo } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: { absolute: "Pharmil · Atendimento Oficial e Procedência" },
+  title: { absolute: "Pharmil · Saúde, Rotina e Hábitos Saudáveis" },
   description:
-    "Canal institucional da Pharmil. Atendimento consultivo, procedência verificada e envio rastreado em todo o Brasil.",
+    "Portal institucional dedicado à organização de rotina, hábitos saudáveis, bem-estar e informações claras com responsabilidade.",
 };
+
+const EDITORIAL_PRINCIPLES = [
+  {
+    index: "01",
+    title: "Constância diária",
+    detail: "Pequenos hábitos estruturados em horários previsíveis sustentam a rotina ao longo do tempo.",
+  },
+  {
+    index: "02",
+    title: "Informação transparente",
+    detail: "Orientações claras e acessíveis para apoiar decisões conscientes junto a profissionais de saúde.",
+  },
+  {
+    index: "03",
+    title: "Cuidado com privacidade",
+    detail: "Atendimento informativo pautado por respeito aos dados pessoais e boas práticas da LGPD.",
+  },
+] as const;
 
 const PILLARS = [
   {
-    title: "Procedência verificada",
+    title: "Organização de rotina",
     description:
-      "Catálogo padronizado, conferência de lote e informações claras antes da confirmação.",
-    icon: <ShieldIcon size={18} strokeWidth={2.2} />,
+      "Conteúdos práticos sobre planejamento de horários, hidratação, descanso e equilíbrio na agenda diária.",
+    icon: <CheckIcon size={18} strokeWidth={2.5} />,
     tone: "wine",
   },
   {
-    title: "Cuidado térmico 2–8 °C",
+    title: "Hábitos sustentáveis",
     description:
-      "Separação monitorada em caixa térmica lacrada para preservar estabilidade durante o trajeto.",
-    icon: <ColdChainIcon size={18} strokeWidth={2.2} />,
+      "Abordagem educativa voltada ao bem-estar contínuo, sem promessas irreais e sempre incentivando acompanhamento profissional.",
+    icon: <ShieldIcon size={18} strokeWidth={2.2} />,
     tone: "navy",
   },
   {
-    title: "Envio 100% rastreado",
+    title: "Atendimento humano",
     description:
-      "Lacre numerado e atualização do código de rastreio diretamente pelo canal oficial no WhatsApp.",
-    icon: <PackageTrackIcon size={18} strokeWidth={2.2} />,
+      "Equipe disponível em canal oficial para esclarecimentos institucionais e suporte ao visitante com clareza.",
+    icon: <ChatBubbleIcon size={18} strokeWidth={2.3} />,
     tone: "orange",
   },
 ] as const;
@@ -47,13 +64,13 @@ export default function InstitucionalPage() {
     process.env.NEXT_PUBLIC_WHATSAPP_OFFICIAL_NUMBER,
   );
   const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
-    "Olá, Pharmil. Gostaria de receber informações pelo atendimento oficial.",
+    "Olá. Gostaria de receber informações institucionais sobre bem-estar e organização de rotina.",
   )}`;
 
   return (
     <div className="funnel-institucional">
       <header className="lp-header">
-        <Link aria-label="Pharmil" className="lp-header__brand" href="/">
+        <Link aria-label="Pharmil Institucional" className="lp-header__brand" href="/institucional">
           <span aria-hidden="true" className="brand__logo-crop">
             <Image
               alt=""
@@ -72,7 +89,7 @@ export default function InstitucionalPage() {
           target="_blank"
         >
           <ChatBubbleIcon size={16} strokeWidth={2.4} />
-          Atendimento oficial
+          Falar com a equipe
         </Button>
       </header>
 
@@ -80,30 +97,52 @@ export default function InstitucionalPage() {
         <section className="funnel-institucional__band">
           <div aria-hidden="true" className="funnel-page__halo" />
           <div className="funnel-institucional__main">
-            <div className="funnel-institucional__hero">
-              <DotPill>Pharmil Oficial · Canal verificado</DotPill>
-              <h1 className="funnel-institucional__title">
-                Atendimento consultivo e transparência em cada etapa do pedido
-              </h1>
-              <p className="funnel-institucional__lede">
-                A equipe Pharmil realiza atendimento direto pelo canal oficial de
-                WhatsApp, com orientação clara sobre catálogo, cadeia fria, envio
-                rastreado e suporte pós-compra.
-              </p>
-              <div className="funnel-institucional__cta">
-                <Button
-                  href={whatsappHref}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  <ChatBubbleIcon size={18} strokeWidth={2.5} />
-                  Falar no WhatsApp (48) 99115-3151
-                </Button>
+            <div className="funnel-institucional__grid">
+              <div className="funnel-institucional__hero">
+                <DotPill>Portal Institucional · Saúde e Rotina</DotPill>
+                <h1 className="funnel-institucional__title">
+                  Organização de rotina e hábitos saudáveis com clareza no dia a dia
+                </h1>
+                <p className="funnel-institucional__lede">
+                  Nosso espaço institucional reúne princípios simples de planejamento
+                  diário, bem-estar e informação responsável para apoiar escolhas
+                  saudáveis com equilíbrio.
+                </p>
+                <div className="funnel-institucional__cta">
+                  <Button
+                    href={whatsappHref}
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <ChatBubbleIcon size={18} strokeWidth={2.5} />
+                    Falar com nossa equipe
+                  </Button>
+                </div>
               </div>
+
+              <aside aria-label="Pilares editoriais de rotina" className="funnel-editorial-card">
+                <Eyebrow tone="wine">Guia editorial</Eyebrow>
+                <h2 className="funnel-editorial-card__title">
+                  Três fundamentos de uma rotina equilibrada
+                </h2>
+                <ol className="funnel-editorial-card__list">
+                  {EDITORIAL_PRINCIPLES.map((item) => (
+                    <li className="funnel-editorial-item" key={item.index}>
+                      <span aria-hidden="true" className="funnel-editorial-item__index">
+                        {item.index}
+                      </span>
+                      <div>
+                        <strong>{item.title}</strong>
+                        <p>{item.detail}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </aside>
             </div>
 
             <section
-              aria-label="Pilares operacionais"
+              aria-label="Frentes institucionais"
               className="funnel-institucional__pillars"
             >
               {PILLARS.map((pillar) => (
@@ -127,53 +166,87 @@ export default function InstitucionalPage() {
           </div>
         </section>
 
-        <section aria-labelledby="inst-proof-title" className="lp-proof">
+        <section aria-labelledby="inst-manifesto-title" className="lp-proof">
           <div className="lp-proof__inner">
             <div>
-              <Eyebrow tone="orange">Compromisso operacional</Eyebrow>
-              <h2 className="section-title lp-proof__title" id="inst-proof-title">
-                Processo documentado do estoque à entrega.
+              <Eyebrow tone="orange">Compromisso editorial</Eyebrow>
+              <h2 className="section-title lp-proof__title" id="inst-manifesto-title">
+                Bem-estar construído com rotina, constância e responsabilidade.
               </h2>
               <p className="lp-proof__lede">
-                Conferência dupla de lote e temperatura, caixa térmica lacrada e
-                suporte humano em todas as etapas.
+                Acreditamos em comunicação objetiva, respeito à individualidade de cada
+                pessoa e valorização do acompanhamento profissional em saúde.
               </p>
             </div>
-            <ul className="lp-stats">
+            <ul className="funnel-manifesto-list">
               <li>
-                <Stat
-                  detail="faixa térmica monitorada no envio"
-                  onDark
-                  value="2–8 °C"
-                />
+                <strong>Rotina</strong>
+                <span>Hábitos de sono, alimentação equilibrada e movimento adaptados à sua realidade.</span>
               </li>
               <li>
-                <Stat
-                  detail="autonomia da embalagem em rotas longas"
-                  onDark
-                  value="48h"
-                />
+                <strong>Clareza</strong>
+                <span>Informações diretas, em linguagem acessível e sem promessas exageradas.</span>
               </li>
               <li>
-                <Stat
-                  detail="dos pedidos com lacre e código de rastreio"
-                  onDark
-                  value="100%"
-                />
+                <strong>Privacidade</strong>
+                <span>Respeito integral aos dados pessoais informados em qualquer contato.</span>
               </li>
             </ul>
           </div>
         </section>
 
         <div className="funnel-institucional__main">
-          <Notice title="Privacidade e proteção de dados (LGPD)" tone="info">
-            Os dados informados nos canais oficiais são utilizados exclusivamente para
-            atendimento, processamento logístico e suporte ao cliente.
+          <Notice title="Aviso informativo e proteção de dados (LGPD)" tone="info">
+            Este portal tem caráter exclusivamente informativo e institucional. As
+            orientações sobre hábitos saudáveis não substituem avaliação ou
+            acompanhamento por profissional de saúde habilitado.
           </Notice>
         </div>
       </main>
 
-      <Footer contactHref={whatsappHref} />
+      <footer className="funnel-inst-footer">
+        <div className="funnel-inst-footer__inner">
+          <div className="funnel-inst-footer__brand">
+            <span className="funnel-inst-footer__name">{companyInfo.tradeName}</span>
+            <p>Portal institucional de saúde, organização de rotina e hábitos saudáveis.</p>
+          </div>
+
+          <div>
+            <p className="site-footer__heading">Contato</p>
+            <ul className="site-footer__list">
+              <li>{companyInfo.email}</li>
+              <li className="site-footer__address">
+                SAUS Q. 5, Bloco N, Sala 307
+                <br />
+                Asa Sul, Brasília/DF
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="site-footer__heading">Institucional</p>
+            <ul className="site-footer__list">
+              <li>
+                <Link href="/termos">Termos de uso</Link>
+              </li>
+              <li>
+                <Link href="/privacidade">Política de privacidade</Link>
+              </li>
+              <li className="site-footer__address">CNPJ {companyInfo.cnpj}</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="funnel-inst-footer__bottom">
+          <div className="funnel-inst-footer__bottom-inner">
+            <p>
+              {companyInfo.tradeName}&reg; · Operado por {companyInfo.legalName} — CNPJ{" "}
+              {companyInfo.cnpj}
+            </p>
+            <p>© {new Date().getFullYear()} {companyInfo.tradeName}</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
