@@ -138,6 +138,7 @@ export default function Shop() {
                 <CardMedia fit={p.fit} tint={p.tint}>
                   <Image
                     alt={p.name}
+                    data-photo-bg={p.tint === "var(--tint-photo)" ? "white" : undefined}
                     height={432}
                     sizes="(max-width: 640px) 90vw, 300px"
                     src={p.image}
@@ -195,6 +196,7 @@ export default function Shop() {
             <ModalMedia>
               <Image
                 alt={detail.name}
+                data-photo-bg={detail.tint === "var(--tint-photo)" ? "white" : undefined}
                 height={520}
                 sizes="(max-width: 700px) 90vw, 420px"
                 src={detail.image}

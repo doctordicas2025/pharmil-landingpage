@@ -322,6 +322,7 @@
   height: 216px;
   border: 0;
   padding: 0;
+  isolation: isolate;
 }
 
 .ds-card__media--contain > img {
@@ -331,6 +332,13 @@
   height: calc(100% - (var(--space-5) * 2));
   object-fit: contain;
   filter: drop-shadow(var(--shadow-object));
+}
+
+/* Ajuste fino 10: foto com fundo branco sólido em cima de fundo claro usa
+   multiply e remove drop-shadow retangular para o fundo branco sumir. */
+.ds-card__media--contain > img[data-photo-bg="white"] {
+  filter: none;
+  mix-blend-mode: multiply;
 }
 
 .ds-card__media--cover > img {
@@ -575,6 +583,7 @@
   min-height: 240px;
   padding: var(--space-10);
   background: var(--color-surface);
+  isolation: isolate;
 }
 
 .ds-modal__media img {
@@ -583,6 +592,11 @@
   max-height: 340px;
   object-fit: contain;
   filter: drop-shadow(0 10px 16px oklch(0.22 0.022 22 / 0.16));
+}
+
+.ds-modal__media img[data-photo-bg="white"] {
+  filter: none;
+  mix-blend-mode: multiply;
 }
 
 .ds-modal__body {

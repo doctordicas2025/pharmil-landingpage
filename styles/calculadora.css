@@ -423,8 +423,15 @@
 .calc-table__scroll {
   overflow-x: auto;
   margin-top: var(--space-9);
-  border: var(--border);
+  border: 1px solid rgb(0 0 0 / 0.12);
   border-radius: var(--radius-card);
+}
+
+@media (max-width: 48rem) {
+  .calc-table__scroll {
+    -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, #000 88%, transparent);
+  }
 }
 
 .calc-table__scroll:focus-visible {

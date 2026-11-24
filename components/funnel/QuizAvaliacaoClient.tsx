@@ -1,17 +1,22 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAction } from "next-safe-action/hooks";
 
 import {
   submitQuizAvaliacao,
   type QuizSubmissionResult,
 } from "@/app/avaliacao/actions";
-import { Button, Card, CardBody } from "@/design-system";
-import { QUIZ_STEPS, type QuizStepConfig } from "@/lib/funnel/quiz-config";
+import { Button, Card, CardBody, Eyebrow } from "@/design-system";
+import {
+  labelForQuizOption,
+  QUIZ_STEPS,
+  type QuizStepConfig,
+} from "@/lib/funnel/quiz-config";
 import type { FunnelAttribution } from "@/lib/funnel/traffic-routing";
 
+import { ArrowRightIcon, CheckIcon } from "./FunnelIcons";
 import { QuizCompletedCard, QuizContactStep } from "./QuizContactStep";
 
 type StepId = QuizStepConfig["id"];
@@ -22,20 +27,35 @@ interface QuizAvaliacaoClientProps {
 }
 
 const TOTAL_STAGES = QUIZ_STEPS.length + 1;
+const OPTION_LETTERS = ["A", "B", "C", "D"] as const;
+const ANALYSIS_STEPS = [
+  "Objetivo e ritmo da rotina identificados",
+  "Prioridade de atendimento calibrada",
+  "Convite do Grupo VIP Pharmil preparado",
+] as const;
 
 export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
   const [stageIndex, setStageIndex] = useState(0);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [answers, setAnswers] = useState<AnswersState>({});
   const [firstName, setFirstName] = useState("");
   const [phone, setPhone] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [completed, setCompleted] = useState<QuizSubmissionResult | null>(null);
 
+  useEffect(() => {
+    if (!isAnalyzing) return undefined;
+    const timer = window.setTimeout(() => {
+      setIsAnalyzing(false);
+      setStageIndex(QUIZ_STEPS.length);
+    }, 1050);
+    return () => window.clearTimeout(timer);
+  }, [isAnalyzing]);
+
   const { execute, isExecuting } = useAction(submitQuizAvaliacao, {
     onSuccess: (result) => {
       if (result.data?.success) {
         setCompleted(result.data.data);
-        // O cartão de conclusão mantém botão explícito caso o in-app browser segure o redirect.
         window.location.assign(result.data.data.vipGroupUrl);
         return;
       }
@@ -48,16 +68,26 @@ export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
 
   const progressPercent = completed
     ? 100
-    : Math.round(((stageIndex + 1) / TOTAL_STAGES) * 100);
+    : isAnalyzing
+      ? 92
+      : Math.round(((stageIndex + 1) / TOTAL_STAGES) * 100);
 
   function handleSelectOption(stepId: StepId, value: string) {
     setErrorMessage(null);
     setAnswers((prev) => ({ ...prev, [stepId]: value }));
+
+    // Ao concluir a 4ª pergunta, exibe o feedback curto de análise de perfil.
+    if (stageIndex === QUIZ_STEPS.length - 1) {
+      setIsAnalyzing(true);
+      return;
+    }
+
     setStageIndex((current) => Math.min(current + 1, QUIZ_STEPS.length));
   }
 
   function handleBack() {
     setErrorMessage(null);
+    setIsAnalyzing(false);
     setStageIndex((current) => Math.max(0, current - 1));
   }
 
@@ -124,17 +154,33 @@ export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
     return <QuizCompletedCard completed={completed} />;
   }
 
-  const currentStep = QUIZ_STEPS[stageIndex];
+  const currentStep = isAnalyzing ? undefined : QUIZ_STEPS[stageIndex];
+  const profileHighlights = [
+    answers.objetivo ? labelForQuizOption("objetivo", answers.objetivo) : null,
+    answers.momento ? labelForQuizOption("momento", answers.momento) : null,
+  ].filter((item): item is string => Boolean(item));
 
   return (
     <Card>
       <div className="funnel-progress">
         <div className="funnel-progress__meta">
-          <span>
-            {currentStep
-              ? `Pergunta ${currentStep.stepNumber} de ${QUIZ_STEPS.length}`
-              : "Etapa final"}
-          </span>
+          <div className="funnel-progress__label">
+            <span className="funnel-dots" aria-hidden="true">
+              {Array.from({ length: TOTAL_STAGES }, (_, idx) => {
+                const activeIdx = isAnalyzing ? QUIZ_STEPS.length : stageIndex;
+                const state =
+                  idx < activeIdx ? "is-done" : idx === activeIdx ? "is-current" : "";
+                return <i className={state} key={idx} />;
+              })}
+            </span>
+            <span>
+              {isAnalyzing
+                ? "Montando diagnóstico"
+                : currentStep
+                  ? `Pergunta ${currentStep.stepNumber} de ${QUIZ_STEPS.length}`
+                  : "Etapa final"}
+            </span>
+          </div>
           <span className="funnel-progress__pct">{progressPercent}%</span>
         </div>
         <div
@@ -153,8 +199,35 @@ export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
 
       <CardBody>
         <div className="funnel-card__body">
-          {currentStep ? (
-            <div>
+          {isAnalyzing ? (
+            <div aria-live="polite" className="funnel-analyzing funnel-step-enter">
+              <div aria-hidden="true" className="funnel-analyzing__pulse" />
+              <Eyebrow tone="orange">Análise personalizada</Eyebrow>
+              <h1 className="funnel-card__title">
+                Preparando seu acesso ao Grupo VIP
+              </h1>
+              <p className="funnel-card__subtitle">
+                Organizamos suas respostas para a equipe Pharmil orientar você com mais
+                clareza.
+              </p>
+              <ul className="funnel-analyzing__list">
+                {ANALYSIS_STEPS.map((label, idx) => (
+                  <li
+                    className="funnel-analyzing__item"
+                    key={label}
+                    style={{ animationDelay: `${idx * 220}ms` }}
+                  >
+                    <span aria-hidden="true" className="funnel-analyzing__check">
+                      <CheckIcon size={14} strokeWidth={2.75} />
+                    </span>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : currentStep ? (
+            <div className="funnel-step-enter" key={currentStep.id}>
+              <Eyebrow tone="orange">Etapa 0{currentStep.stepNumber}</Eyebrow>
               <h1 className="funnel-card__title">{currentStep.title}</h1>
               <p className="funnel-card__subtitle">{currentStep.subtitle}</p>
 
@@ -163,7 +236,7 @@ export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
                 className="funnel-options"
                 role="radiogroup"
               >
-                {currentStep.options.map((option) => {
+                {currentStep.options.map((option, idx) => {
                   const selected = answers[currentStep.id] === option.value;
                   return (
                     <button
@@ -174,14 +247,18 @@ export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
                       key={option.value}
                       onClick={() => handleSelectOption(currentStep.id, option.value)}
                       role="radio"
+                      style={{ animationDelay: `${idx * 45}ms` }}
                       type="button"
                     >
+                      <span aria-hidden="true" className="funnel-option__badge">
+                        {OPTION_LETTERS[idx]}
+                      </span>
                       <span className="funnel-option__content">
                         <span className="funnel-option__label">{option.label}</span>
                         <span className="funnel-option__detail">{option.detail}</span>
                       </span>
                       <span aria-hidden="true" className="funnel-option__arrow">
-                        →
+                        <ArrowRightIcon size={17} strokeWidth={2.5} />
                       </span>
                     </button>
                   );
@@ -206,6 +283,7 @@ export function QuizAvaliacaoClient({ attribution }: QuizAvaliacaoClientProps) {
               onPhoneChange={setPhone}
               onSubmit={handleSubmit}
               phone={phone}
+              profileHighlights={profileHighlights}
             />
           )}
         </div>

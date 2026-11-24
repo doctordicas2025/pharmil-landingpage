@@ -21,22 +21,21 @@
 
 .brand__logo-crop {
   position: relative;
-  display: block;
-  width: 2.75rem;
-  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  width: 3.25rem;
+  height: 3.25rem;
   overflow: hidden;
+  border-radius: var(--radius-pill);
 }
 
-/* A arte tem ~12% de margem branca em volta do círculo; o zoom recorta essa
-   folga para o círculo preencher a caixa. O PNG tem alpha real, então não
-   precisa de mix-blend-mode para esconder fundo. */
+/* A arte tem ~11% de margem transparente em volta do círculo; scale(1.16)
+   preenche o selo com equilíbrio sem cortar nenhum pixel do anel externo. */
 .brand__logo {
-  position: absolute;
-  top: -0.475rem;
-  left: -0.475rem;
-  width: 3.7rem;
-  height: 3.7rem;
-  max-width: none;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transform: scale(1.16);
 }
 
 .desktop-nav {

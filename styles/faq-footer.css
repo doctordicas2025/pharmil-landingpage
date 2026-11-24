@@ -25,7 +25,10 @@
 }
 
 .site-footer__logo img {
-  border-radius: 999px;
+  padding: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--color-paper);
+  object-fit: contain;
 }
 
 .site-footer__brand p {

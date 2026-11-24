@@ -55,7 +55,7 @@ export function Hero({ contactHref }: HeroProps) {
                       fill="none"
                       height="18"
                       stroke={chip.stroke}
-                      strokeWidth="1.7"
+                      strokeWidth="2.2"
                       viewBox="0 0 24 24"
                       width="18"
                     >
