@@ -2,12 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { LandingSteps } from "@/components/LandingSteps";
 import Footer from "@/components/sections/Footer";
 import {
   Accordion,
   Button,
-  Card,
-  CardBody,
   DotPill,
   TextLink,
 } from "@/design-system";
@@ -161,19 +160,7 @@ export default function OriginalPage() {
             Três passos, com a caixa na mão.
           </h2>
 
-          <ol className="lp-grid lp-grid--3 lp-steps">
-            {steps.map((step, index) => (
-              <Card as="li" key={step.title}>
-                <CardBody>
-                  <span aria-hidden="true" className="lp-step__number">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <h3 className="lp-card__title">{step.title}</h3>
-                  <p className="lp-card__text">{step.detail}</p>
-                </CardBody>
-              </Card>
-            ))}
-          </ol>
+          <LandingSteps steps={steps} />
 
           <div className="og-valiq">
             <TextLink external href={VALIQ_URL}>

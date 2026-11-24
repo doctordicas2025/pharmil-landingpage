@@ -4,10 +4,9 @@ import { useSearchParams } from "next/navigation";
 import { FormEvent, useState, useTransition } from "react";
 
 import { Button, Field, FieldSet, OptionGroup } from "@/design-system";
+import { getWhatsappHref } from "@/lib/site-config";
 
 import { salvarLeadAction } from "./actions";
-
-const WHATSAPP_NUMBER = "5561999969091";
 
 const objetivos = [
   "Entender como funciona",
@@ -32,7 +31,7 @@ export default function CadastroForm() {
       if (influencer) {
         mensagem += ` Fui indicado(a) por: ${influencer}.`;
       }
-      const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensagem)}`;
+      const whatsappUrl = getWhatsappHref(mensagem);
 
       // O registro do lead nao pode barrar o contato: se o banco falhar, o
       // atendimento segue e a falha fica no console.

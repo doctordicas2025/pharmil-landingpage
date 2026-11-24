@@ -22,8 +22,7 @@ export const salvarLeadAction = actionClient
         return { success: false, error: "Servidor não configurado com as chaves do Supabase. Verifique o Vercel." };
       }
 
-      // Inserir no Supabase (na tabela "leads")
-      const { error, data } = await supabase
+      const { error } = await supabase
         .from("leads")
         .insert([
           {
