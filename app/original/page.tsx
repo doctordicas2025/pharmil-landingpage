@@ -131,7 +131,7 @@ export default function OriginalPage() {
                     height={1254}
                     priority
                     sizes="(max-width: 992px) 72vw, 380px"
-                    src="/images/cut-tg.png"
+                    src="/images/catalogo/tg-15-4-frascos.webp"
                     width={1254}
                   />
                   <span aria-hidden="true" className="og-scan__corner og-scan__corner--tl" />
