@@ -8,10 +8,16 @@ import OrderProcess from "@/components/sections/OrderProcess";
 import Shop from "@/components/sections/Shop";
 import Testimonials from "@/components/sections/Testimonials";
 import Trust from "@/components/sections/Trust";
+import { catalogToday } from "@/lib/catalog";
 import { getContactHref } from "@/lib/site-config";
+
+// O preco de campanha vale ate um dia certo de Brasilia. A pagina e refeita de
+// hora em hora para voltar sozinha ao preco normal, sem novo deploy.
+export const revalidate = 3600;
 
 export default function HomePage() {
   const contactHref = getContactHref();
+  const products = catalogToday(new Date());
 
   return (
     <>
@@ -21,7 +27,7 @@ export default function HomePage() {
       <Header contactHref={contactHref} />
       <main id="conteudo">
         <Hero contactHref={contactHref} />
-        <Shop />
+        <Shop products={products} />
         <ColdChain />
         <OrderProcess />
         <Trust contactHref={contactHref} />

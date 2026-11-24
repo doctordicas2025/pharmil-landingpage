@@ -55,9 +55,6 @@ in a warm system.
 - **Text hierarchy is two levels** (`ink`, `muted`). A third level for metadata
   would stop `muted` from doing two jobs.
 - `--color-wine-deep` and `--color-navy-light` are declared and never used.
-- Eight product tints live as raw hex in `lib/catalog.ts` (`#FFF3E6`, `#ECF0F7`, …).
-  They are per-product photographic backdrops, not UI surfaces, so keeping them as
-  data is defensible — but they are outside the system and should be labeled as such.
 
 ---
 
@@ -186,7 +183,7 @@ is a static composed frame, not a frozen one.
 | **Inline buy button** | `12px 16px`, pill, 800, `flex: 1` |
 | **Filter pill** | `11px 20px`, pill, `1.5px` border, 700; active inverts to wine fill |
 | **Card** | `1px` line, `22px` radius, paper ground, `translateY(-4px)` + wine shadow on hover |
-| **Card media well** | `216px` fixed height, product tint ground, cutout inset `16px` `object-fit: contain` |
+| **Card media well** | square (`aspect-ratio: 1 / 1`); the square studio photo from the catalog covers the whole well |
 | **Icon container** | `38×38`, `12px` radius, `1px` line, paper ground |
 | **Icon button** | `44×44` — the minimum touch target, never smaller |
 | **Text link** | `1.5px` bottom border at 30% wine, opaque on hover |

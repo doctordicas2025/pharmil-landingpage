@@ -315,38 +315,50 @@
   padding: var(--space-5) var(--space-7) var(--space-7);
 }
 
+/* A foto de estudio e quadrada e tem fundo proprio: o poco tem a mesma
+   proporcao e a foto ocupa tudo. O tint so aparece enquanto ela carrega. */
 .ds-card__media {
   position: relative;
   display: block;
   width: 100%;
-  height: 216px;
-  border: 0;
-  padding: 0;
+  aspect-ratio: 1 / 1;
+  background: var(--tint-photo);
   isolation: isolate;
 }
 
-.ds-card__media--contain > img {
-  position: absolute;
-  inset: var(--space-5);
-  width: calc(100% - (var(--space-5) * 2));
-  height: calc(100% - (var(--space-5) * 2));
-  object-fit: contain;
-  filter: drop-shadow(var(--shadow-object));
-}
-
-/* Ajuste fino 10: foto com fundo branco sólido em cima de fundo claro usa
-   multiply e remove drop-shadow retangular para o fundo branco sumir. */
-.ds-card__media--contain > img[data-photo-bg="white"] {
-  filter: none;
-  mix-blend-mode: multiply;
-}
-
-.ds-card__media--cover > img {
+.ds-card__media > img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ---- Price ----------------------------------------------------------- */
+
+.ds-price__amount {
+  color: var(--color-wine);
+  font-size: 1.5rem;
+  font-weight: var(--weight-display);
+  letter-spacing: var(--tracking-tight);
+}
+
+.ds-price--lg .ds-price__amount {
+  font-size: 2rem;
+  letter-spacing: var(--tracking-title);
+}
+
+.ds-price__amount small {
+  color: var(--text-secondary);
+  font-size: var(--size-xs);
+  font-weight: var(--weight-soft);
+  letter-spacing: 0;
+}
+
+.ds-price__normal {
+  color: var(--text-secondary);
+  font-size: var(--size-sm);
+  font-weight: var(--weight-soft);
 }
 
 /* ---- Field ----------------------------------------------------------- */
@@ -580,23 +592,16 @@
 .ds-modal__media {
   display: grid;
   place-items: center;
-  min-height: 240px;
-  padding: var(--space-10);
+  padding: var(--space-3);
   background: var(--color-surface);
-  isolation: isolate;
 }
 
+/* Foto de estudio inteira, encaixada no canto do dialogo: o raio e o de
+   fora menos a folga, para as duas curvas ficarem concentricas. */
 .ds-modal__media img {
   width: 100%;
   height: auto;
-  max-height: 340px;
-  object-fit: contain;
-  filter: drop-shadow(0 10px 16px oklch(0.22 0.022 22 / 0.16));
-}
-
-.ds-modal__media img[data-photo-bg="white"] {
-  filter: none;
-  mix-blend-mode: multiply;
+  border-radius: calc(var(--radius-modal) - var(--space-3));
 }
 
 .ds-modal__body {
@@ -610,9 +615,11 @@
   border-top: var(--border);
 }
 
+/* O valor leva dois tercos: a conservacao do cadastro e um paragrafo, e o
+   rotulo e uma palavra. */
 .ds-facts > div {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
   gap: var(--space-3);
   padding: 11px 0;
   border-bottom: var(--border);

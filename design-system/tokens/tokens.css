@@ -48,15 +48,10 @@
   --color-danger: oklch(0.52 0.19 28);
   --color-success: oklch(0.52 0.11 155);
 
-  /* Fundos fotograficos dos produtos. Sao dado, nao superficie de UI:
-     cada um e o cenario de um produto especifico.
-     Regra: foto com fundo branco recebe --tint-photo, senao o branco da foto
-     aparece como um quadrado recortado sobre a cor. Cor so em recorte com
-     alpha, que assenta em qualquer fundo. */
+  /* Fundo atras da foto de produto. As fotos do catalogo sao de estudio, com
+     fundo proprio, e preenchem o espaco inteiro: este tom so aparece enquanto
+     a foto carrega. */
   --tint-photo: #fefefe;
-  --tint-ghkcu: #e9eff7;
-  --tint-glow: #e7edf6;
-  --tint-klow: #f4e9e8;
 
   /* ---- Tipografia --------------------------------------------------- */
   --font-display-family: var(--font-brand), Arial, sans-serif;

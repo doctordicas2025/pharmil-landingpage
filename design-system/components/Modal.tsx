@@ -64,8 +64,13 @@ export type FactListProps = {
   facts: readonly { label: string; value: string }[];
 };
 
-/** Tabela de fatos: rotulo discreto a esquerda, valor com peso a direita. */
+/**
+ * Tabela de fatos: rotulo discreto a esquerda, valor com peso a direita.
+ * Sem fato nenhum nao desenha nada, nem a linha de cima.
+ */
 export function FactList({ facts }: FactListProps) {
+  if (facts.length === 0) return null;
+
   return (
     <dl className="ds-facts">
       {facts.map((fact) => (

@@ -51,19 +51,10 @@ export function CardFooter({ children }: { children: ReactNode }) {
   return <div className="ds-card__footer">{children}</div>;
 }
 
-export type CardMediaProps = {
-  /** Fundo do poco. Use um token `--tint-*`, nunca hex solto. */
-  tint: string;
-  /** `contain` recorta com folga; `cover` preenche a area. */
-  fit?: "contain" | "cover";
-  children: ReactNode;
-};
-
-/** Poco de imagem de altura fixa no topo do card. */
-export function CardMedia({ tint, fit = "contain", children }: CardMediaProps) {
-  return (
-    <div className={`ds-card__media ds-card__media--${fit}`} style={{ background: tint }}>
-      {children}
-    </div>
-  );
+/**
+ * Poco quadrado no topo do card. A foto de estudio do produto, tambem
+ * quadrada e com fundo proprio, preenche tudo, sem recorte.
+ */
+export function CardMedia({ children }: { children: ReactNode }) {
+  return <div className="ds-card__media">{children}</div>;
 }

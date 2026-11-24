@@ -17,41 +17,46 @@ import {
   Modal,
   ModalBody,
   ModalMedia,
+  Price,
 } from "@/design-system";
-import { Category, formatPrice, products } from "@/lib/catalog";
+import { formatPrice } from "@/lib/catalog";
+import type { Category, ProductToday } from "@/lib/catalog";
 import { getWhatsappHref } from "@/lib/site-config";
 
 type Filter = "Todos" | Category;
 
 const filters: Filter[] = ["Todos", "GLP-1", "Skin", "Recovery"];
 
-const categoryCards = [
-  {
-    cat: "GLP-1" as Category,
-    index: "01",
-    image: "/images/cut-lipoless.png",
-    detail: "Tirzepatida e Retatrutida, em frasco e em caneta.",
-  },
-  {
-    cat: "Skin" as Category,
-    index: "02",
-    image: "/images/cut-ghkcu.png",
-    detail: "GHK-Cu e Glow, liofilizados com laudo por lote.",
-  },
-  {
-    cat: "Recovery" as Category,
-    index: "03",
-    image: "/images/cut-klow.png",
-    detail: "Blends de manutenção, como o Klow.",
-  },
+const categoryCards: { cat: Category; index: string; detail: string }[] = [
+  { cat: "GLP-1", index: "01", detail: "Tirzepatida e Retatrutida, em frasco e em caneta." },
+  { cat: "Skin", index: "02", detail: "GHK-Cu e Glow, com laudo por lote." },
+  { cat: "Recovery", index: "03", detail: "Blends de manutenção, como o Klow." },
 ];
 
-const orderHref = (name: string, presentation: string) =>
-  getWhatsappHref(
-    `Olá, vim pelo site da Pharmil e quero pedir: ${name} (${presentation}).`,
-  );
+const orderHref = (name: string) =>
+  getWhatsappHref(`Olá, vim pelo site da Pharmil e quero pedir: ${name}.`);
 
-export default function Shop() {
+// O preco de hoje e, em campanha, o normal que vai riscado ao lado.
+const priceOf = (p: ProductToday) => ({
+  amount: formatPrice(p.price),
+  normalAmount: p.discount ? formatPrice(p.discount.normalPrice) : undefined,
+});
+
+// So entra a linha que o catalogo informa para o produto.
+const factsOf = (p: ProductToday) =>
+  [
+    { label: "Apresentação", value: p.presentation },
+    { label: "Origem", value: p.origin },
+    { label: "Conservação", value: p.storage },
+  ].filter((fact): fact is { label: string; value: string } => fact.value !== undefined);
+
+export type ShopProps = {
+  /** A vitrine do dia. O preco chega resolvido pelo servidor, para o relogio
+   *  do visitante nao mudar o que a pagina mostra. */
+  products: ProductToday[];
+};
+
+export default function Shop({ products }: ShopProps) {
   const [cat, setCat] = useState<Filter>("Todos");
   const [detailId, setDetailId] = useState<string | null>(null);
 
@@ -60,6 +65,12 @@ export default function Shop() {
 
   const visible = cat === "Todos" ? products : products.filter((p) => p.category === cat);
   const detail = products.find((p) => p.id === detailId) ?? null;
+
+  // Cada linha leva a foto do primeiro produto dela na vitrine.
+  const lines = categoryCards.flatMap((card) => {
+    const first = products.find((p) => p.category === card.cat);
+    return first ? [{ ...card, image: first.image }] : [];
+  });
 
   const pick = (next: Category) => {
     setCat(next);
@@ -74,26 +85,26 @@ export default function Shop() {
             Três linhas, um mesmo padrão de controle.
           </h2>
           <p className="section-intro">
-            Escolha pela finalidade. Cada produto abre com dosagem, apresentação e
-            orientação de conservação.
+            Escolha pela finalidade. Cada produto abre com a foto da embalagem, o
+            preço e as informações de apresentação e conservação disponíveis.
           </p>
         </div>
 
         <ul className="categories__grid">
-          {categoryCards.map((card) => (
-            <li key={card.cat}>
+          {lines.map((line) => (
+            <li key={line.cat}>
               <button
                 className="category-card"
-                onClick={() => pick(card.cat)}
+                onClick={() => pick(line.cat)}
                 type="button"
               >
                 <span className="category-card__thumb">
-                  <Image alt="" height={220} src={card.image} width={220} />
+                  <Image alt="" height={220} src={line.image} width={220} />
                 </span>
                 <span className="category-card__body">
-                  <span className="category-card__index">{card.index}</span>
-                  <strong className="category-card__title">{card.cat}</strong>
-                  <span className="category-card__detail">{card.detail}</span>
+                  <span className="category-card__index">{line.index}</span>
+                  <strong className="category-card__title">{line.cat}</strong>
+                  <span className="category-card__detail">{line.detail}</span>
                 </span>
               </button>
             </li>
@@ -108,8 +119,7 @@ export default function Shop() {
             A lojinha Pharmil.
           </h2>
           <p className="section-intro">
-            Preço à vista em PIX. Toque em um produto para ver apresentação,
-            conservação e o que acompanha.
+            Preço à vista em PIX. Toque em um produto para ver os detalhes.
           </p>
         </div>
 
@@ -135,32 +145,31 @@ export default function Shop() {
                 onClick={() => setDetailId(p.id)}
                 type="button"
               >
-                <CardMedia fit={p.fit} tint={p.tint}>
+                <CardMedia>
                   <Image
                     alt={p.name}
-                    data-photo-bg={p.tint === "var(--tint-photo)" ? "white" : undefined}
                     height={432}
                     sizes="(max-width: 640px) 90vw, 300px"
                     src={p.image}
                     width={432}
                   />
-                  {p.badge ? <Badge>{p.badge}</Badge> : null}
+                  {p.discount ? <Badge>{p.discount.campaign}</Badge> : null}
                 </CardMedia>
               </button>
 
               <CardBody>
                 <Eyebrow tone="muted">{p.category}</Eyebrow>
                 <h3 className="product__name">{p.name}</h3>
-                <p className="product__presentation">{p.presentation}</p>
+                {p.presentation ? (
+                  <p className="product__presentation">{p.presentation}</p>
+                ) : null}
               </CardBody>
 
               <CardFooter>
-                <p className="product__price">
-                  {formatPrice(p.price)} <small>no PIX</small>
-                </p>
+                <Price {...priceOf(p)} note="no PIX" />
                 <div className="product__actions">
                   <Button
-                    href={orderHref(p.name, p.presentation)}
+                    href={orderHref(p.name)}
                     rel="noopener noreferrer"
                     target="_blank"
                     variant="inline"
@@ -196,7 +205,6 @@ export default function Shop() {
             <ModalMedia>
               <Image
                 alt={detail.name}
-                data-photo-bg={detail.tint === "var(--tint-photo)" ? "white" : undefined}
                 height={520}
                 sizes="(max-width: 700px) 90vw, 420px"
                 src={detail.image}
@@ -207,15 +215,20 @@ export default function Shop() {
             <ModalBody>
               <Eyebrow tone="muted">{detail.category}</Eyebrow>
               <h3 className="modal__title">{detail.name}</h3>
-              <p className="modal__description">{detail.description}</p>
+              {detail.description ? (
+                <p className="modal__description">{detail.description}</p>
+              ) : null}
 
-              <FactList facts={detail.facts} />
+              <FactList facts={factsOf(detail)} />
 
-              <p className="modal__price">{formatPrice(detail.price)}</p>
+              <div className="modal__price">
+                {detail.discount ? <Badge>{detail.discount.campaign}</Badge> : null}
+                <Price {...priceOf(detail)} size="lg" />
+              </div>
 
               <Button
                 block
-                href={orderHref(detail.name, detail.presentation)}
+                href={orderHref(detail.name)}
                 rel="noopener noreferrer"
                 target="_blank"
               >

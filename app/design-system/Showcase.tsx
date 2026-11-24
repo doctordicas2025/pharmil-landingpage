@@ -24,6 +24,7 @@ import {
   ModalBody,
   Notice,
   OptionGroup,
+  Price,
   Skeleton,
   Spinner,
   Stat,
@@ -128,6 +129,12 @@ export default function Showcase() {
             <p className="ds-demo__card-text">Borda wine com anel de 1px.</p>
           </CardBody>
         </Card>
+      </Row>
+
+      <Row title="Price" note="Preco de hoje; em campanha, o preco normal entra acima, riscado e por extenso.">
+        <Price amount="R$ 500" note="no PIX" />
+        <Price amount="R$ 400" normalAmount="R$ 500" note="no PIX" />
+        <Price amount="R$ 400" normalAmount="R$ 500" size="lg" />
       </Row>
 
       <Row title="Field" note="Default, com apoio, erro e desabilitado. Erro sempre em texto, nunca so na borda.">

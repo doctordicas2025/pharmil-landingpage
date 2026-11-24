@@ -11,7 +11,7 @@ export { Button, IconButton } from "./components/Button";
 export type { ButtonProps, ButtonSize, ButtonVariant, IconButtonProps } from "./components/Button";
 
 export { Card, CardBody, CardFooter, CardMedia } from "./components/Card";
-export type { CardMediaProps, CardProps } from "./components/Card";
+export type { CardProps } from "./components/Card";
 
 export { Accordion, Stat, TextLink } from "./components/Disclosure";
 export type { AccordionItem, AccordionProps, StatProps, TextLinkProps } from "./components/Disclosure";
@@ -27,3 +27,6 @@ export type { FactListProps, ModalProps } from "./components/Modal";
 
 export { Badge, Chip, DotPill, Eyebrow, FilterPill, IconBox } from "./components/Pill";
 export type { EyebrowTone, FilterPillProps } from "./components/Pill";
+
+export { Price } from "./components/Price";
+export type { PriceProps } from "./components/Price";

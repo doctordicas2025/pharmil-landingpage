@@ -29,7 +29,8 @@ Os documentos que acompanham a biblioteca:
 | `Button` | `Button.tsx` | default, hover, active, focus, disabled, loading · variantes `primary` / `secondary` / `inline`, tamanhos `md` / `sm`, `block` |
 | `IconButton` | `Button.tsx` | default, hover, focus, disabled · 44px fixo |
 | `Card` | `Card.tsx` | repouso, `interactive` (elevação no hover), `selected`, foco interno · tons `paper` / `surface` · polimórfico via `as` |
-| `CardBody` `CardFooter` `CardMedia` | `Card.tsx` | `CardMedia` aceita `tint` (token `--tint-*`) e `fit` contain/cover |
+| `CardBody` `CardFooter` `CardMedia` | `Card.tsx` | `CardMedia` é um poço quadrado: a foto de estúdio do produto preenche tudo |
+| `Price` | `Price.tsx` | preço de hoje · com `normalAmount`, o preço normal riscado acima · `note` ao lado do valor · tamanhos `md` / `lg` |
 | `Field` | `Field.tsx` | default, hover, focus, erro, desabilitado · com `hint` ou `error` |
 | `OptionGroup` | `Field.tsx` | default, hover, focus, selecionado, desabilitado, erro · `layout` `list` / `chips` · opções como texto ou `{ value, label, detail, marked }` · `hint` |
 | `FieldSet` | `Field.tsx` | agrupamento com o espaçamento do sistema |
