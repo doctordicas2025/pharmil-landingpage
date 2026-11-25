@@ -2,16 +2,16 @@ import { Eyebrow, TextLink } from "@/design-system";
 
 const networkItems = [
   {
-    title: "Farmácias habilitadas",
-    detail: "Dispensação por estabelecimento regularizado",
+    title: "Logística refrigerada 2°C–8°C",
+    detail: "Caixa térmica lacrada com autonomia de até 48h na rota",
   },
   {
-    title: "Documentação verificada",
-    detail: "Registro e origem confirmados a cada pedido",
+    title: "Conferência de lote",
+    detail: "Validade, fotos da embalagem e registro enviados antes da postagem",
   },
   {
-    title: "Cobertura nacional",
-    detail: "Rotas e prazos informados conforme o destino",
+    title: "Suporte humano no WhatsApp",
+    detail: "Acompanhamento direto da separação até a confirmação da entrega",
   },
 ] as const;
 
@@ -24,17 +24,17 @@ export default function Trust({ contactHref }: TrustProps) {
     <section aria-labelledby="rede-title" className="network" id="rede">
       <div className="network__inner">
         <div>
-          <Eyebrow>Rede parceira</Eyebrow>
+          <Eyebrow>Operação e logística</Eyebrow>
           <h2 className="section-title" id="rede-title">
-            Quem dispensa está habilitado para isso.
+            Cadeia fria monitorada e suporte humano em cada envio.
           </h2>
           <p className="section-intro">
-            A Pharmil organiza o atendimento e a logística. A dispensação fica com
-            farmácias parceiras regularizadas, mediante prescrição válida.
+            A equipe Pharmil acompanha todo o fluxo: conferência de lote, embalagem
+            térmica entre 2°C e 8°C e atendimento direto pelo WhatsApp sem robô.
           </p>
           <div className="network__action">
             <TextLink external href={contactHref}>
-              Tirar uma dúvida
+              Falar com a equipe
             </TextLink>
           </div>
         </div>

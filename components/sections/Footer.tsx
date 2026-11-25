@@ -76,9 +76,8 @@ export default function Footer({ contactHref }: FooterProps) {
       <div className="site-footer__legal">
         <div className="site-footer__legal-inner">
           <p>
-            Conteúdo informativo. Não substitui avaliação profissional e não promete
-            resultados. Dispensação por farmácia parceira habilitada, mediante
-            prescrição.
+            Conteúdo informativo sobre protocolos e logística térmica 2°C a 8°C.
+            Não substitui acompanhamento profissional individualizado.
           </p>
           <p className="site-footer__entity">
             PHARMIL&reg; | Marca comercial operada por {companyInfo.legalName}. &mdash;

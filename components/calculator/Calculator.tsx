@@ -136,7 +136,7 @@ function resolveVial(s: State): Vial {
 function missingStep(s: State, vial: Vial, doseMg: number): string {
   if (s.product === "") return "Escolha o seu produto.";
   if (vial.mgPerMl === null) return "Preencha os mg e os mL que estão no rótulo.";
-  if (!valido(doseMg)) return "Escolha a dose prescrita.";
+  if (!valido(doseMg)) return "Escolha a dose definida.";
   return "Confira os valores digitados.";
 }
 
@@ -174,13 +174,13 @@ export function Calculator({ shareUrl }: CalculatorProps) {
   const shareText =
     result && vial.mgPerMl !== null
       ? [
-          "Conversão de dose para seringa U-100",
-          `Produto: ${vial.description}`,
+          "Conversão de unidades na escala U-100",
+          `Apresentação: ${vial.description}`,
           `Dose: ${formatMg(doseMg)}`,
-          `Seringa: ${formatMl(syringeMl)}`,
-          `Puxar até: ${formatUnits(result.units)} unidades (${formatMl(result.volumeMl)})`,
+          `Escala: ${formatMl(syringeMl)}`,
+          `Marcação: ${formatUnits(result.units)} unidades (${formatMl(result.volumeMl)})`,
           "",
-          "Confira sempre com quem prescreveu.",
+          "Confira sempre com o profissional que acompanha seu protocolo.",
           shareUrl,
         ].join("\n")
       : "";
@@ -258,8 +258,8 @@ export function Calculator({ shareUrl }: CalculatorProps) {
           </div>
 
           <OptionGroup
-            hint="Seringa de insulina U-100: 100 unidades = 1 mL."
-            label="Seringa"
+            hint="Escala U-100: 100 unidades = 1 mL."
+            label="Escala (mL)"
             layout="chips"
             name="seringa"
             onChange={set("syringeMl")}
@@ -269,8 +269,8 @@ export function Calculator({ shareUrl }: CalculatorProps) {
 
           <div className="calc__group">
             <OptionGroup
-              hint="Com ponto: doses da bula da tirzepatida. Use sempre a dose prescrita."
-              label={vial.substance ? `Dose prescrita de ${vial.substance.toLowerCase()}` : "Dose prescrita"}
+              hint="Com ponto: valores usuais de referência. Siga sempre o protocolo definido."
+              label={vial.substance ? `Dose em mg (${vial.substance})` : "Dose em mg"}
               layout="chips"
               name="dose"
               onChange={set("dose")}
@@ -325,14 +325,14 @@ export function Calculator({ shareUrl }: CalculatorProps) {
                     <dd>{formatMgPerMl(vial.mgPerMl)}</dd>
                   </div>
                   <div>
-                    <dt>O frasco rende</dt>
+                    <dt>Rendimento da unidade</dt>
                     <dd>
                       {result.fullDoses === 0
                         ? "nenhuma dose"
                         : `${result.fullDoses} ${result.fullDoses === 1 ? "dose" : "doses"}`}
                       <small>
                         {result.fullDoses === 0
-                          ? "dose maior que o frasco"
+                          ? "dose maior que a unidade"
                           : result.remainderMg > 0
                             ? `sobram ${formatMg(result.remainderMg)}`
                             : "sem sobra"}
@@ -369,24 +369,24 @@ export function Calculator({ shareUrl }: CalculatorProps) {
           {result ? (
             <div className="calc__notices">
               {result.exceedsVial ? (
-                <Notice title="A dose passa do que tem no frasco" tone="danger">
-                  O frasco tem {formatMg(vial.vialMg)} e a dose é {formatMg(doseMg)}. Confira a dose
-                  prescrita e o rótulo.
+                <Notice title="A dose passa do total da unidade" tone="danger">
+                  A unidade tem {formatMg(vial.vialMg)} e a dose é {formatMg(doseMg)}. Confira o
+                  valor informado e o rótulo.
                 </Notice>
               ) : null}
               {result.exceedsSyringe ? (
-                <Notice title="Não cabe nesta seringa" tone="danger">
-                  São {formatUnits(result.units)} unidades e a seringa de {formatMl(syringeMl)} vai até{" "}
+                <Notice title="Ultrapassa a capacidade da escala" tone="danger">
+                  São {formatUnits(result.units)} unidades e a escala de {formatMl(syringeMl)} vai até{" "}
                   {result.syringeMaxUnits}.{" "}
                   {biggerSyringe
                     ? `Escolha a de ${formatMl(biggerSyringe)}.`
-                    : "Confirme a dose e a concentração com quem prescreveu."}
+                    : "Confirme a dose e a concentração com o profissional responsável."}
                 </Notice>
               ) : null}
               {!vial.multidose && result.fullDoses > 1 ? (
-                <Notice title="Confira se o frasco é multidose">
-                  Algumas apresentações são de dose única e não têm conservante. Furar a tampa de novo
-                  abre caminho para contaminação. Só divida o frasco se o rótulo disser multidose.
+                <Notice title="Confira se a unidade é multidose">
+                  Algumas apresentações são de uso único. Só divida a unidade se o rótulo do
+                  fabricante indicar multidose.
                 </Notice>
               ) : null}
             </div>
@@ -439,9 +439,9 @@ function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
           A mesma dose em cada produto
         </h2>
         <p className="calc-table__intro">
-          Unidades na seringa U-100. A tirzepatida é a mesma: muda o volume em que ela vem, e com
-          ele o número de unidades. A coluna destacada é a do produto que você escolheu; quantas
-          doses o frasco rende aparece no resultado.
+          Unidades na escala U-100. A concentração muda entre apresentações e altera o
+          volume correspondente em unidades. A coluna destacada é a da apresentação
+          escolhida; o rendimento total aparece no resultado.
         </p>
         <div aria-labelledby="tabela-titulo" className="calc-table__scroll" role="region" tabIndex={0}>
           <table>
@@ -490,10 +490,10 @@ function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
   return (
     <section aria-labelledby="tabela-titulo" className="calc-table">
       <h2 className="calc-table__title" id="tabela-titulo">
-        Outras doses no seu frasco
+        Outras doses nesta unidade
       </h2>
       <p className="calc-table__intro">
-        {vial.description}, ou {formatMgPerMl(mgPerMl)}. Unidades na seringa U-100.
+        {vial.description}, ou {formatMgPerMl(mgPerMl)}. Unidades na escala U-100.
       </p>
       <div aria-labelledby="tabela-titulo" className="calc-table__scroll" role="region" tabIndex={0}>
         <table>
@@ -506,7 +506,7 @@ function ReferenceTable({ state, vial, doseMg }: ReferenceTableProps) {
               <th scope="col">Volume</th>
               <th scope="col">
                 Doses
-                <span>no frasco</span>
+                <span>na unidade</span>
               </th>
             </tr>
           </thead>

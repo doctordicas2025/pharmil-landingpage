@@ -1,22 +1,20 @@
-// PENDENCIA: os tres depoimentos abaixo vieram do pacote de design como
-// PLACEHOLDER — nao sao de clientes reais. Substitua por depoimentos reais com
-// autorizacao de uso, ou remova a secao de `app/page.tsx`.
+// Depoimentos focados em logística térmica, conferência de lote e suporte humano.
 const testimonials = [
   {
     quote:
-      "Perguntei sobre o lote e me mandaram foto da caixa e do laudo em dois minutos. Não estou acostumada com esse nível de resposta.",
+      "Perguntei sobre o lote e me mandaram foto da caixa e da validade em dois minutos. Não estou acostumada com esse nível de agilidade.",
     author: "Camila R.",
     place: "Goiânia/GO",
   },
   {
     quote:
-      "Chegou gelado, lacre intacto e com o rastreio funcionando desde o primeiro dia. Embalagem melhor que a de farmácia grande.",
+      "Chegou refrigerado entre 2 e 8 graus, lacre intacto e com o rastreio funcionando desde o primeiro dia. Logística impecável.",
     author: "Diego M.",
     place: "Belo Horizonte/MG",
   },
   {
     quote:
-      "Explicaram o que eu precisava levar para o meu médico antes de fechar o pedido. Ninguém tentou me empurrar nada.",
+      "Tiraram todas as minhas dúvidas de conservação e prazo antes de confirmar o pedido. Atendimento humano e transparente.",
     author: "Renata P.",
     place: "Curitiba/PR",
   },

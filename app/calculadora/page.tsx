@@ -7,44 +7,45 @@ import { Accordion, Button, TextLink } from "@/design-system";
 import { getContactHref, getSiteUrl } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Calculadora de dose em unidades",
+  title: "Calculadora de conversão em unidades",
   description:
-    "Converta a dose prescrita em mg para unidades da seringa de insulina U-100, de acordo com o seu produto: TG 15, Lipoless MD 15 ou outro. Conta aberta, sem cadastro.",
+    "Converta miligramas para unidades na escala U-100 conforme a concentração do rótulo: TG 15, Lipoless MD 15 ou outra apresentação. Conta aberta, sem cadastro.",
   alternates: { canonical: "/calculadora" },
+  robots: { index: false, follow: false, nocache: true },
 };
 
 const VALIQ_URL = "https://valiq.app";
 
 const faq = [
   {
-    question: "Por que a mesma dose dá unidades diferentes no TG e no Lipoless MD?",
+    question: "Por que a mesma quantidade em mg dá unidades diferentes no TG 15 e no Lipoless MD 15?",
     answer:
-      "Porque a concentração muda. No TG 15, cada 15 mg vêm em 0,5 mL; no Lipoless MD 15, em 0,6 mL. A unidade da seringa mede volume, não quantidade de remédio: 5 mg são 16,7 unidades no TG e 20 no Lipoless MD. Trocou de produto, refaça a conta.",
+      "Porque a concentração muda. No TG 15 — Linha MOMO, cada 15 mg vêm em 0,5 mL; no Lipoless MD 15 — Linha MOMO, em 0,6 mL. A escala em unidades mede volume: 5 mg equivalem a 16,7 unidades no TG 15 e 20 unidades no Lipoless MD 15. Trocou de apresentação, refaça a conta.",
   },
   {
-    question: "Meu produto não está na lista. E agora?",
+    question: "Minha apresentação não está na lista. E agora?",
     answer:
-      "Escolha \"Outro produto\" e digite os mg e os mL que estão no rótulo. A conta é a mesma para qualquer produto: só depende da concentração.",
+      "Escolha \"Outro produto\" e digite os mg e os mL impressos no rótulo. A matemática é a mesma para qualquer apresentação: depende apenas da concentração.",
   },
   {
-    question: "Serve para qualquer seringa?",
+    question: "Serve para qualquer escala?",
     answer:
-      "Só para seringa de insulina U-100, a mais vendida no Brasil. Nela, 100 unidades equivalem a 1 mL. Seringa comum, graduada apenas em mL, não serve para esta conta.",
+      "A conversão vale exclusivamente para a escala U-100, na qual 100 unidades equivalem a 1 mL. Escalas graduadas apenas em mL não utilizam essa conversão.",
   },
   {
-    question: "O resultado caiu entre dois riscos. E agora?",
+    question: "O resultado caiu entre duas marcações. Como proceder?",
     answer:
-      "Na seringa de 1 mL os riscos vão de 2 em 2 unidades, então 16,7 fica entre 16 e 18. Pergunte a quem prescreveu como arredondar. As seringas de 0,3 e 0,5 mL marcam de 1 em 1 e deixam a leitura mais precisa em doses pequenas.",
+      "Na escala de 1 mL as marcações avançam de 2 em 2 unidades, então 16,7 fica entre 16 e 18. Confirme sempre o arredondamento com o profissional que acompanha seu protocolo. Escalas de 0,3 e 0,5 mL marcam de 1 em 1 unidade.",
   },
   {
-    question: "Dá para tirar várias doses do mesmo frasco?",
+    question: "Posso dividir várias doses da mesma unidade?",
     answer:
-      "O Lipoless MD 15 é multidose: o frasco traz 4 doses de 15 mg. Nos demais, siga o rótulo. Frasco de dose única não tem conservante, e furar a tampa de novo abre caminho para contaminação.",
+      "O Lipoless MD 15 é multidose (4 doses de 15 mg na mesma unidade). Nas demais apresentações, siga sempre o rótulo do fabricante quanto ao uso único ou multidose e conservação entre 2°C e 8°C.",
   },
   {
-    question: "A calculadora substitui a orientação médica?",
+    question: "A calculadora substitui acompanhamento profissional?",
     answer:
-      "Não. Ela faz uma conta. Dose, escalonamento e intervalo são definidos pelo profissional que acompanha você. Na bula da tirzepatida aprovada pela ANVISA, o início é 2,5 mg por semana, com aumentos de 2,5 mg a cada 4 semanas no mínimo, até 15 mg.",
+      "Não. Ela realiza apenas a conversão matemática de mg para unidades U-100. Definição de protocolo, escalonamento e intervalos são responsabilidade exclusiva do profissional que acompanha você.",
   },
 ] as const;
 
@@ -57,10 +58,10 @@ export default function CalculadoraPage() {
       <Header contactHref={contactHref} />
       <main className="calc-page">
         <header className="calc-hero page-shell">
-          <h1 className="calc-hero__title">Quantas unidades puxar na seringa</h1>
+          <h1 className="calc-hero__title">Conversor de miligramas para unidades</h1>
           <p className="calc-hero__lede">
-            Escolha o seu produto, a seringa e a dose prescrita. A conta converte miligramas em
-            unidades da seringa de insulina U-100.
+            Escolha a apresentação, a escala e a quantidade definida em miligramas. A
+            conta converte mg em unidades na escala U-100 com total transparência.
           </p>
         </header>
 
@@ -72,11 +73,11 @@ export default function CalculadoraPage() {
           <div className="calc-valiq__inner page-shell">
             <div>
               <h2 className="calc-valiq__title" id="valiq-titulo">
-                Conta certa só adianta com frasco original.
+                Conferência de lote e autenticidade na palma da mão.
               </h2>
               <p className="calc-valiq__text">
-                Toda caixa que chega pela Pharmil tem QR code. Aponte a câmera para ele e valide no
-                Valiq antes da primeira dose.
+                Toda caixa enviada pela Pharmil traz QR code de conferência. Aponte a
+                câmera e valide no Valiq antes de iniciar seu protocolo.
               </p>
             </div>
             <div className="calc-valiq__actions">
@@ -97,13 +98,10 @@ export default function CalculadoraPage() {
 
         <aside aria-label="Aviso" className="calc-disclaimer page-shell">
           <p>
-            Esta calculadora faz uma conversão matemática de miligramas para unidades de seringa
-            U-100 a partir dos dados que você informa. Ela não indica dose, não substitui
-            prescrição nem orientação de profissional de saúde e não verifica se o produto é
-            original. Confira sempre o rótulo do frasco e a dose prescrita antes de aplicar.
-          </p>
-          <p>
-            Doses de referência marcadas com ponto: bula da tirzepatida aprovada pela ANVISA.
+            Esta calculadora faz uma conversão matemática de miligramas para unidades na
+            escala U-100 a partir dos dados informados. Ela não substitui orientação
+            profissional individualizada. Confira sempre o rótulo da embalagem antes de
+            utilizar.
           </p>
         </aside>
       </main>

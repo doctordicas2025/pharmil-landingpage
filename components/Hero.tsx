@@ -4,19 +4,31 @@ import { Button, Chip, DotPill, TextLink } from "@/design-system";
 
 const chips = [
   {
-    label: ["Laudo de análise", "por lote"],
+    label: ["Conferência de", "lote no envio"],
     stroke: "var(--color-wine)",
-    path: <><path d="M7 3h7l4 4v14H7z" /><path d="M10 12h5M10 16h5" /></>,
+    path: (
+      <>
+        <path d="M7 3h7l4 4v14H7z" />
+        <path d="M10 12h5M10 16h5" />
+      </>
+    ),
   },
   {
-    label: ["Envio entre", "2 e 8 °C"],
+    label: ["Envio térmico", "2°C a 8°C"],
     stroke: "var(--color-navy)",
-    path: <path d="M12 3v18M6.5 6.5l5.5-3.5 5.5 3.5M6.5 17.5l5.5 3.5 5.5-3.5M4 12h16" />,
+    path: (
+      <path d="M12 3v18M6.5 6.5l5.5-3.5 5.5 3.5M6.5 17.5l5.5 3.5 5.5-3.5M4 12h16" />
+    ),
   },
   {
     label: ["Rastreio no", "mesmo dia"],
     stroke: "var(--color-orange)",
-    path: <><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></>,
+    path: (
+      <>
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 7.5V12l3 2" />
+      </>
+    ),
   },
 ] as const;
 
@@ -31,19 +43,19 @@ export function Hero({ contactHref }: HeroProps) {
 
       <div className="hero__inner">
         <div className="hero__copy">
-          <DotPill>Tecnologia em peptídeos</DotPill>
+          <DotPill>Protocolos e logística térmica</DotPill>
 
           <h1 className="hero__title" id="hero-title">
-            O padrão Pharmil em
+            Protocolos avançados de
             <br />
-            <em>peptídeos injetáveis</em>
+            <em>controle metabólico</em>,
             <br />
-            de alta pureza.
+            pele e recuperação.
           </h1>
 
           <p className="hero__lede">
-            Tirzepatida, Retatrutida, GHK-Cu e blends — com laudo do lote, cadeia
-            de frio e rastreio informados antes de você confirmar.
+            Linhas MOMO (TG / Lipoless), RETA, GHK e blends concentrados —
+            conferência de lote, envio térmico 2°C a 8°C e rastreio no mesmo dia.
           </p>
 
           <ul className="hero__chips">
@@ -75,11 +87,11 @@ export function Hero({ contactHref }: HeroProps) {
             <Button href={contactHref} rel="noopener noreferrer" target="_blank">
               Garanta o seu agora
             </Button>
-            <TextLink href="#loja">Ver todos os produtos</TextLink>
+            <TextLink href="#loja">Ver todos os protocolos</TextLink>
           </div>
 
           <p className="hero__fineprint">
-            Produtos de alta pureza &nbsp;|&nbsp; Uso sob orientação profissional
+            Conferência de lote e cadeia fria &nbsp;|&nbsp; Suporte humano no WhatsApp
           </p>
         </div>
 
@@ -99,7 +111,7 @@ export function Hero({ contactHref }: HeroProps) {
               width={1632}
             />
             <Image
-              alt="Linha Pharmil sobre pódio: T.G. 15, Lipoless 15, GHKCU 100 mg, Klow 80 mg e GHK-Cu 50 mg"
+              alt="Linhas Pharmil sobre pódio: TG 15, Lipoless 15, GHK-Cu 100, Klow 80 e Glow"
               className="showcase__object"
               data-float
               height={642}

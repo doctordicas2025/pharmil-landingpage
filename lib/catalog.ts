@@ -1,17 +1,12 @@
-// Catalogo da loja da landing: os mesmos produtos, nomes, fotos e precos da
-// Loja do app (app.pharmilmed.com), na ordem da vitrine de la.
-//
-// Fonte: as regras de preco da sessao Pharmil3gp9 (sdr_price_rules) e o
-// cadastro de produtos, lidos em 24/11/2026. Entra a oferta ligada de produto
-// ativo. O preco mora so neste arquivo: mudou no cadastro, muda aqui.
-//
-// Texto de produto: o que o cadastro informa (descricao, apresentacao,
-// conservacao, pais de origem). Onde ele nao informa, o campo fica de fora.
-// Tirzepatida Peking 100mg e as duas Retatrutidas nao tem texto no cadastro e
-// mantem o que a landing ja dizia delas.
-// Coberto por tests/catalog.test.mjs.
+// Catálogo da vitrine (/catalogo): mesmas fotos em public/images/catalogo,
+// preços normais e campanha Black Friday (16 a 30/11/2026) da Loja do app,
+// com nomenclatura de protocolos (Linhas MOMO, RETA, GHK e blends).
+// Coberto por tests/catalog.test.mjs e tests/dosage.test.mjs.
 
-export type Category = "GLP-1" | "Skin" | "Recovery";
+export type Category =
+  | "Linha Metabólica"
+  | "Linha Dérmica & Colágeno"
+  | "Linha Regenerativa";
 
 /** Preco de campanha do cadastro. Vale do primeiro ao ultimo dia, inclusive,
  *  no calendario de Brasilia (AAAA-MM-DD), e so quando e menor que o normal. */
@@ -24,7 +19,7 @@ export type Campaign = {
 
 export type Product = {
   id: string;
-  /** Nome da oferta na Loja do app. */
+  /** Nome codificado da oferta na vitrine. */
   name: string;
   category: Category;
   /** O que se cobra hoje sai de priceToday(). */
@@ -32,26 +27,25 @@ export type Product = {
   campaign?: Campaign;
   /** Foto do cadastro, guardada em public/images/catalogo. */
   image: string;
-  /** Como a caixa vem, em uma linha. */
+  /** Como o kit/unidade vem, em uma linha. */
   presentation?: string;
   description?: string;
-  /** Pais de origem, com o nome que a Loja do app mostra. */
+  /** Pais de origem, com o nome que a vitrine informa. */
   origin?: string;
-  /** Orientacao de conservacao. */
+  /** Orientacao de conservacao termica. */
   storage?: string;
-  /** Solucao pronta para seringa U-100. So quem tem este campo entra na
-   *  calculadora de dose: caneta e frasco sem concentracao ficam de fora. */
+  /** Solucao pronta para conversao na calculadora U-100. */
   solution?: Solution;
 };
 
 export type Solution = {
   substance: string;
-  /** Concentracao impressa na caixa: labelMg em labelMl. */
+  /** Concentracao impressa na embalagem: labelMg em labelMl. */
   labelMg: number;
   labelMl: number;
-  /** Total em um frasco. Define quantas doses ele rende. */
+  /** Total em uma unidade. Define o rendimento. */
   vialMg: number;
-  /** Como a caixa vem, em uma linha. */
+  /** Como o kit/unidade vem, em uma linha. */
   vialNote: string;
 };
 
@@ -63,266 +57,262 @@ const blackFriday = (price: number): Campaign => ({
   lastDay: "2026-11-30",
 });
 
-// A caixa e a ampola avulsa do mesmo produto tem a mesma conservacao no cadastro.
 const tgParaguaiStorage =
-  "Mantenha os frascos refrigerados entre 2 °C e 8 °C, mesmo lacrados. Proteja da luz e não congele. No transporte, mantenha a cadeia de frio entre 2 °C e 8 °C.";
+  "Mantenha as unidades refrigeradas entre 2 °C e 8 °C, mesmo lacradas. Proteja da luz e não congele. No transporte, mantenha a cadeia de frio entre 2 °C e 8 °C.";
 const lipolessStorage =
-  "Mantenha os frascos na geladeira entre 2 °C e 8 °C, mesmo lacrados. Não congele. Cada frasco é de uso único. Descarte-o após o uso, inclusive se restar solução.";
-
-// O que a landing ja dizia dos produtos sem conservacao no cadastro.
-const refrigerated = "Refrigerado, entre 2 e 8 °C";
+  "Mantenha as unidades refrigeradas entre 2 °C e 8 °C, mesmo lacradas. Não congele. Cada unidade é de uso único.";
+const refrigerated = "Conservação refrigerada entre 2 °C e 8 °C";
 
 export const products: Product[] = [
   {
     id: "black-combo",
-    name: "Black Combo: TG China + GHK-Cu",
-    category: "GLP-1",
+    name: "Black Combo: TG China + GHK-Cu 100",
+    category: "Linha Metabólica",
     normalPrice: 814,
     image: "/images/catalogo/black-combo-tg-china-ghk-cu.webp",
     description:
-      "1 caixa de TG Origem China (4 frascos de tirzepatida 15 mg/0,5 mL) + 1 frasco de GHK-Cu Genixx Labs 100 mg.",
+      "1 kit TG Origem China (4 unidades 15 mg/0,5 mL — Linha MOMO) + 1 unidade GHK-Cu Genixx Labs 100 mg.",
   },
   {
     id: "tg15",
-    name: "TG Origem Paraguai",
-    category: "GLP-1",
+    name: "TG 15 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 769,
     image: "/images/catalogo/tg-15-4-frascos.webp",
-    presentation: "TG Paraguai (Indufar) 15 mg/0,5 mL · caixa com 4 frascos",
+    presentation: "TG Paraguai (Indufar) 15 mg/0,5 mL · Kit com 4 unidades",
     origin: "Paraguai",
     storage: tgParaguaiStorage,
-    // Caixa: "4 frascos viales con 0,5 mL"; "cada 0,5 mL contiene 15 mg"
     solution: {
-      substance: "Tirzepatida",
+      substance: "Linha MOMO",
       labelMg: 15,
       labelMl: 0.5,
       vialMg: 15,
-      vialNote: "caixa com 4 frascos de 15 mg",
+      vialNote: "kit com 4 unidades de 15 mg",
     },
   },
   {
     id: "tg-china",
-    name: "TG Origem China",
-    category: "GLP-1",
+    name: "TG China 15 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 549,
     campaign: blackFriday(539),
     image: "/images/catalogo/tg-15-4-frascos.webp",
+    presentation: "Kit com 4 unidades · 15 mg/0,5 mL",
     origin: "China",
   },
   {
     id: "tirzec-4",
-    name: "Tirzec 4 ampolas",
-    category: "GLP-1",
+    name: "Tirzec Kit 4 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 769,
     image: "/images/catalogo/tirzec-4-ampolas.webp",
+    presentation: "Kit com 4 unidades · 15 mg",
     origin: "Paraguai",
   },
   {
     id: "tirzec-md",
-    name: "Tirzec MD",
-    category: "GLP-1",
+    name: "Tirzec MD 15 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 649,
     campaign: blackFriday(499),
     image: "/images/catalogo/tirzec-md-15.webp",
     presentation:
-      "Tirzec MD (Quimfa) · 1 frasco multidose de 2 mL por caixa · 15 mg por 0,5 mL, 60 mg no frasco inteiro",
+      "Tirzec MD (Quimfa) · 1 unidade multidose de 2 mL · 15 mg por 0,5 mL (60 mg total)",
     origin: "Paraguai",
     storage:
-      "Conserve o frasco na geladeira entre 2 °C e 8 °C, mesmo lacrado. Após abrir, mantenha nessa temperatura por no máximo quatro semanas.",
+      "Conserve a unidade refrigerada entre 2 °C e 8 °C, mesmo lacrada. Após abertura, mantenha nessa faixa por no máximo quatro semanas.",
   },
   {
     id: "ghkcu",
-    name: "GHK-Cu 100mg",
-    category: "Skin",
+    name: "GHK-Cu 100",
+    category: "Linha Dérmica & Colágeno",
     normalPrice: 599,
     campaign: blackFriday(349),
     image: "/images/catalogo/ghk-cu-genixx-100mg.webp",
-    description: "GHK-Cu Genixx Labs 100 mg. Frasco de GHK-Cu de 100 mg.",
+    description: "GHK-Cu Genixx Labs 100 mg · Unidade concentrada com conferência de lote.",
     origin: "Estados Unidos",
   },
   {
     id: "tirze100",
-    name: "Tirzepatida Peking 100mg",
-    category: "GLP-1",
+    name: "Pepking 100 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 1100,
     campaign: blackFriday(1000),
     image: "/images/catalogo/tirzepatida-pepking-100.webp",
-    presentation: "Frasco liofilizado 100 mg",
+    presentation: "Unidade concentrada · 100 mg",
     description:
-      "Frasco liofilizado de maior quantidade, para quem já tem orientação profissional definida. Reconstituição conforme instrução do profissional responsável.",
+      "Unidade concentrada de 100 mg da Linha MOMO com conferência de lote e envio térmico monitorado.",
     origin: "Inglaterra",
     storage: refrigerated,
   },
   {
     id: "lipoless",
-    name: "Lipoless MD 15mg",
-    category: "GLP-1",
+    name: "Lipoless MD 15 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 699,
     campaign: blackFriday(589),
     image: "/images/catalogo/lipoless-md-15.webp",
     presentation:
-      "Lipoless MD (Éticos) · 1 frasco multidose de 2,4 mL por caixa · 15 mg por 0,6 mL, 60 mg no frasco inteiro",
+      "Lipoless MD (Éticos) · 1 unidade multidose de 2,4 mL · 15 mg por 0,6 mL (60 mg total)",
     origin: "Paraguai",
     storage:
-      "Guarde o frasco na geladeira entre 2 °C e 8 °C, mesmo lacrado. Proteja da luz e não congele. Depois do primeiro uso, mantenha refrigerado e descarte em até 30 dias.",
-    // Caixa: "Vial Multidosis ... contiene 4 dosis de 15 mg / 0,6 mL"
+      "Guarde a unidade refrigerada entre 2 °C e 8 °C, mesmo lacrada. Proteja da luz e não congele. Após abertura, mantenha refrigerada por até 30 dias.",
     solution: {
-      substance: "Tirzepatida",
+      substance: "Linha MOMO",
       labelMg: 15,
       labelMl: 0.6,
       vialMg: 60,
-      vialNote: "1 frasco multidose com 4 doses de 15 mg",
+      vialNote: "1 unidade multidose com 4 doses de 15 mg",
     },
   },
   {
     id: "reta40",
-    name: "Retatrutida Synedica 40mg",
-    category: "GLP-1",
+    name: "Synedica 40 — Linha RETA",
+    category: "Linha Metabólica",
     normalPrice: 1370,
     campaign: blackFriday(899),
     image: "/images/catalogo/retatrutida-synedica-40.webp",
-    presentation: "Caneta aplicadora · 40 mg",
+    presentation: "Kit aplicador · 40 mg",
     description:
-      "Apresentação em caneta aplicadora. Disponibilidade confirmada por lote no atendimento.",
+      "Apresentação em kit da Linha RETA 40 mg. Disponibilidade e lote confirmados no atendimento.",
     origin: "Alemanha",
     storage: refrigerated,
   },
   {
     id: "glow-skin-booster",
     name: "Glow Skin Booster",
-    category: "Skin",
+    category: "Linha Dérmica & Colágeno",
     normalPrice: 950,
     campaign: blackFriday(849),
     image: "/images/catalogo/glow-alluvi.webp",
     description:
-      "Glow GHK-Cu Alluvi Healthcare. Caixa com dois dispositivos; marcação da embalagem: 10/10/50 mg.",
+      "Glow GHK-Cu Alluvi Healthcare · Kit com duas unidades; marcação da embalagem: 10/10/50 mg.",
     origin: "Inglaterra",
   },
   {
     id: "reta60",
-    name: "Retatrutida Peking 60mg",
-    category: "GLP-1",
+    name: "Pepking 60 — Linha RETA",
+    category: "Linha Metabólica",
     normalPrice: 1100,
     image: "/images/catalogo/reta-60-pepking.webp",
-    presentation: "Frasco liofilizado 60 mg",
+    presentation: "Unidade concentrada · 60 mg",
     description:
-      "Frasco liofilizado. Reconstituição e uso conforme orientação do profissional responsável.",
+      "Unidade concentrada de 60 mg da Linha RETA com envio térmico 2°C a 8°C e conferência de lote.",
     origin: "Inglaterra",
     storage: refrigerated,
   },
   {
     id: "t36-md",
-    name: "T36 15 MD",
-    category: "GLP-1",
+    name: "T36 15 MD — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 699,
     campaign: blackFriday(649),
     image: "/images/catalogo/t36-md-15.webp",
-    presentation: "T36 15 MD (Laboratorios Catedral) · 1 frasco multidose de 2,4 mL por caixa",
+    presentation: "T36 15 MD (Laboratorios Catedral) · 1 unidade multidose de 2,4 mL",
     origin: "Paraguai",
     storage:
-      "Mantenha o frasco na geladeira entre 2 °C e 8 °C, mesmo lacrado. Não congele. Depois do primeiro uso, mantenha refrigerado e descarte em até 30 dias.",
+      "Mantenha a unidade refrigerada entre 2 °C e 8 °C, mesmo lacrada. Não congele. Após abertura, mantenha refrigerada por até 30 dias.",
   },
   {
     id: "klow",
-    name: "Klow",
-    category: "Recovery",
+    name: "Klow 80",
+    category: "Linha Regenerativa",
     normalPrice: 797,
     campaign: blackFriday(622),
     image: "/images/catalogo/klow-80mg.webp",
     description:
-      "Klow BioPeptides 80 mg. Frasco azul com tampa vermelha e conta-gotas acompanhante, conforme imagem do produto.",
+      "Klow BioPeptides 80 mg · Unidade concentrada da Linha Regenerativa com conferência de lote.",
     origin: "Estados Unidos",
   },
   {
     id: "lipoless-4",
-    name: "Lipoless 4 ampolas",
-    category: "GLP-1",
+    name: "Lipoless Kit 4 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 749,
     image: "/images/catalogo/lipoless-4-ampolas.webp",
-    presentation: "Lipoless 15 mg/0,5 mL (Éticos) · caixa com 4 frascos de dose única",
+    presentation: "Lipoless 15 mg/0,5 mL (Éticos) · Kit com 4 unidades",
     origin: "Paraguai",
     storage: lipolessStorage,
   },
   {
     id: "tirzedral",
-    name: "Tirzedral",
-    category: "GLP-1",
+    name: "Tirzedral 15 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 749,
     image: "/images/catalogo/tirzedral-15.webp",
-    presentation:
-      "Tirzedral 15 mg/0,5 mL (Laboratorios Catedral) · caixa com 4 frascos de dose única",
+    presentation: "Tirzedral 15 mg/0,5 mL (Laboratorios Catedral) · Kit com 4 unidades",
     origin: "Paraguai",
     storage:
-      "Guarde os frascos entre 2 °C e 8 °C, sem congelar. A bula desta apresentação permite até 28 dias consecutivos fora da geladeira a menos de 30 °C. Descarte ao fim desse prazo. Cada frasco é de uso único.",
+      "Guarde as unidades entre 2 °C e 8 °C, sem congelar. Suporta até 28 dias consecutivos abaixo de 30 °C conforme rótulo do fabricante.",
   },
   {
     id: "veltrane90",
-    name: "Veltrane 90mg",
-    category: "GLP-1",
+    name: "Veltrane 90 — Linha RETA",
+    category: "Linha Metabólica",
     normalPrice: 649,
     campaign: blackFriday(579),
     image: "/images/catalogo/veltrane-gold-90.webp",
-    description: "Retatrutida.",
+    description: "Unidade concentrada 90 mg da Linha RETA com envio térmico monitorado.",
     origin: "Bélgica",
   },
   {
     id: "avulsa-tirzec",
-    name: "Ampola avulsa Tirzec",
-    category: "GLP-1",
+    name: "Unidade avulsa Tirzec — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 250,
     image: "/images/catalogo/unidade-ampola.webp",
-    description: "1 ampola avulsa da Tirzec.",
+    description: "1 unidade avulsa Tirzec da Linha MOMO.",
     origin: "Paraguai",
   },
   {
     id: "avulsa-lipoless",
-    name: "Ampola avulsa Lipoless",
-    category: "GLP-1",
+    name: "Unidade avulsa Lipoless — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 250,
     image: "/images/catalogo/unidade-ampola.webp",
-    presentation: "Lipoless 15 mg/0,5 mL (Éticos) · 1 frasco avulso de dose única",
-    description: "1 ampola avulsa da Lipoless.",
+    presentation: "Lipoless 15 mg/0,5 mL (Éticos) · 1 unidade avulsa",
+    description: "1 unidade avulsa Lipoless da Linha MOMO.",
     origin: "Paraguai",
     storage: lipolessStorage,
   },
   {
     id: "avulsa-tg-china",
-    name: "Ampola avulsa TG Origem China",
-    category: "GLP-1",
+    name: "Unidade avulsa TG China — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 250,
     image: "/images/catalogo/unidade-ampola.webp",
-    description: "1 ampola avulsa da TG Origem China.",
+    description: "1 unidade avulsa TG Origem China da Linha MOMO.",
     origin: "China",
   },
   {
     id: "avulsa-tg-paraguai",
-    name: "Ampola avulsa TG Origem Paraguai",
-    category: "GLP-1",
+    name: "Unidade avulsa TG Paraguai — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 250,
     image: "/images/catalogo/unidade-ampola.webp",
-    presentation: "TG Paraguai (Indufar) 15 mg/0,5 mL · 1 frasco avulso",
-    description: "1 ampola avulsa da TG Origem Paraguai.",
+    presentation: "TG Paraguai (Indufar) 15 mg/0,5 mL · 1 unidade avulsa",
+    description: "1 unidade avulsa TG Origem Paraguai da Linha MOMO.",
     origin: "Paraguai",
     storage: tgParaguaiStorage,
   },
   {
     id: "glow",
-    name: "Glow 70mg",
-    category: "Skin",
+    name: "Glow Blend",
+    category: "Linha Dérmica & Colágeno",
     normalPrice: 697,
     campaign: blackFriday(580),
     image: "/images/catalogo/glow-alluvi.webp",
-    description: "GHK-Cu, BPC-157/TB-500.",
+    description: "Blend concentrado 70 mg (GHK-Cu / BPC-157 / TB-500) da Linha Dérmica & Colágeno.",
     origin: "Estados Unidos",
   },
   {
     id: "vital-science-20",
-    name: "Vital Science 20mg",
-    category: "GLP-1",
+    name: "Vital Science 20 — Linha MOMO",
+    category: "Linha Metabólica",
     normalPrice: 529,
     campaign: blackFriday(499),
     image: "/images/catalogo/vital-science-20mg.webp",
-    description: "Vital Science Tirzepatide 20 mg.",
+    description: "Vital Science 20 mg · Unidade concentrada da Linha MOMO.",
     origin: "Inglaterra",
   },
 ];

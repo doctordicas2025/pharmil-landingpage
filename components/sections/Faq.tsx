@@ -2,34 +2,34 @@ import { Accordion, TextLink } from "@/design-system";
 
 const faqItems = [
   {
-    question: "Preciso de receita médica?",
+    question: "Como funciona a logística refrigerada de 2°C a 8°C?",
     answer:
-      "Sim, sempre que o item exigir. A dispensação é feita por farmácia parceira habilitada, mediante receita válida e acompanhamento de profissional de saúde. A equipe informa os requisitos antes de fechar o pedido.",
+      "Todos os envios saem em caixa térmica lacrada com elementos refrigerantes calibrados para manter a faixa de 2°C a 8°C por até 48 horas. Você recebe foto do lacre e código de rastreio no mesmo dia da postagem.",
   },
   {
-    question: "Como sei a procedência do lote?",
+    question: "Como é feita a conferência de lote antes do envio?",
     answer:
-      "Cada lote tem laudo de análise disponível. Peça no atendimento antes de confirmar: enviamos o laudo, a validade e a foto da embalagem do lote que vai no seu pedido.",
+      "Antes de fechar a caixa térmica, nossa equipe confere lote, validade e integridade da embalagem e envia as informações diretamente na conversa do WhatsApp para você validar.",
   },
   {
-    question: "Como é feita a entrega?",
+    question: "Como funciona o atendimento no WhatsApp?",
     answer:
-      "Caixa térmica lacrada, com faixa de 2 a 8 °C mantida na rota e autonomia de até 48 horas. Você recebe foto do lacre e o código de rastreio no mesmo dia do envio.",
+      "Nosso suporte é 100% humano pelo canal oficial. Você informa a linha e a concentração desejada, tiramos dúvidas sobre envio, prazo e conservação, e acompanhamos até a entrega.",
   },
   {
     question: "Quais formas de pagamento são aceitas?",
     answer:
-      "PIX à vista, com o preço que aparece na lojinha, ou cartão. Nota e comprovante são enviados na mesma conversa. Use apenas os canais oficiais da Pharmil e confira os dados antes de pagar.",
+      "PIX à vista, com o valor exibido no catálogo, ou cartão. Comprovante e atualização do pedido são enviados na mesma conversa. Utilize sempre os canais oficiais da Pharmil.",
   },
   {
-    question: "Como solicito cancelamento ou reembolso?",
+    question: "Como solicito troca, cancelamento ou suporte pós-entrega?",
     answer:
-      "Pelo mesmo canal de atendimento. As condições seguem o Código de Defesa do Consumidor e estão detalhadas nos Termos de Uso. Por determinação sanitária, itens com embalagem violada não podem ser devolvidos, salvo vício ou avaria de transporte.",
+      "Pelo mesmo canal oficial de WhatsApp. Caso haja qualquer divergência ou avaria no transporte, nossa equipe analisa imediatamente e providencia a solução conforme nossos Termos de Uso.",
   },
   {
-    question: "Como meus dados pessoais são tratados?",
+    question: "Como meus dados pessoais são protegidos?",
     answer:
-      "Coletamos apenas o necessário para o atendimento e a entrega, conforme a LGPD. Você pode pedir acesso, correção ou exclusão a qualquer momento. Os detalhes estão na Política de Privacidade.",
+      "Coletamos apenas o necessário para o atendimento e o rastreamento logístico, em conformidade com a LGPD. Os detalhes completos estão na nossa Política de Privacidade.",
   },
 ] as const;
 
@@ -47,7 +47,7 @@ export default function Faq({ contactHref }: FaqProps) {
           </h2>
           <p className="section-intro">
             Se a sua pergunta não estiver aqui, é mais rápido no WhatsApp —
-            respondemos em minutos no horário comercial.
+            nossa equipe responde em minutos no horário comercial.
           </p>
           <div className="faq__action">
             <TextLink external href={contactHref}>

@@ -25,24 +25,42 @@ import { getWhatsappHref } from "@/lib/site-config";
 
 type Filter = "Todos" | Category;
 
-const filters: Filter[] = ["Todos", "GLP-1", "Skin", "Recovery"];
+const filters: Filter[] = [
+  "Todos",
+  "Linha Metabólica",
+  "Linha Dérmica & Colágeno",
+  "Linha Regenerativa",
+];
 
-const categoryCards: { cat: Category; index: string; detail: string }[] = [
-  { cat: "GLP-1", index: "01", detail: "Tirzepatida e Retatrutida, em frasco e em caneta." },
-  { cat: "Skin", index: "02", detail: "GHK-Cu e Glow, com laudo por lote." },
-  { cat: "Recovery", index: "03", detail: "Blends de manutenção, como o Klow." },
+const categoryCards: { cat: Category; index: string; label: string; detail: string }[] = [
+  {
+    cat: "Linha Metabólica",
+    index: "01",
+    label: "Linha Metabólica (MOMO / RETA)",
+    detail: "Linhas MOMO (TG / Lipoless / Pepking) e RETA em kits e unidades selecionadas.",
+  },
+  {
+    cat: "Linha Dérmica & Colágeno",
+    index: "02",
+    label: "Linha Dérmica & Colágeno (GHK / Glow)",
+    detail: "GHK-Cu 100 e Glow Blend concentrados com conferência de lote.",
+  },
+  {
+    cat: "Linha Regenerativa",
+    index: "03",
+    label: "Linha Regenerativa (Klow)",
+    detail: "Blends concentrados de manutenção e recuperação, como o Klow 80.",
+  },
 ];
 
 const orderHref = (name: string) =>
-  getWhatsappHref(`Olá, vim pelo site da Pharmil e quero pedir: ${name}.`);
+  getWhatsappHref(`Olá, vim pelo catálogo da Pharmil e quero consultar: ${name}.`);
 
-// O preco de hoje e, em campanha, o normal que vai riscado ao lado.
 const priceOf = (p: ProductToday) => ({
   amount: formatPrice(p.price),
   normalAmount: p.discount ? formatPrice(p.discount.normalPrice) : undefined,
 });
 
-// So entra a linha que o catalogo informa para o produto.
 const factsOf = (p: ProductToday) =>
   [
     { label: "Apresentação", value: p.presentation },
@@ -51,8 +69,6 @@ const factsOf = (p: ProductToday) =>
   ].filter((fact): fact is { label: string; value: string } => fact.value !== undefined);
 
 export type ShopProps = {
-  /** A vitrine do dia. O preco chega resolvido pelo servidor, para o relogio
-   *  do visitante nao mudar o que a pagina mostra. */
   products: ProductToday[];
 };
 
@@ -66,7 +82,6 @@ export default function Shop({ products }: ShopProps) {
   const visible = cat === "Todos" ? products : products.filter((p) => p.category === cat);
   const detail = products.find((p) => p.id === detailId) ?? null;
 
-  // Cada linha leva a foto do primeiro produto dela na vitrine.
   const lines = categoryCards.flatMap((card) => {
     const first = products.find((p) => p.category === card.cat);
     return first ? [{ ...card, image: first.image }] : [];
@@ -82,11 +97,11 @@ export default function Shop({ products }: ShopProps) {
       <section aria-labelledby="categorias-title" className="categories" id="categorias">
         <div className="categories__header">
           <h2 className="section-title" id="categorias-title">
-            Três linhas, um mesmo padrão de controle.
+            Três linhas, um mesmo padrão de controle térmico.
           </h2>
           <p className="section-intro">
-            Escolha pela finalidade. Cada produto abre com a foto da embalagem, o
-            preço e as informações de apresentação e conservação disponíveis.
+            Escolha pela finalidade do protocolo. Cada item abre com apresentação,
+            valor no PIX e orientações de conservação 2°C a 8°C.
           </p>
         </div>
 
@@ -103,7 +118,7 @@ export default function Shop({ products }: ShopProps) {
                 </span>
                 <span className="category-card__body">
                   <span className="category-card__index">{line.index}</span>
-                  <strong className="category-card__title">{line.cat}</strong>
+                  <strong className="category-card__title">{line.label}</strong>
                   <span className="category-card__detail">{line.detail}</span>
                 </span>
               </button>
@@ -114,12 +129,13 @@ export default function Shop({ products }: ShopProps) {
 
       <section aria-labelledby="loja-title" className="shop" id="loja">
         <div className="shop__header">
-          <Eyebrow>Nossos produtos</Eyebrow>
+          <Eyebrow>Catálogo de protocolos</Eyebrow>
           <h2 className="section-title" id="loja-title">
-            A lojinha Pharmil.
+            Linhas disponíveis.
           </h2>
           <p className="section-intro">
-            Preço à vista em PIX. Toque em um produto para ver os detalhes.
+            Preço à vista em PIX. Toque em um item para ver apresentação, conservação
+            e conferência de lote.
           </p>
         </div>
 
@@ -189,9 +205,8 @@ export default function Shop({ products }: ShopProps) {
         </ul>
 
         <p className="shop__notice">
-          Produtos sujeitos a disponibilidade de lote. A dispensação é feita por
-          farmácia parceira habilitada, mediante prescrição e acompanhamento de
-          profissional de saúde.
+          Disponibilidade sujeita à conferência de lote no atendimento. Envio em caixa
+          térmica 2°C a 8°C com lacre numerado e código de rastreio.
         </p>
       </section>
 
@@ -232,12 +247,12 @@ export default function Shop({ products }: ShopProps) {
                 rel="noopener noreferrer"
                 target="_blank"
               >
-                Pedir este produto no WhatsApp
+                Consultar este item no WhatsApp
               </Button>
 
               <p className="modal__note">
-                Conservação sob refrigeração. Uso mediante prescrição e
-                acompanhamento profissional.
+                Conservação térmica 2°C a 8°C. Conferência de lote e suporte humano
+                diretamente pelo WhatsApp.
               </p>
             </ModalBody>
           </>
