@@ -265,8 +265,9 @@ describe("registro do lead do cadastro", () => {
     assert.equal(atualizacao.cabecalhos.get("apikey"), CHAVE_DE_SERVICO_FALSA);
     // name, phone, status, labels e source ficam como estão.
     assert.deepEqual(Object.keys(atualizacao.corpo).sort(), ["metadata", "updated_at"]);
-    const { historico_cadastro: historico, ...resto } = atualizacao.corpo.metadata;
-    assert.deepEqual(resto, { chatwoot_id: 42, objetivo: "Consultar disponibilidade" });
+    const { cadastros_nao_verificados: historico, ...resto } = atualizacao.corpo.metadata;
+    // Nenhum campo de verdade é preenchido: o envio só entra no histórico.
+    assert.deepEqual(resto, { chatwoot_id: 42 });
     assert.equal(historico.length, 1);
     assert.deepEqual(Object.keys(historico[0]).sort(), ["em", "objetivo"]);
     assert.equal(historico[0].objetivo, "Consultar disponibilidade");
@@ -274,25 +275,22 @@ describe("registro do lead do cadastro", () => {
     assert.ok(!Number.isNaN(Date.parse(atualizacao.corpo.updated_at)));
   });
 
-  it("lead existente: nada que já tem valor é sobrescrito, só o que falta é preenchido", async () => {
+  it("lead existente sem influenciadora continua sem: a do envio fica só no histórico", async () => {
     respostas.GET = () =>
       responderJson(200, [
         {
           id: "lead-existente",
-          metadata: { objetivo: "Entender como funciona", influenciadora: "", chatwoot_id: 42 },
+          metadata: { objetivo: "", influenciadora: "", chatwoot_id: 42 },
         },
       ]);
 
-    await registrar({ ...VISITANTE, influenciadora: "parceira-nova" });
+    await registrar({ ...VISITANTE, influenciadora: "parceira-de-um-estranho" });
 
-    const { historico_cadastro: historico, ...resto } = deUmVerbo("PATCH")[0].corpo.metadata;
-    assert.deepEqual(resto, {
-      objetivo: "Entender como funciona",
-      influenciadora: "parceira-nova",
-      chatwoot_id: 42,
-    });
+    const { cadastros_nao_verificados: historico, ...resto } =
+      deUmVerbo("PATCH")[0].corpo.metadata;
+    assert.deepEqual(resto, { objetivo: "", influenciadora: "", chatwoot_id: 42 });
     assert.equal(historico.at(-1).objetivo, "Consultar disponibilidade");
-    assert.equal(historico.at(-1).influenciadora, "parceira-nova");
+    assert.equal(historico.at(-1).influenciadora, "parceira-de-um-estranho");
   });
 
   it("lead existente: a influenciadora de quem já está no CRM nunca é trocada", async () => {
@@ -305,7 +303,10 @@ describe("registro do lead do cadastro", () => {
 
     const { metadata } = deUmVerbo("PATCH")[0].corpo;
     assert.equal(metadata.influenciadora, "parceira-original");
-    assert.equal(metadata.historico_cadastro.at(-1).influenciadora, "parceira-de-outra-pessoa");
+    assert.equal(
+      metadata.cadastros_nao_verificados.at(-1).influenciadora,
+      "parceira-de-outra-pessoa",
+    );
   });
 
   it("o histórico do lead existente guarda só os 10 cadastros mais recentes", async () => {
@@ -314,11 +315,13 @@ describe("registro do lead do cadastro", () => {
       objetivo: `antigo-${i}`,
     }));
     respostas.GET = () =>
-      responderJson(200, [{ id: "lead-existente", metadata: { historico_cadastro: antigos } }]);
+      responderJson(200, [
+        { id: "lead-existente", metadata: { cadastros_nao_verificados: antigos } },
+      ]);
 
     await registrar(VISITANTE);
 
-    const historico = deUmVerbo("PATCH")[0].corpo.metadata.historico_cadastro;
+    const historico = deUmVerbo("PATCH")[0].corpo.metadata.cadastros_nao_verificados;
     assert.equal(historico.length, 10);
     assert.equal(historico[0].objetivo, "antigo-1");
     assert.equal(historico.at(-1).objetivo, "Consultar disponibilidade");

@@ -4,8 +4,8 @@ import { z } from "zod";
 // Grava o lead do /cadastro na tabela `leads` do CRM do painel (mesmo projeto
 // Supabase). Roda só no servidor: a chave de serviço nunca vai ao navegador, e
 // a RLS de `leads` não deixa a chave anônima inserir. O formulário é público e
-// sem login, então ninguém prova que o telefone é seu: o cadastro só cria lead
-// novo ou acrescenta ao existente, nunca troca o que já está lá.
+// sem login, então ninguém prova que o telefone é seu: os campos de verdade só
+// valem no lead novo; no existente, o envio fica num histórico não verificado.
 
 export const MENSAGEM_FALHA_CADASTRO =
   "Não conseguimos registrar agora. Fale com a gente pelo WhatsApp.";
@@ -149,27 +149,27 @@ function clienteDeServico() {
 
 type Metadata = Record<string, unknown>;
 
-const temValor = (valor: unknown) => valor !== undefined && valor !== null && valor !== "";
-
 /**
- * O metadata de quem já está no CRM só ganha: chave com valor fica como está,
- * a que falta é preenchida, e o cadastro entra em `historico_cadastro` (os 10
- * mais recentes), a única chave que este módulo escreve por cima.
+ * Num lead que já existe, o envio é de alguém que não provou ser o dono do
+ * telefone: nenhum campo de verdade muda nem é preenchido (`objetivo`,
+ * `influenciadora` ou outro). O envio só entra em `cadastros_nao_verificados`
+ * (os 10 mais recentes), a única chave que este módulo escreve.
  */
-function acrescentarAoMetadata(anterior: unknown, cadastro: Metadata, em: string): Metadata {
+function anotarCadastroNaoVerificado(anterior: unknown, cadastro: Metadata, em: string): Metadata {
   const atual: Metadata =
     anterior && typeof anterior === "object" && !Array.isArray(anterior) ? { ...anterior } : {};
-  for (const [chave, valor] of Object.entries(cadastro)) {
-    if (!temValor(atual[chave])) atual[chave] = valor;
-  }
-  const historico = Array.isArray(atual.historico_cadastro) ? atual.historico_cadastro : [];
-  atual.historico_cadastro = [...historico, { em, ...cadastro }].slice(-MAXIMO_NO_HISTORICO);
+  const historico = Array.isArray(atual.cadastros_nao_verificados)
+    ? atual.cadastros_nao_verificados
+    : [];
+  atual.cadastros_nao_verificados = [...historico, { em, ...cadastro }].slice(
+    -MAXIMO_NO_HISTORICO,
+  );
   return atual;
 }
 
 /**
- * Cria o lead, ou acrescenta ao `metadata` de quem já está no CRM com o mesmo
- * telefone. Falha nunca derruba o visitante: ele recebe a frase neutra.
+ * Cria o lead, ou anota o envio como não verificado em quem já está no CRM com
+ * o mesmo telefone. Falha nunca derruba o visitante: ele recebe a frase neutra.
  */
 export async function registrarLeadDoCadastro(
   lead: LeadDoCadastro,
@@ -201,7 +201,7 @@ export async function registrarLeadDoCadastro(
       const { error } = await supabase
         .from("leads")
         .update({
-          metadata: acrescentarAoMetadata(existente.metadata, cadastro, agora),
+          metadata: anotarCadastroNaoVerificado(existente.metadata, cadastro, agora),
           updated_at: agora,
         })
         .eq("id", existente.id);
