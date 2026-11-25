@@ -2,6 +2,7 @@
 
 ## Últimas mudanças
 
+- 25/11/2026 00:36 (Brasília), Claude, `fix(cadastro): lead existente so ganha dados e o envio tem limite por IP`: o formulário é público e ninguém prova que o telefone é seu, então no lead que já existe o cadastro não sobrescreve chave do `metadata` que tem valor (a `influenciadora` de quem já está no CRM nunca muda), só preenche o que falta e guarda o envio em `metadata.historico_cadastro` (data, objetivo e influenciadora, os 10 mais recentes); `name`, `phone`, `status`, `labels` e `source` não são tocados. `objetivo` só aceita as três opções do formulário (a lista mora em `lib/cadastro-lead.ts` e a página a passa ao formulário), `influenciadora` tem até 40 caracteres, e nome e influenciadora recusam caractere de controle e `<>`. Limite de 10 envios por IP a cada 10 minutos, em memória por instância (o do `/avaliacao` fica dentro do arquivo do funil e não dava para reaproveitar sem editá-lo); o IP não vai para o log.
 - 25/11/2026 00:30 (Brasília), Claude, `fix(cadastro): grava o lead do /cadastro no CRM pelo servidor`: o `/cadastro` passa a gravar em `leads` nas colunas do CRM (`name`, `phone` só dígitos com 55, `source` e etiqueta `landing-cadastro`, `status` `novo`, `metadata` com `objetivo` e `influenciadora`), pelo servidor com a `SUPABASE_SERVICE_ROLE_KEY` (`lib/cadastro-lead.ts`). Telefone já cadastrado (DDD + 8 últimos dígitos, com ou sem 9 e 55) atualiza o `metadata` do lead existente em vez de criar outro. O log fica só com etapa e código do erro, o visitante recebe uma frase neutra, e saiu o cliente com a chave anônima (`lib/supabase.ts`), que só o cadastro usava. Testes em `tests/cadastro-lead.test.mjs`.
 
 ## Em andamento
@@ -12,7 +13,7 @@ Nada.
 
 - A `SUPABASE_SERVICE_ROLE_KEY` não está nas variáveis do projeto da landing na Vercel (conferido em 25/11 pelo `vercel env ls`: só `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY`). Até o dono cadastrá-la em Production e publicar de novo, o `/cadastro` responde a frase neutra, o log diz `supabase_nao_configurado` com a variável que falta e o visitante segue para o WhatsApp sem virar lead. O `/avaliacao` cai na chave anônima no mesmo caso.
 - Os logs antigos da Vercel com nome e telefone de quem se cadastrou antes desta correção continuam lá até expirarem; apagar antes é decisão do dono.
-- O `/cadastro` não tem limite de envios por IP (o `/avaliacao` tem um em memória).
+- O limite por IP do `/cadastro` e o do `/avaliacao` são em memória e valem por instância da Vercel: seguram rajada de um IP, não ataque distribuído. Limite compartilhado pede um armazenamento (banco ou KV).
 
 ## Varredura de 23/11/2026
 

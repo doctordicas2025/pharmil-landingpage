@@ -3,7 +3,10 @@ import { afterEach, beforeEach, describe, it, mock } from "node:test";
 
 import {
   MENSAGEM_FALHA_CADASTRO,
+  OBJETIVOS_DO_CADASTRO,
+  criarLimiteDeTentativas,
   esquemaDoCadastro,
+  ipDoVisitante,
   registrarLeadDoCadastro,
 } from "../lib/cadastro-lead.ts";
 
@@ -64,8 +67,13 @@ function capturarLogs() {
   }
 }
 
-async function registrar(bruto) {
-  return registrarLeadDoCadastro(esquemaDoCadastro.parse(bruto));
+// Cada chamada vem de um IP de documentação diferente, para o limite por IP
+// só aparecer no teste que é sobre ele.
+let ipsUsados = 0;
+const outroIp = () => `198.51.100.${(ipsUsados += 1)}`;
+
+async function registrar(bruto, ip = outroIp()) {
+  return registrarLeadDoCadastro(esquemaDoCadastro.parse(bruto), ip);
 }
 
 const deUmVerbo = (metodo) => requisicoes.filter((r) => r.metodo === metodo);
@@ -120,6 +128,80 @@ describe("telefone do cadastro", () => {
     for (const telefone of ["123", "(11) 8765-432", "(01) 98765-4321", "11 88765-43210"]) {
       assert.equal(esquemaDoCadastro.safeParse({ ...VISITANTE, telefone }).success, false, telefone);
     }
+  });
+});
+
+describe("campos de texto do cadastro", () => {
+  it("objetivo só aceita as opções que o formulário oferece", () => {
+    assert.deepEqual([...OBJETIVOS_DO_CADASTRO], [
+      "Entender como funciona",
+      "Consultar disponibilidade",
+      "Tirar dúvidas sobre entrega",
+    ]);
+    for (const objetivo of OBJETIVOS_DO_CADASTRO) {
+      assert.equal(esquemaDoCadastro.safeParse({ ...VISITANTE, objetivo }).success, true, objetivo);
+    }
+    for (const objetivo of ["Quero desconto", "consultar disponibilidade", ""]) {
+      assert.equal(esquemaDoCadastro.safeParse({ ...VISITANTE, objetivo }).success, false, objetivo);
+    }
+  });
+
+  it("influenciadora tem no máximo 40 caracteres", () => {
+    const comLimite = (n) => ({ ...VISITANTE, influenciadora: "a".repeat(n) });
+    assert.equal(esquemaDoCadastro.safeParse(comLimite(40)).success, true);
+    assert.equal(esquemaDoCadastro.safeParse(comLimite(41)).success, false);
+  });
+
+  it("nome e influenciadora recusam caractere de controle e sinais de tag", () => {
+    for (const texto of ["<script>", "linha\nquebrada", "tab\tulada"]) {
+      assert.equal(esquemaDoCadastro.safeParse({ ...VISITANTE, nome: `Ana ${texto}` }).success, false);
+      assert.equal(
+        esquemaDoCadastro.safeParse({ ...VISITANTE, influenciadora: `p${texto}` }).success,
+        false,
+      );
+    }
+  });
+});
+
+describe("limite de tentativas por IP", () => {
+  it("o 11º cadastro do mesmo IP em 10 minutos não chega ao banco", async () => {
+    const ip = "203.0.113.10";
+    for (let i = 0; i < 10; i += 1) {
+      assert.deepEqual(await registrar(VISITANTE, ip), { success: true }, `tentativa ${i + 1}`);
+    }
+    const antes = requisicoes.length;
+
+    const resultado = await registrar(VISITANTE, ip);
+
+    assert.deepEqual(resultado, { success: false, error: MENSAGEM_FALHA_CADASTRO });
+    assert.equal(requisicoes.length, antes, "não pode consultar nem gravar no banco");
+    const erro = logs.find((l) => l.nivel === "warn" || l.nivel === "error");
+    assert.ok(erro, "o bloqueio deveria aparecer no log");
+    assert.match(erro.texto, /limite_de_tentativas/);
+    assert.ok(!erro.texto.includes(ip), "o IP é dado pessoal e não vai para o log");
+
+    assert.deepEqual(await registrar(VISITANTE, "203.0.113.11"), { success: true });
+  });
+
+  it("o IP volta a cadastrar quando a janela passa", () => {
+    let agora = 0;
+    const cabe = criarLimiteDeTentativas({ maximo: 2, janelaMs: 1000, relogio: () => agora });
+
+    assert.equal(cabe("ip-a"), true);
+    assert.equal(cabe("ip-a"), true);
+    assert.equal(cabe("ip-a"), false);
+    assert.equal(cabe("ip-b"), true);
+    agora = 1000;
+    assert.equal(cabe("ip-a"), true);
+  });
+
+  it("o IP do visitante é o primeiro do x-forwarded-for, senão o x-real-ip", () => {
+    assert.equal(
+      ipDoVisitante(new Headers({ "x-forwarded-for": "203.0.113.7, 10.0.0.1" })),
+      "203.0.113.7",
+    );
+    assert.equal(ipDoVisitante(new Headers({ "x-real-ip": "203.0.113.8" })), "203.0.113.8");
+    assert.equal(ipDoVisitante(new Headers()), null);
   });
 });
 
@@ -181,12 +263,65 @@ describe("registro do lead do cadastro", () => {
     assert.ok(atualizacao, "deveria atualizar o lead existente");
     assert.equal(atualizacao.url.searchParams.get("id"), "eq.lead-existente");
     assert.equal(atualizacao.cabecalhos.get("apikey"), CHAVE_DE_SERVICO_FALSA);
+    // name, phone, status, labels e source ficam como estão.
     assert.deepEqual(Object.keys(atualizacao.corpo).sort(), ["metadata", "updated_at"]);
-    assert.deepEqual(atualizacao.corpo.metadata, {
-      chatwoot_id: 42,
-      objetivo: "Consultar disponibilidade",
-    });
+    const { historico_cadastro: historico, ...resto } = atualizacao.corpo.metadata;
+    assert.deepEqual(resto, { chatwoot_id: 42, objetivo: "Consultar disponibilidade" });
+    assert.equal(historico.length, 1);
+    assert.deepEqual(Object.keys(historico[0]).sort(), ["em", "objetivo"]);
+    assert.equal(historico[0].objetivo, "Consultar disponibilidade");
+    assert.ok(!Number.isNaN(Date.parse(historico[0].em)));
     assert.ok(!Number.isNaN(Date.parse(atualizacao.corpo.updated_at)));
+  });
+
+  it("lead existente: nada que já tem valor é sobrescrito, só o que falta é preenchido", async () => {
+    respostas.GET = () =>
+      responderJson(200, [
+        {
+          id: "lead-existente",
+          metadata: { objetivo: "Entender como funciona", influenciadora: "", chatwoot_id: 42 },
+        },
+      ]);
+
+    await registrar({ ...VISITANTE, influenciadora: "parceira-nova" });
+
+    const { historico_cadastro: historico, ...resto } = deUmVerbo("PATCH")[0].corpo.metadata;
+    assert.deepEqual(resto, {
+      objetivo: "Entender como funciona",
+      influenciadora: "parceira-nova",
+      chatwoot_id: 42,
+    });
+    assert.equal(historico.at(-1).objetivo, "Consultar disponibilidade");
+    assert.equal(historico.at(-1).influenciadora, "parceira-nova");
+  });
+
+  it("lead existente: a influenciadora de quem já está no CRM nunca é trocada", async () => {
+    respostas.GET = () =>
+      responderJson(200, [
+        { id: "lead-existente", metadata: { influenciadora: "parceira-original" } },
+      ]);
+
+    await registrar({ ...VISITANTE, influenciadora: "parceira-de-outra-pessoa" });
+
+    const { metadata } = deUmVerbo("PATCH")[0].corpo;
+    assert.equal(metadata.influenciadora, "parceira-original");
+    assert.equal(metadata.historico_cadastro.at(-1).influenciadora, "parceira-de-outra-pessoa");
+  });
+
+  it("o histórico do lead existente guarda só os 10 cadastros mais recentes", async () => {
+    const antigos = Array.from({ length: 10 }, (_, i) => ({
+      em: new Date(Date.UTC(2026, 10, 1 + i)).toISOString(),
+      objetivo: `antigo-${i}`,
+    }));
+    respostas.GET = () =>
+      responderJson(200, [{ id: "lead-existente", metadata: { historico_cadastro: antigos } }]);
+
+    await registrar(VISITANTE);
+
+    const historico = deUmVerbo("PATCH")[0].corpo.metadata.historico_cadastro;
+    assert.equal(historico.length, 10);
+    assert.equal(historico[0].objetivo, "antigo-1");
+    assert.equal(historico.at(-1).objetivo, "Consultar disponibilidade");
   });
 
   it("erro do banco não chega ao visitante e o log fica só com o código", async () => {

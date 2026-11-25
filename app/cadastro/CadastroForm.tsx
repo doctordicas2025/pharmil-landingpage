@@ -6,15 +6,15 @@ import { FormEvent, useState, useTransition } from "react";
 import { Button, Field, FieldSet, OptionGroup } from "@/design-system";
 import { getWhatsappHref } from "@/lib/site-config";
 
+import type { ObjetivoDoCadastro } from "@/lib/cadastro-lead";
+
 import { salvarLeadAction } from "./actions";
 
-const objetivos = [
-  "Entender como funciona",
-  "Consultar disponibilidade",
-  "Tirar dúvidas sobre entrega",
-] as const;
-
-export default function CadastroForm() {
+export default function CadastroForm({
+  objetivos,
+}: {
+  objetivos: readonly ObjetivoDoCadastro[];
+}) {
   const searchParams = useSearchParams();
   const influencer = searchParams.get("inf") || "";
 
@@ -25,6 +25,9 @@ export default function CadastroForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    // O botão só habilita com uma opção marcada; isto só estreita o tipo.
+    const objetivoEscolhido = objetivos.find((opcao) => opcao === objetivo);
+    if (!objetivoEscolhido) return;
 
     startTransition(async () => {
       let mensagem = `Olá, meu nome é ${nome}. Gostaria de: ${objetivo}.`;
@@ -39,7 +42,7 @@ export default function CadastroForm() {
         const result = await salvarLeadAction({
           nome,
           telefone,
-          objetivo,
+          objetivo: objetivoEscolhido,
           influenciadora: influencer,
         });
 
