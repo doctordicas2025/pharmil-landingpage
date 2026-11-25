@@ -14,17 +14,23 @@ const brandFont = localFont({
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
   title: {
-    default: "Pharmil | Peptídeos injetáveis de alta pureza",
+    default: "Pharmil · Saúde, Rotina e Hábitos Saudáveis",
     template: "%s | Pharmil",
   },
   description:
-    "Laudo de análise por lote, envio entre 2 e 8 °C e rastreio no mesmo dia. Dispensação por farmácia parceira habilitada, mediante prescrição.",
+    "Portal institucional dedicado à organização de rotina, hábitos saudáveis, bem-estar e informações claras com responsabilidade.",
   openGraph: {
-    title: "Pharmil | Peptídeos injetáveis de alta pureza",
+    title: "Pharmil · Saúde, Rotina e Hábitos Saudáveis",
     description:
-      "Laudo por lote, cadeia de frio e rastreio informados antes de você confirmar.",
+      "Organização de rotina, hábitos saudáveis e informações claras com responsabilidade.",
     locale: "pt_BR",
     type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Pharmil · Saúde, Rotina e Hábitos Saudáveis",
+    description:
+      "Organização de rotina, hábitos saudáveis e informações claras com responsabilidade.",
   },
   robots: { index: true, follow: true },
 };

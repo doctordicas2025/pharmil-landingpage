@@ -1,16 +1,19 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 
-import { Header } from "@/components/Header";
-import Footer from "@/components/sections/Footer";
-import { companyInfo, getContactHref } from "@/lib/site-config";
+import {
+  getInstitutionalContactHref,
+  InstitutionalFooter,
+  InstitutionalHeader,
+} from "@/components/funnel/InstitutionalPortal";
+import { companyInfo } from "@/lib/site-config";
 
 export function LegalPage({ title, children }: { title: string; children: ReactNode }) {
-  const contactHref = getContactHref();
+  const contactHref = getInstitutionalContactHref();
 
   return (
     <>
-      <Header contactHref={contactHref} />
+      <InstitutionalHeader contactHref={contactHref} />
       <main className="legal-page">
         <div className="legal-shell">
           <header className="legal-page__header">
@@ -42,7 +45,7 @@ export function LegalPage({ title, children }: { title: string; children: ReactN
           </div>
         </div>
       </main>
-      <Footer contactHref={contactHref} />
+      <InstitutionalFooter />
     </>
   );
 }

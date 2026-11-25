@@ -2,16 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navigation = [
-  { href: "/#loja", label: "Produtos" },
-  { href: "/#cadeia-de-frio", label: "Cadeia de frio" },
-  { href: "/#como-pedir", label: "Como pedir" },
+  { href: "/catalogo#loja", label: "Produtos" },
+  { href: "/catalogo#cadeia-de-frio", label: "Cadeia de frio" },
+  { href: "/catalogo#como-pedir", label: "Como pedir" },
   { href: "/calculadora", label: "Calculadora" },
-  { href: "/#faq", label: "Dúvidas" },
+  { href: "/catalogo#faq", label: "Dúvidas" },
 ] as const;
 
 function Brand() {
   return (
-    <Link className="brand" href="/#inicio" aria-label="Pharmil, voltar ao início">
+    <Link className="brand" href="/catalogo#inicio" aria-label="Pharmil, voltar ao início do catálogo">
       <span className="brand__logo-crop" aria-hidden="true">
         <Image
           className="brand__logo"

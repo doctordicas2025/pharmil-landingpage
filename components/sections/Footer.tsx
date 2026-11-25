@@ -4,11 +4,11 @@ import Link from "next/link";
 import { companyInfo } from "@/lib/site-config";
 
 const navLinks = [
-  { label: "Produtos", href: "/#loja" },
-  { label: "Cadeia de frio", href: "/#cadeia-de-frio" },
-  { label: "Como pedir", href: "/#como-pedir" },
+  { label: "Produtos", href: "/catalogo#loja" },
+  { label: "Cadeia de frio", href: "/catalogo#cadeia-de-frio" },
+  { label: "Como pedir", href: "/catalogo#como-pedir" },
   { label: "Calculadora", href: "/calculadora" },
-  { label: "Dúvidas", href: "/#faq" },
+  { label: "Dúvidas", href: "/catalogo#faq" },
 ] as const;
 
 export type FooterProps = {
@@ -20,7 +20,7 @@ export default function Footer({ contactHref }: FooterProps) {
     <footer className="site-footer" id="contato">
       <div className="site-footer__inner">
         <div className="site-footer__brand">
-          <Link className="site-footer__logo" href="/#inicio">
+          <Link className="site-footer__logo" href="/catalogo#inicio">
             <Image alt="" height={42} src="/images/pharmil-logo.png" width={42} />
             <span>Pharmil</span>
           </Link>
