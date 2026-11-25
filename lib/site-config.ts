@@ -1,3 +1,4 @@
+const defaultProductionSiteUrl = "https://www.pharmilmed.com";
 const localSiteUrl = "http://localhost:3000";
 const whatsappNumber = "5561999969091";
 const whatsappGreeting =
@@ -18,7 +19,11 @@ function readHttpsUrl(value: string | undefined) {
 }
 
 export function getSiteUrl() {
-  return readHttpsUrl(process.env.NEXT_PUBLIC_SITE_URL) ?? new URL(localSiteUrl);
+  const configured = readHttpsUrl(process.env.NEXT_PUBLIC_SITE_URL);
+  if (configured instanceof URL) return configured;
+  return new URL(
+    process.env.NODE_ENV === "development" ? localSiteUrl : defaultProductionSiteUrl,
+  );
 }
 
 export function getContactHref() {
