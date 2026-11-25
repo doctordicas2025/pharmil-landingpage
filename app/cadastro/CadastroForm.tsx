@@ -43,8 +43,9 @@ export default function CadastroForm() {
           influenciadora: influencer,
         });
 
-        if (!result?.data?.success) {
-          console.error("Lead nao registrado:", result?.data?.error ?? result?.validationErrors);
+        const resposta = result?.data;
+        if (!resposta?.success) {
+          console.error("Lead nao registrado:", resposta?.error ?? result?.validationErrors);
         }
       } catch (err) {
         console.error("Falha ao registrar lead:", err);
