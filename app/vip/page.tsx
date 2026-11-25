@@ -10,6 +10,7 @@ import {
 import { Button, Card, CardBody, DotPill } from "@/design-system";
 import {
   buildDirectWhatsAppUrl,
+  formatBrazilianWhatsAppDisplay,
   resolveVipGroupInviteUrl,
 } from "@/lib/funnel/quiz-config";
 
@@ -44,6 +45,9 @@ export default function VipPage() {
     process.env.NEXT_PUBLIC_WHATSAPP_VIP_GROUP_URL,
   );
   const directWhatsappUrl = buildDirectWhatsAppUrl(
+    process.env.NEXT_PUBLIC_WHATSAPP_OFFICIAL_NUMBER,
+  );
+  const directWhatsappDisplay = formatBrazilianWhatsAppDisplay(
     process.env.NEXT_PUBLIC_WHATSAPP_OFFICIAL_NUMBER,
   );
 
@@ -113,7 +117,7 @@ export default function VipPage() {
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  Atendimento direto no WhatsApp (48) 99115-3151
+                  Atendimento direto no WhatsApp {directWhatsappDisplay}
                 </a>
               </p>
 

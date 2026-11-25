@@ -5,7 +5,10 @@ import { useState } from "react";
 
 import type { QuizSubmissionResult } from "@/app/avaliacao/actions";
 import { Button, Card, CardBody, Eyebrow, Field, FieldSet, Notice } from "@/design-system";
-import { buildDirectWhatsAppUrl } from "@/lib/funnel/quiz-config";
+import {
+  buildDirectWhatsAppUrl,
+  formatBrazilianWhatsAppDisplay,
+} from "@/lib/funnel/quiz-config";
 
 import { ChatBubbleIcon, CheckIcon, CopyIcon, ShieldIcon } from "./FunnelIcons";
 
@@ -15,6 +18,9 @@ interface QuizCompletedCardProps {
 
 export function QuizCompletedCard({ completed }: QuizCompletedCardProps) {
   const [copied, setCopied] = useState(false);
+  const directWhatsappDisplay = formatBrazilianWhatsAppDisplay(
+    process.env.NEXT_PUBLIC_WHATSAPP_OFFICIAL_NUMBER,
+  );
 
   async function handleCopySummary() {
     try {
@@ -85,7 +91,7 @@ export function QuizCompletedCard({ completed }: QuizCompletedCardProps) {
               rel="noopener noreferrer"
               target="_blank"
             >
-              Falar no atendimento direto (48) 99115-3151
+              Falar no atendimento direto {directWhatsappDisplay}
             </a>
           </p>
         </div>
@@ -118,6 +124,9 @@ export function QuizContactStep({
   onSubmit,
 }: QuizContactStepProps) {
   const directWhatsappUrl = buildDirectWhatsAppUrl(
+    process.env.NEXT_PUBLIC_WHATSAPP_OFFICIAL_NUMBER,
+  );
+  const directWhatsappDisplay = formatBrazilianWhatsAppDisplay(
     process.env.NEXT_PUBLIC_WHATSAPP_OFFICIAL_NUMBER,
   );
 
@@ -201,7 +210,7 @@ export function QuizContactStep({
           rel="noopener noreferrer"
           target="_blank"
         >
-          Atendimento direto no WhatsApp (48) 99115-3151
+          Atendimento direto no WhatsApp {directWhatsappDisplay}
         </a>
       </p>
 

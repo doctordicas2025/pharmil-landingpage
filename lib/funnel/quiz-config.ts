@@ -8,7 +8,7 @@
 
 import { z } from "zod";
 
-export const DEFAULT_WHATSAPP_NUMBER = "5548991153151";
+export const DEFAULT_WHATSAPP_NUMBER = "5561999969091";
 export const DEFAULT_WHATSAPP_VIP_GROUP_URL =
   "https://chat.whatsapp.com/JcIISmSCGo28QDWYeQtmDX?s=cl&p=i&iam=2";
 
@@ -198,6 +198,18 @@ export function labelForQuizOption(stepId: QuizStepConfig["id"], value: string):
 export function resolveOfficialWhatsAppNumber(envValue?: string): string {
   const digits = (envValue ?? DEFAULT_WHATSAPP_NUMBER).replace(/\D/g, "");
   return digits.length >= 12 && digits.length <= 15 ? digits : DEFAULT_WHATSAPP_NUMBER;
+}
+
+export function formatBrazilianWhatsAppDisplay(envValue?: string): string {
+  const digits = resolveOfficialWhatsAppNumber(envValue);
+  const national = digits.startsWith("55") ? digits.slice(2) : digits;
+  if (national.length === 11) {
+    return `(${national.slice(0, 2)}) ${national.slice(2, 7)}-${national.slice(7)}`;
+  }
+  if (national.length === 10) {
+    return `(${national.slice(0, 2)}) ${national.slice(2, 6)}-${national.slice(6)}`;
+  }
+  return `+${digits}`;
 }
 
 export function resolveVipGroupInviteUrl(envValue?: string): string {

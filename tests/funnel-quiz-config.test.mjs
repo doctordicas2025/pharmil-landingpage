@@ -7,6 +7,7 @@ import {
   buildWhatsAppSummaryUrl,
   DEFAULT_WHATSAPP_NUMBER,
   DEFAULT_WHATSAPP_VIP_GROUP_URL,
+  formatBrazilianWhatsAppDisplay,
   priorityTagForMomento,
   QUIZ_STEPS,
   quizSubmissionSchema,
@@ -64,7 +65,7 @@ describe("quiz de avaliacao config e validacao", () => {
     assert.equal(badOption.success, false);
   });
 
-  it("aponta destino principal para o Grupo VIP oficial e mantem atendimento direto (48) 99115-3151", () => {
+  it("aponta destino principal para o Grupo VIP oficial e mantem atendimento direto (61) 99996-9091", () => {
     assert.equal(
       DEFAULT_WHATSAPP_VIP_GROUP_URL,
       "https://chat.whatsapp.com/JcIISmSCGo28QDWYeQtmDX?s=cl&p=i&iam=2",
@@ -77,7 +78,8 @@ describe("quiz de avaliacao config e validacao", () => {
       resolveVipGroupInviteUrl("https://site-invalido.com/x"),
       DEFAULT_WHATSAPP_VIP_GROUP_URL,
     );
-    assert.equal(buildDirectWhatsAppUrl(), "https://wa.me/5548991153151");
+    assert.equal(buildDirectWhatsAppUrl(), "https://wa.me/5561999969091");
+    assert.equal(formatBrazilianWhatsAppDisplay(), "(61) 99996-9091");
 
     const input = {
       firstName: "Marina",
